@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooddo/components/screens/home/home.dart';
 import 'package:fooddo/components/screens/home/notifications.dart';
+import 'package:fooddo/screens/screen_make_donation.dart';
 
 class Home extends StatefulWidget {
   static final routeName = "/home";
@@ -23,7 +24,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(MakeDonation.routeName);
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(

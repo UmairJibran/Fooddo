@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_login.dart';
+import 'package:fooddo/screens/screen_make_donation.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
 
 //Screens Import
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         Login.routeName: (ctx) => Login(),
         RegisterAsDonor.routeName: (ctx) => RegisterAsDonor(),
         Home.routeName: (ctx) => Home(),
+        MakeDonation.routeName: (ctx) => MakeDonation(),
       },
     );
   }

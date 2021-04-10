@@ -6,6 +6,7 @@ import 'package:fooddo/screens/screen_make_donation.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
 
 //Screens Import
+import 'screens/screen_confirm_donation.dart';
 import 'screens/screen_splash.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         RegisterAsDonor.routeName: (ctx) => RegisterAsDonor(),
         Home.routeName: (ctx) => Home(),
         MakeDonation.routeName: (ctx) => MakeDonation(),
+        ConfirmDonation.routeName: (ctx) => ConfirmDonation()
       },
     );
   }

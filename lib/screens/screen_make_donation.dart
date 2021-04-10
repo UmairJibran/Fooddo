@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fooddo/components/continuation_button.dart';
+import 'package:fooddo/screens/screen_confirm_donation.dart';
 
 class MakeDonation extends StatefulWidget {
   static final String routeName = "/make-donation";
@@ -202,7 +203,10 @@ class _MakeDonationState extends State<MakeDonation> {
                     children: [
                       ContinuationButton(
                         buttonText: "Continue",
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(ConfirmDonation.routeName);
+                        },
                       ),
                     ],
                   )

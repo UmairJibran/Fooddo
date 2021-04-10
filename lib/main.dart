@@ -1,5 +1,6 @@
 //Packages Import
 import 'package:flutter/material.dart';
+import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_login.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
 
@@ -15,10 +16,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color.fromRGBO(242, 166, 66, 1),
+        fontFamily: "Raleway",
+      ),
       routes: {
         "/": (ctx) => SplashScreen(),
         Login.routeName: (ctx) => Login(),
         RegisterAsDonor.routeName: (ctx) => RegisterAsDonor(),
+        Home.routeName: (ctx) => Home(),
       },
     );
   }

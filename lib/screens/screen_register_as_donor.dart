@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooddo/classes/city.dart';
 import 'package:fooddo/components/continuation_button.dart';
+import 'package:fooddo/screens/screen_home.dart';
 
 class RegisterAsDonor extends StatefulWidget {
   static final routeName = "/register";
@@ -198,7 +199,9 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
               children: [
                 ContinuationButton(
                   buttonText: "Continue",
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed(Home.routeName);
+                  },
                 ),
               ],
             ),

@@ -171,7 +171,10 @@ class _MakeDonationState extends State<MakeDonation> {
                             textAlign: TextAlign.left,
                             onChanged: (value) {
                               setState(() {
-                                _servings = double.parse(value);
+                                if (double.parse(value) > 1000)
+                                  _servings = 1000;
+                                else
+                                  _servings = double.parse(value);
                               });
                             },
                             decoration: InputDecoration(

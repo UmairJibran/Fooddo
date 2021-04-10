@@ -1,5 +1,6 @@
 //Packages Import
 import 'package:flutter/material.dart';
+import 'package:fooddo/screens/screen_login.dart';
 
 //Screens Import
 import 'screens/screen_splash.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         "/": (ctx) => SplashScreen(),
+        Login.routeName: (ctx) => Login(),
       },
     );
   }

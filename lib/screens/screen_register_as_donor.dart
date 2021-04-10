@@ -175,7 +175,9 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                         hintText: donorType == "Individual"
                             ? "John Doe"
                             : "xyz Marquee",
-                        helperText: "Your good name for human identification",
+                        helperText: donorType == "Individual"
+                            ? "Your good name for human identification"
+                            : "Representative of the Establishment",
                       ),
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) {

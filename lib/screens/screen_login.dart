@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 //Component Import
 import 'package:fooddo/components/continuation_button.dart';
+import 'package:fooddo/screens/screen_register_as_donor.dart';
 
 class Login extends StatelessWidget {
   static final routeName = "/login";
@@ -37,7 +38,11 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ContinuationButton(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushReplacementNamed(
+                        RegisterAsDonor.routeName,
+                      );
+                    },
                     buttonText: "Continue",
                   ),
                 ],

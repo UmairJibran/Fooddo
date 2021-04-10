@@ -1,6 +1,7 @@
 //Packages Import
 import 'package:flutter/material.dart';
 import 'package:fooddo/screens/screen_login.dart';
+import 'package:fooddo/screens/screen_register_as_donor.dart';
 
 //Screens Import
 import 'screens/screen_splash.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (ctx) => SplashScreen(),
         Login.routeName: (ctx) => Login(),
+        RegisterAsDonor.routeName: (ctx) => RegisterAsDonor(),
       },
     );
   }

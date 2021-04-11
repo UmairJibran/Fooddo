@@ -11,7 +11,7 @@ class MakeDonation extends StatefulWidget {
 }
 
 class _MakeDonationState extends State<MakeDonation> {
-  double _servings = 0;
+  double _servings = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 100
+                    _servings.round() > 10
                         ? Positioned(
                             top: 80,
                             left: 10,
@@ -58,7 +58,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 200
+                    _servings.round() > 20
                         ? Positioned(
                             top: 50,
                             right: 00,
@@ -68,7 +68,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 300
+                    _servings.round() > 30
                         ? Positioned(
                             bottom: 100,
                             left: 20,
@@ -78,7 +78,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 400
+                    _servings.round() > 40
                         ? Positioned(
                             top: 50,
                             left: 80,
@@ -88,7 +88,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 500
+                    _servings.round() > 50
                         ? Positioned(
                             bottom: 10,
                             right: 100,
@@ -98,7 +98,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 600
+                    _servings.round() > 60
                         ? Positioned(
                             top: 10,
                             right: 80,
@@ -108,7 +108,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 700
+                    _servings.round() > 70
                         ? Positioned(
                             top: 50,
                             right: 30,
@@ -118,7 +118,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 800
+                    _servings.round() > 80
                         ? Positioned(
                             top: 30,
                             left: 30,
@@ -128,7 +128,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 900
+                    _servings.round() > 90
                         ? Positioned(
                             bottom: 30,
                             right: 30,
@@ -138,7 +138,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() >= 1000
+                    _servings.round() >= 100
                         ? Positioned(
                             bottom: 80,
                             right: 50,
@@ -187,10 +187,10 @@ class _MakeDonationState extends State<MakeDonation> {
                     ),
                   ),
                   Slider(
-                    value: _servings,
+                    value: _servings > 100 ? 100 : _servings,
                     min: 0,
-                    max: 1000,
-                    divisions: 1000,
+                    max: 100,
+                    divisions: 100,
                     label: _servings.round().toString(),
                     onChanged: (value) {
                       setState(() {
@@ -204,8 +204,10 @@ class _MakeDonationState extends State<MakeDonation> {
                       ContinuationButton(
                         buttonText: "Continue",
                         onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(ConfirmDonation.routeName);
+                          if (_servings.round() > 1)
+                            Navigator.of(context).pushNamed(
+                                ConfirmDonation.routeName,
+                                arguments: {"servings": _servings});
                         },
                       ),
                     ],

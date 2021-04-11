@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fooddo/enums/status.dart';
 
 class FoodCardTile extends StatelessWidget {
   final String date;
   final String imgUrl;
   final int serving;
-  final Status status;
+  final String status;
   final double height;
   final String recepient;
   FoodCardTile({

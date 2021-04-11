@@ -1,10 +1,8 @@
-import 'package:fooddo/enums/status.dart';
-
 class Donation {
   final String id;
   final String imgUrl;
   final int serving;
-  final Status status;
+  final String status;
   final String recepient;
   final String date;
   final String pickupAddress;

@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
+        leading: SizedBox(),
         title: Text(
           "Fooddo",
           style: TextStyle(

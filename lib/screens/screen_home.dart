@@ -49,59 +49,61 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.794,
-              width: MediaQuery.of(context).size.width,
-              child: screens[selectedScreen],
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).primaryColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(),
-                  SizedBox(),
-                  FlatButton(
-                    child: Text(
-                      "Home",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        selectedScreen = 0;
-                      });
-                    },
-                  ),
-                  SizedBox(),
-                  FlatButton(
-                    child: Text(
-                      "Notifications",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        selectedScreen = 1;
-                      });
-                    },
-                  )
-                ],
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.794,
+                width: MediaQuery.of(context).size.width,
+                child: screens[selectedScreen],
               ),
-            )
-          ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                width: MediaQuery.of(context).size.width,
+                color: Theme.of(context).primaryColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(),
+                    SizedBox(),
+                    FlatButton(
+                      child: Text(
+                        "Home",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          selectedScreen = 0;
+                        });
+                      },
+                    ),
+                    SizedBox(),
+                    FlatButton(
+                      child: Text(
+                        "Notifications",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          selectedScreen = 1;
+                        });
+                      },
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

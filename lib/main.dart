@@ -1,4 +1,5 @@
 //Packages Import
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_login.dart';
@@ -7,9 +8,12 @@ import 'package:fooddo/screens/screen_register_as_donor.dart';
 
 //Screens Import
 import 'screens/screen_confirm_donation.dart';
+import 'screens/screen_loading.dart';
 import 'screens/screen_splash.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -28,7 +32,8 @@ class MyApp extends StatelessWidget {
         RegisterAsDonor.routeName: (ctx) => RegisterAsDonor(),
         Home.routeName: (ctx) => Home(),
         MakeDonation.routeName: (ctx) => MakeDonation(),
-        ConfirmDonation.routeName: (ctx) => ConfirmDonation()
+        ConfirmDonation.routeName: (ctx) => ConfirmDonation(),
+        LoadingScreen.routeName: (ctx) => LoadingScreen(),
       },
     );
   }

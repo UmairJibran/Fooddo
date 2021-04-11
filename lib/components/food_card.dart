@@ -34,10 +34,15 @@ class FoodCardTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            height: height * 0.78,
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(imgUrl)),
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                imgUrl,
+                height: height * 0.78,
+                width: height * 0.78,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           SizedBox(width: 10),
           Container(

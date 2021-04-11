@@ -1,11 +1,9 @@
-import 'package:fooddo/enums/donor_type.dart';
-
 class User {
   final String id;
   final String city;
   final String email;
   final String phone;
-  final DonorType type;
+  final String type;
   final String address;
   final String name;
 

@@ -1,16 +1,16 @@
 //Packages Import
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fooddo/screens/screen_check_reg_status.dart';
-import 'package:fooddo/screens/screen_home.dart';
-import 'package:fooddo/screens/screen_login.dart';
-import 'package:fooddo/screens/screen_make_donation.dart';
-import 'package:fooddo/screens/screen_register_as_donor.dart';
-import 'package:fooddo/screens/screen_settings.dart';
 
 //Screens Import
+import 'screens/screen_check_reg_status.dart';
+import 'screens/screen_home.dart';
+import 'screens/screen_login.dart';
+import 'screens/screen_make_donation.dart';
+import 'screens/screen_register_as_donor.dart';
 import 'screens/screen_confirm_donation.dart';
 import 'screens/screen_loading.dart';
+import 'screens/screen_settings.dart';
 import 'screens/screen_splash.dart';
 
 void main() async {

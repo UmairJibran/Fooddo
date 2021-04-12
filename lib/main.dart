@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 //Screens Import
+import 'screens/screen_charity_home.dart';
 import 'screens/screen_check_reg_status.dart';
 import 'screens/screen_home.dart';
 import 'screens/screen_login.dart';
@@ -11,7 +12,9 @@ import 'screens/screen_register_as_donor.dart';
 import 'screens/screen_confirm_donation.dart';
 import 'screens/screen_loading.dart';
 import 'screens/screen_settings.dart';
+import 'screens/screen_donation_details.dart';
 import 'screens/screen_splash.dart';
+import 'screens/screen_charity_update_loading.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +41,9 @@ class MyApp extends StatelessWidget {
         LoadingScreen.routeName: (ctx) => LoadingScreen(),
         CheckRegisterationStatus.routeName: (ctx) => CheckRegisterationStatus(),
         Settings.routeName: (ctx) => Settings(),
+        DonationDetails.routeName: (ctx) => DonationDetails(),
+        CharityUpdateLoading.routeName: (ctx) => CharityUpdateLoading(),
+        CharityDashboard.routeName: (ctx) => CharityDashboard(),
       },
     );
   }

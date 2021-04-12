@@ -3,6 +3,7 @@ import 'package:fooddo/components/screens/charity_home/home.dart';
 import 'package:fooddo/components/screens/charity_home/notifications.dart';
 
 import '../services.dart';
+import 'screen_charity_accepted.dart';
 import 'screen_charity_rejected.dart';
 import 'screen_settings.dart';
 
@@ -53,6 +54,11 @@ class _CharityDashboardState extends State<CharityDashboard> {
                 setState(() {
                   loading = true;
                 });
+                await Services.fetchAcceptedDonations();
+                setState(() {
+                  loading = false;
+                });
+                Navigator.pushNamed(context, CharityAccepted.routeName);
               },
             ),
             Divider(),

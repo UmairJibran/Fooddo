@@ -15,6 +15,7 @@ class Data {
   static String userPhone;
   static List<Donation> unclaimedDonations = [];
   static List<Donation> rejectedDonations = [];
+  static List<Donation> acceptedDonations = [];
 }
 
 class Services {
@@ -275,6 +276,31 @@ class Services {
           waitingTime: data["waitingTime"],
         );
         Data.unclaimedDonations.add(donation);
+      });
+    });
+  }
+
+  static fetchAcceptedDonations() async {
+    Data.acceptedDonations.clear();
+    Query acceptedDonations = FirebaseFirestore.instance
+        .collection("donations")
+        .where("status", isEqualTo: "accepted");
+    await acceptedDonations.get().then((QuerySnapshot querySnapshot) {
+      var docs = querySnapshot.docs;
+      docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data();
+        Donation donation = new Donation(
+          id: doc.id,
+          date: data["date"],
+          pickupAddress: data["pickupAddress"],
+          serving: data["servings"],
+          status: data["status"],
+          imgUrl: data["imgUrl"],
+          recepient: data["recipient"],
+          donorId: data["donorId"],
+          waitingTime: data["waitingTime"],
+        );
+        Data.acceptedDonations.add(donation);
       });
     });
   }

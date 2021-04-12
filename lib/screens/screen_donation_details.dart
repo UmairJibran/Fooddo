@@ -78,14 +78,33 @@ class _DonationDetailsState extends State<DonationDetails> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(width: 20),
+                SizedBox(width: 10),
                 Icon(Icons.timer, size: 20, color: Colors.black),
               ],
             ),
           ),
           Container(
+            color: Color(0xffEBF4FF),
+            height: height * 0.065,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Serves ${donation.serving} People",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Icon(Icons.people_outline, size: 20, color: Colors.black),
+              ],
+            ),
+          ),
+          Container(
             width: width * 0.9,
-            height: height * 0.5,
+            height: height * 0.4,
             margin: EdgeInsets.only(
               top: 10,
             ),

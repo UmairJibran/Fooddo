@@ -5,6 +5,7 @@ import 'package:fooddo/components/screens/charity_home/notifications.dart';
 import '../services.dart';
 import 'screen_charity_accepted.dart';
 import 'screen_charity_rejected.dart';
+import 'screen_charity_completed.dart';
 import 'screen_settings.dart';
 
 class CharityDashboard extends StatefulWidget {
@@ -73,6 +74,20 @@ class _CharityDashboardState extends State<CharityDashboard> {
                   loading = false;
                 });
                 Navigator.pushNamed(context, CharityRejected.routeName);
+              },
+            ),
+            Divider(),
+            FlatButton(
+              child: Text("Completed Donation"),
+              onPressed: () async {
+                setState(() {
+                  loading = true;
+                });
+                await Services.fetchCompletedDonations();
+                setState(() {
+                  loading = false;
+                });
+                Navigator.pushNamed(context, CharityCompleted.routeName);
               },
             ),
             Divider(),

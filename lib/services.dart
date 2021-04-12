@@ -16,6 +16,7 @@ class Data {
   static List<Donation> unclaimedDonations = [];
   static List<Donation> rejectedDonations = [];
   static List<Donation> acceptedDonations = [];
+  static List<Donation> completedDonations = [];
 }
 
 class Services {
@@ -326,6 +327,31 @@ class Services {
           waitingTime: data["waitingTime"],
         );
         Data.rejectedDonations.add(donation);
+      });
+    });
+  }
+
+  static fetchCompletedDonations() async {
+    Data.completedDonations.clear();
+    Query completedDonations = FirebaseFirestore.instance
+        .collection("donations")
+        .where("status", isEqualTo: "completed");
+    await completedDonations.get().then((QuerySnapshot querySnapshot) {
+      var docs = querySnapshot.docs;
+      docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data();
+        Donation donation = new Donation(
+          id: doc.id,
+          date: data["date"],
+          pickupAddress: data["pickupAddress"],
+          serving: data["servings"],
+          status: data["status"],
+          imgUrl: data["imgUrl"],
+          recepient: data["recipient"],
+          donorId: data["donorId"],
+          waitingTime: data["waitingTime"],
+        );
+        Data.completedDonations.add(donation);
       });
     });
   }

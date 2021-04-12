@@ -214,6 +214,19 @@ class _DonationDetailsState extends State<DonationDetails> {
                       ),
                     ],
                   )
+                else if (donation.status == "accepted")
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Assign Deliveryman",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )
+                    ],
+                  )
               ],
             ),
           ),

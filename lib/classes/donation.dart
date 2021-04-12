@@ -6,14 +6,18 @@ class Donation {
   final String recepient;
   final String date;
   final String pickupAddress;
+  final String donorId;
+  final int waitingTime;
 
   Donation({
     this.id,
+    this.donorId,
     this.pickupAddress,
     this.imgUrl,
     this.serving,
     this.status,
     this.recepient,
     this.date,
+    this.waitingTime,
   });
 }

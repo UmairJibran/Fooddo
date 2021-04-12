@@ -6,6 +6,7 @@ import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_login.dart';
 import 'package:fooddo/screens/screen_make_donation.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
+import 'package:fooddo/screens/screen_settings.dart';
 
 //Screens Import
 import 'screens/screen_confirm_donation.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         ConfirmDonation.routeName: (ctx) => ConfirmDonation(),
         LoadingScreen.routeName: (ctx) => LoadingScreen(),
         CheckRegisterationStatus.routeName: (ctx) => CheckRegisterationStatus(),
+        Settings.routeName: (ctx) => Settings(),
       },
     );
   }

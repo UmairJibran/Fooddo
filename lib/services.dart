@@ -27,13 +27,14 @@ class Services {
       docs.forEach((doc) {
         Map<String, dynamic> data = doc.data();
         Donation donation = new Donation(
-          id: data["donorId"],
+          id: doc.id,
           date: data["date"],
           pickupAddress: data["pickupAddress"],
           recepient: data["recipient"],
           serving: data["servings"],
           status: data["status"],
           imgUrl: data["imgUrl"],
+          donorId: data["donorId"],
         );
         Data.pastDonations.add(donation);
       });
@@ -277,5 +278,31 @@ class Services {
     });
   }
 
-  
+  static acceptDonation(String donationId) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    DocumentSnapshot doc =
+        await firebaseFirestore.collection("donations").doc(donationId).get();
+    if (doc.exists) {
+      var donationDocument = doc.data();
+      donationDocument["status"] = "accepted";
+      firebaseFirestore
+          .collection("donations")
+          .doc(donationId)
+          .update(donationDocument);
+    }
+  }
+
+  static rejectDonation(String donationId) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    DocumentSnapshot doc =
+        await firebaseFirestore.collection("donations").doc(donationId).get();
+    if (doc.exists) {
+      var donationDocument = doc.data();
+      donationDocument["status"] = "rejected";
+      firebaseFirestore
+          .collection("donations")
+          .doc(donationId)
+          .update(donationDocument);
+    }
+  }
 }

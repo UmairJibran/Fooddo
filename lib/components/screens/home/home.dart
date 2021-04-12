@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddo/components/make_donation.dart';
 
 import '../../../services.dart';
 import '../../food_card.dart';
@@ -15,16 +16,18 @@ class HomeComponent extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.794,
         child: ListView.builder(
           itemBuilder: (BuildContext context, index) {
-            return FoodCardTile(
-              date: Data.pastDonations[index].date,
-              serving: Data.pastDonations[index].serving,
-              imgUrl: Data.pastDonations[index].imgUrl,
-              status: Data.pastDonations[index].status,
-              recepient: Data.pastDonations[index].recepient,
-              height: height * 0.25,
-            );
+            return index == 0
+                ? AddDonation(height: height)
+                : FoodCardTile(
+                    date: Data.pastDonations[index - 1].date,
+                    serving: Data.pastDonations[index - 1].serving,
+                    imgUrl: Data.pastDonations[index - 1].imgUrl,
+                    status: Data.pastDonations[index - 1].status,
+                    recepient: Data.pastDonations[index - 1].recepient,
+                    height: height * 0.25,
+                  );
           },
-          itemCount: Data.pastDonations.length,
+          itemCount: Data.pastDonations.length + 1,
         ),
       ),
     );

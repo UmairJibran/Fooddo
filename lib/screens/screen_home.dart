@@ -24,13 +24,6 @@ class _HomeState extends State<Home> {
       NotificationsComponet()
     ];
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed(MakeDonation.routeName);
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         leading: SizedBox(),
         title: Text(

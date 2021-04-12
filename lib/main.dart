@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 //Screens Import
 import 'screens/screen_charity_home.dart';
+import 'screens/screen_charity_rejected.dart';
 import 'screens/screen_check_reg_status.dart';
 import 'screens/screen_home.dart';
 import 'screens/screen_login.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         DonationDetails.routeName: (ctx) => DonationDetails(),
         CharityUpdateLoading.routeName: (ctx) => CharityUpdateLoading(),
         CharityDashboard.routeName: (ctx) => CharityDashboard(),
+        CharityRejected.routeName: (ctx) => CharityRejected(),
       },
     );
   }

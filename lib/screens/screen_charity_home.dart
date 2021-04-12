@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/components/screens/charity_home/home.dart';
 import 'package:fooddo/components/screens/charity_home/notifications.dart';
 
+import '../services.dart';
+import 'screen_charity_rejected.dart';
 import 'screen_settings.dart';
 
 class CharityDashboard extends StatefulWidget {
@@ -60,6 +62,11 @@ class _CharityDashboardState extends State<CharityDashboard> {
                 setState(() {
                   loading = true;
                 });
+                await Services.fetchRejectedDonations();
+                setState(() {
+                  loading = false;
+                });
+                Navigator.pushNamed(context, CharityRejected.routeName);
               },
             ),
             Divider(),

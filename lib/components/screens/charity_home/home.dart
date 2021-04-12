@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fooddo/classes/donation.dart';
+import 'package:fooddo/components/charity_food_card.dart';
 import 'package:fooddo/screens/screen_charity_update_loading.dart';
 
 import '../../../services.dart';
-import '../../unclaimed_food_card.dart';
 
 class ChairyHomeComponent extends StatelessWidget {
   final double height;
@@ -35,7 +35,7 @@ class ChairyHomeComponent extends StatelessWidget {
                       ),
                     ),
                   )
-                : UnclaimedFoodCardTile(
+                : CharityFoodCard(
                     donation: new Donation(
                       id: Data.unclaimedDonations[index - 1].id,
                       date: Data.unclaimedDonations[index - 1].date,

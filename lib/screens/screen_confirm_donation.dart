@@ -100,6 +100,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         pickupAddress: _pickUpAddress,
                         serving: int.parse(args["servings"].round().toString()),
                         status: "waiting",
+                        donorId: Data.userPhone,
                       ),
                       name: _name,
                       address: _pickUpAddress,

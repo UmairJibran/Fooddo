@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/donation.dart';
 import 'package:fooddo/screens/screen_donation_details.dart';
 
-class UnclaimedFoodCardTile extends StatelessWidget {
+class CharityFoodCard extends StatelessWidget {
   final Donation donation;
   final double height;
-  UnclaimedFoodCardTile({
+  CharityFoodCard({
     this.donation,
     this.height,
   });
@@ -65,14 +65,26 @@ class UnclaimedFoodCardTile extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Icon(
-                        donation.status == "delivered"
-                            ? Icons.check
-                            : Icons.query_builder,
-                        color: donation.status == "delivered"
-                            ? Colors.greenAccent
-                            : Colors.indigo,
-                      ),
+                      if (donation.status == "completed")
+                        Icon(
+                          Icons.done_all_outlined,
+                          color: Theme.of(context).primaryColor,
+                        )
+                      else if (donation.status == "waiting")
+                        Icon(
+                          Icons.schedule_outlined,
+                          color: Colors.indigo,
+                        )
+                      else if (donation.status == "accepted")
+                        Icon(
+                          Icons.local_shipping_outlined,
+                          color: Colors.green,
+                        )
+                      else if (donation.status == "rejected")
+                        Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        )
                     ],
                   ),
                   Text(

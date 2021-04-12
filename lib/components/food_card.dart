@@ -113,14 +113,26 @@ class FoodCardTile extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Icon(
-                        status == "delivered"
-                            ? Icons.check
-                            : Icons.query_builder,
-                        color: status == "delivered"
-                            ? Colors.greenAccent
-                            : Colors.indigo,
-                      ),
+                      if (status == "completed")
+                        Icon(
+                          Icons.done_all_outlined,
+                          color: Theme.of(context).primaryColor,
+                        )
+                      else if (status == "waiting")
+                        Icon(
+                          Icons.schedule_outlined,
+                          color: Colors.indigo,
+                        )
+                      else if (status == "accepted")
+                        Icon(
+                          Icons.local_shipping_outlined,
+                          color: Colors.green,
+                        )
+                      else if (status == "rejected")
+                        Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        )
                     ],
                   ),
                   Text(

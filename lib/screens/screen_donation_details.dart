@@ -126,6 +126,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Pick Up Address",
@@ -134,6 +135,30 @@ class _DonationDetailsState extends State<DonationDetails> {
                             fontSize: 30,
                           ),
                         ),
+                        if (donation.status == "completed")
+                          Icon(
+                            Icons.done_all_outlined,
+                            color: Theme.of(context).primaryColor,
+                            size: 30,
+                          )
+                        else if (donation.status == "waiting")
+                          Icon(
+                            Icons.schedule_outlined,
+                            color: Colors.indigo,
+                            size: 30,
+                          )
+                        else if (donation.status == "accepted")
+                          Icon(
+                            Icons.local_shipping_outlined,
+                            color: Colors.green,
+                            size: 30,
+                          )
+                        else if (donation.status == "rejected")
+                          Icon(
+                            Icons.close,
+                            color: Colors.red,
+                            size: 30,
+                          )
                       ],
                     ),
                     Padding(

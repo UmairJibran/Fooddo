@@ -221,7 +221,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                       FlatButton(
                         onPressed: () {},
                         child: Text(
-                          "Assign Deliveryman",
+                          "Assign Deliveryperson",
                           style: TextStyle(color: Colors.black),
                         ),
                       )

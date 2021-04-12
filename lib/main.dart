@@ -1,6 +1,7 @@
 //Packages Import
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fooddo/screens/screen_check_reg_status.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_login.dart';
 import 'package:fooddo/screens/screen_make_donation.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         MakeDonation.routeName: (ctx) => MakeDonation(),
         ConfirmDonation.routeName: (ctx) => ConfirmDonation(),
         LoadingScreen.routeName: (ctx) => LoadingScreen(),
+        CheckRegisterationStatus.routeName: (ctx) => CheckRegisterationStatus(),
       },
     );
   }

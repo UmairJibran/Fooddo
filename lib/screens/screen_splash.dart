@@ -4,16 +4,26 @@ import 'package:splashscreen/splashscreen.dart' as Splash;
 
 //Screens Import
 import '../services.dart';
+import 'screen_home.dart';
 import 'screen_login.dart';
 
 class SplashScreen extends StatelessWidget {
+  Future<Widget> checkIfLoggedIn(BuildContext context) async {
+    bool isLoggedIn = await Services.checkIfLoggedIn();
+    if (isLoggedIn) {
+      await Services.fetchUserData(Data.userPhone);
+      await Services.fetchUserPastDonation();
+      return Home();
+    } else {
+      return Login();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Services.fetchUserPastDonation();
     return Scaffold(
       body: Splash.SplashScreen(
-        seconds: 4,
-        navigateAfterSeconds: Login(),
+        navigateAfterFuture: checkIfLoggedIn(context),
         useLoader: false,
         backgroundColor: Colors.white,
         photoSize: 150.0,

@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as FAuth;
+import 'package:flutter/material.dart';
+import 'package:fooddo/components/continuation_button.dart';
+import 'package:fooddo/screens/screen_home.dart';
+import 'package:fooddo/screens/screen_register_as_donor.dart';
 
 import 'classes/donation.dart';
 import 'classes/user.dart';
+import 'screens/screen_check_reg_status.dart';
 
 class Data {
   static List<Donation> pastDonations = [];
-  static User user = new User(
-    id: "iFV9JhQdkXakT175trww",
-    address: "R#10,H#12",
-    city: "Peshawar",
-    email: "john@doe.com",
-    name: "Joh Doe",
-    phone: "3123456789",
-    type: "individual",
-  );
+  static User user;
+  static String userPhone;
 }
 
 class Services {
@@ -40,7 +39,44 @@ class Services {
     });
   }
 
-  static Future<bool> postUserDonation(Donation donation,
+  static fetchUserData(String phone) async {
+    phone = phone.replaceFirst("+", "");
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    await firebaseFirestore.collection("users").doc(phone).get().then(
+      (DocumentSnapshot documentSnapshot) {
+        Map<String, dynamic> userData = documentSnapshot.data();
+        print(userData);
+        if (userData != null)
+          Data.user = new User(
+            id: phone,
+            address: userData["address"],
+            city: userData["city"],
+            email: userData["email"],
+            name: userData["name"],
+            phone: phone,
+            type: userData["type"],
+          );
+      },
+    );
+  }
+
+  static Future<bool> checkIfLoggedIn() async {
+    bool isLoggedIn;
+    await FAuth.FirebaseAuth.instance
+        .authStateChanges()
+        .listen((FAuth.User user) {
+      if (user == null)
+        isLoggedIn = false;
+      else {
+        Data.userPhone = user.phoneNumber.replaceFirst("+", "");
+        isLoggedIn = true;
+      }
+    });
+    return isLoggedIn;
+  }
+
+  static postUserDonation(Donation donation,
       {String name, String address, String phone, int waitingTime}) async {
     bool posted = false;
     CollectionReference donations =
@@ -64,5 +100,135 @@ class Services {
     });
     print("posted: " + posted.toString());
     return posted;
+  }
+
+  static Future<bool> verifyPhone(String phone, BuildContext context) async {
+    FAuth.FirebaseAuth auth = FAuth.FirebaseAuth.instance;
+    await auth.verifyPhoneNumber(
+      phoneNumber: phone,
+      timeout: Duration(seconds: 120),
+      verificationCompleted: (FAuth.PhoneAuthCredential credential) async {
+        FAuth.UserCredential result =
+            await auth.signInWithCredential(credential);
+        Navigator.of(context).pop();
+        FAuth.User user = result.user;
+        if (user != null) {
+          Navigator.of(context).pushReplacementNamed(
+            CheckRegisterationStatus.routeName,
+            arguments: {"user": user},
+          );
+        } else {
+          print("errors");
+        }
+      },
+      verificationFailed: (FirebaseException e) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("${e.code}"),
+              actions: [
+                ContinuationButton(
+                  buttonText: "Dismiss",
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+      codeSent: (String verificationId, int resendToken) async {
+        final _textController = new TextEditingController();
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Please Enter your verification code"),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: _textController,
+                  ),
+                ],
+              ),
+              actions: [
+                ContinuationButton(
+                  buttonText: "Confirm",
+                  onTap: () async {
+                    final code = _textController.text.trim();
+                    FAuth.PhoneAuthCredential credential =
+                        FAuth.PhoneAuthProvider.credential(
+                            verificationId: verificationId, smsCode: code);
+                    FAuth.UserCredential result =
+                        await auth.signInWithCredential(credential);
+                    FAuth.User user = result.user;
+                    if (user != null) {
+                      Navigator.of(context).pushReplacementNamed(
+                        CheckRegisterationStatus.routeName,
+                        arguments: {"user": user},
+                      );
+                    } else {
+                      print("errors");
+                    }
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  static checkIfUserExists(String userPhone, BuildContext context) async {
+    userPhone = userPhone.replaceFirst("+", "");
+    DocumentSnapshot user = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userPhone)
+        .get();
+    if (user.exists) {
+      Map<String, dynamic> userData = user.data();
+      Data.user = new User(
+        id: userPhone,
+        address: userData["address"],
+        city: userData["city"],
+        email: userData["email"],
+        name: userData["name"],
+        phone: userData["userPhone"],
+        type: userData["type"],
+      );
+      await Services.fetchUserPastDonation();
+      Navigator.of(context).pushReplacementNamed(
+        Home.routeName,
+      );
+    } else {
+      Navigator.of(context).pushReplacementNamed(RegisterAsDonor.routeName,
+          arguments: {"phoneNumber": userPhone});
+    }
+  }
+
+  static registerDonor(User user, BuildContext context,
+      {registerationNumber}) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore.collection("users").doc(user.phone).set(
+      {
+        "address": user.address,
+        "city": user.city,
+        "email": user.email,
+        "name": user.name,
+        "phone": user.phone,
+        "type": user.type,
+        "donorId": user.phone,
+      },
+    ).then((_d) async {
+      await Services.fetchUserData(user.phone);
+      Navigator.of(context).pushReplacementNamed(Home.routeName);
+    });
   }
 }

@@ -31,67 +31,73 @@ class FoodCardTile extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                imgUrl,
-                height: height * 0.78,
-                width: height * 0.78,
-                fit: BoxFit.cover,
+      child: InkWell(
+        onTap: () {},
+        splashColor: Colors.black38,
+        child: Row(
+          children: [
+            Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  imgUrl,
+                  height: height * 0.78,
+                  width: height * 0.78,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SizedBox(width: 10),
-          Container(
-            height: height * 0.7,
-            width: MediaQuery.of(context).size.width * 0.38,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Served",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+            SizedBox(width: 10),
+            Container(
+              height: height * 0.7,
+              width: MediaQuery.of(context).size.width * 0.38,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Served",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      Icon(
+                        status == "delivered"
+                            ? Icons.check
+                            : Icons.query_builder,
+                        color: status == "delivered"
+                            ? Colors.greenAccent
+                            : Colors.indigo,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "$serving People",
+                    style: TextStyle(
+                      fontSize: 18,
                     ),
-                    Icon(
-                      status == "delivered" ? Icons.check : Icons.query_builder,
-                      color: status == "delivered"
-                          ? Colors.greenAccent
-                          : Colors.indigo,
+                  ),
+                  Text(
+                    "at $recepient",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-                Text(
-                  "$serving People",
-                  style: TextStyle(
-                    fontSize: 18,
                   ),
-                ),
-                Text(
-                  "at $recepient",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    "on $date",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                Text(
-                  "on $date",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -102,7 +102,7 @@ class Services {
     return posted;
   }
 
-  static Future<bool> verifyPhone(String phone, BuildContext context) async {
+  static verifyPhone(String phone, BuildContext context) async {
     FAuth.FirebaseAuth auth = FAuth.FirebaseAuth.instance;
     await auth.verifyPhoneNumber(
       phoneNumber: phone,

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/city.dart';
 import 'package:fooddo/classes/user.dart';
 import 'package:fooddo/components/continuation_button.dart';
-import 'package:fooddo/screens/screen_home.dart';
-
 import '../services.dart';
 
 class RegisterAsDonor extends StatefulWidget {

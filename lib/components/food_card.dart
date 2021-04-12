@@ -7,8 +7,10 @@ class FoodCardTile extends StatelessWidget {
   final String status;
   final double height;
   final String recepient;
+  final String donationId;
   FoodCardTile({
     this.date,
+    this.donationId,
     this.imgUrl,
     this.serving,
     this.status,

@@ -46,6 +46,7 @@ class ChairyHomeComponent extends StatelessWidget {
                       donorId: Data.unclaimedDonations[index - 1].donorId,
                       pickupAddress:
                           Data.unclaimedDonations[index - 1].pickupAddress,
+                      waitingTime: Data.unclaimedDonations[index].waitingTime,
                     ),
                     height: height * 0.25,
                   );

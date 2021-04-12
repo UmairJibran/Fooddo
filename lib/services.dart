@@ -13,6 +13,7 @@ class Data {
   static List<Donation> pastDonations = [];
   static User user;
   static String userPhone;
+  static List<Donation> unclaimedDonations = [];
 }
 
 class Services {
@@ -56,6 +57,7 @@ class Services {
             name: userData["name"],
             phone: phone,
             type: userData["type"],
+            isDonor: userData["isDonor"],
           );
       },
     );
@@ -202,6 +204,7 @@ class Services {
         name: userData["name"],
         phone: userData["userPhone"],
         type: userData["type"],
+        isDonor: userData["isDonor"],
       );
       await Services.fetchUserPastDonation();
       Navigator.of(context).pushReplacementNamed(
@@ -225,6 +228,7 @@ class Services {
         "phone": user.phone,
         "type": user.type,
         "donorId": user.phone,
+        "isDonor": true,
       },
     ).then((_d) async {
       await Services.fetchUserData(user.phone);
@@ -247,4 +251,31 @@ class Services {
           .update(userData);
     }
   }
+
+  static fetchUnclaimedDonations() async {
+    Data.unclaimedDonations.clear();
+    Query unclaimedDonations = FirebaseFirestore.instance
+        .collection("donations")
+        .where("status", isEqualTo: "waiting");
+    await unclaimedDonations.get().then((QuerySnapshot querySnapshot) {
+      var docs = querySnapshot.docs;
+      docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data();
+        Donation donation = new Donation(
+          id: doc.id,
+          date: data["date"],
+          pickupAddress: data["pickupAddress"],
+          serving: data["servings"],
+          status: data["status"],
+          imgUrl: data["imgUrl"],
+          recepient: data["recipient"],
+          donorId: data["donorId"],
+          waitingTime: data["waitingTime"],
+        );
+        Data.unclaimedDonations.add(donation);
+      });
+    });
+  }
+
+  
 }

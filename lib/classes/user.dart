@@ -6,6 +6,7 @@ class User {
   final String type;
   final String address;
   final String name;
+  final bool isDonor;
 
   User({
     this.id,
@@ -15,5 +16,6 @@ class User {
     this.type,
     this.address,
     this.name,
+    this.isDonor,
   });
 }

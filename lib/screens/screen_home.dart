@@ -3,6 +3,8 @@ import 'package:fooddo/components/screens/home/home.dart';
 import 'package:fooddo/components/screens/home/notifications.dart';
 import 'package:fooddo/screens/screen_make_donation.dart';
 
+import 'screen_settings.dart';
+
 class Home extends StatefulWidget {
   static final routeName = "/home";
 
@@ -46,7 +48,9 @@ class _HomeState extends State<Home> {
               Icons.settings,
               color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(Settings.routeName);
+            },
           ),
         ],
       ),

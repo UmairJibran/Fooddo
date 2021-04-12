@@ -231,4 +231,20 @@ class Services {
       Navigator.of(context).pushReplacementNamed(Home.routeName);
     });
   }
+
+  static updateUser({String name, String email, String address}) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    DocumentSnapshot doc =
+        await firebaseFirestore.collection("users").doc(Data.userPhone).get();
+    if (doc.exists) {
+      var userData = doc.data();
+      userData["email"] = email;
+      userData["name"] = name;
+      userData["address"] = address;
+      await firebaseFirestore
+          .collection("users")
+          .doc(Data.userPhone)
+          .update(userData);
+    }
+  }
 }

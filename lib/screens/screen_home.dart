@@ -69,41 +69,49 @@ class _HomeState extends State<Home> {
                 width: MediaQuery.of(context).size.width,
                 color: Theme.of(context).primaryColor,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SizedBox(),
-                    SizedBox(),
-                    FlatButton(
-                      child: Text(
-                        "Home",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                    InkWell(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Center(
+                          child: Text(
+                            "Home",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          selectedScreen = 0;
-                        });
+                      onTap: () {
+                        if (selectedScreen != 0)
+                          setState(() {
+                            selectedScreen = 0;
+                          });
                       },
                     ),
-                    SizedBox(),
-                    FlatButton(
-                      child: Text(
-                        "Notifications",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                    InkWell(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Center(
+                          child: Text(
+                            "Notifications",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          selectedScreen = 1;
-                        });
+                      onTap: () {
+                        if (selectedScreen != 1)
+                          setState(() {
+                            selectedScreen = 1;
+                          });
                       },
-                    )
+                    ),
                   ],
                 ),
               )

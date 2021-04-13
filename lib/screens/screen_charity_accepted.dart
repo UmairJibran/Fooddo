@@ -47,6 +47,7 @@ class CharityAccepted extends StatelessWidget {
               donorId: Data.acceptedDonations[index].donorId,
               pickupAddress: Data.acceptedDonations[index].pickupAddress,
               waitingTime: Data.acceptedDonations[index].waitingTime,
+              city: Data.acceptedDonations[index].city,
             ),
             height: height * 0.25,
           );

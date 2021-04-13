@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
+import 'package:intl/intl.dart';
 
+import 'classes/delivery_person.dart';
 import 'classes/donation.dart';
 import 'classes/notification.dart' as Notification;
 import 'classes/user.dart';
@@ -20,6 +22,7 @@ class Data {
   static List<Donation> completedDonations = [];
   static List<Donation> enRouteDonations = [];
   static List<Notification.Notification> notifications = [];
+  static List<DeliveryPerson> deliveryPersons = [];
 }
 
 class Services {
@@ -102,6 +105,7 @@ class Services {
       "name": name.isNotEmpty ? name : Data.user.name,
       "address": address.isNotEmpty ? address : Data.user.address,
       "waitingTime": waitingTime > 0 ? waitingTime : 30,
+      "city": Data.user.city,
     }).then((documentReference) async {
       await Services.fetchUserPastDonation();
       posted = true;
@@ -276,6 +280,7 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
         );
         Data.unclaimedDonations.add(donation);
       });
@@ -301,6 +306,7 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
         );
         Data.acceptedDonations.add(donation);
       });
@@ -326,6 +332,7 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
         );
         Data.rejectedDonations.add(donation);
       });
@@ -351,6 +358,7 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
         );
         Data.completedDonations.add(donation);
       });
@@ -377,6 +385,7 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
         );
         Data.enRouteDonations.add(donation);
       });
@@ -457,5 +466,78 @@ class Services {
         },
       );
     }
+  }
+
+  static fetchDeliveryPersons(String city) async {
+    Data.deliveryPersons.clear();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var documents = await firebaseFirestore
+        .collection("deliverypersons")
+        .where("city", isEqualTo: city)
+        .get();
+    if (documents.docs.length > 0) {
+      documents.docs.forEach(
+        (doc) {
+          Data.deliveryPersons.add(
+            new DeliveryPerson(
+              id: doc.id,
+              name: doc["name"],
+              contact: doc["phone"],
+              vehicleCapacity: doc["vehicleCapacity"],
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  static assignDeliveryPerson(
+      {Donation donation, DeliveryPerson deliveryPersons}) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection("deliverypersons")
+        .doc(deliveryPersons.id)
+        .collection("assignments")
+        .add(
+      {
+        "donationId": donation.id,
+        "donorContact": donation.donorId,
+        "pickUpAddress": donation.pickupAddress,
+        "servings": donation.serving,
+        "date": donation.date,
+      },
+    );
+    await firebaseFirestore
+        .collection("users")
+        .doc(donation.donorId)
+        .collection("notifications")
+        .add(
+      {
+        "donationId": donation.id,
+        "status": "EnRoute",
+        "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
+      },
+    );
+    await firebaseFirestore
+        .collection("donations")
+        .doc(deliveryPersons.id)
+        .collection("assignments")
+        .add(
+      {
+        "donationId": donation.id,
+        "donorContact": donation.donorId,
+        "pickUpAddress": donation.pickupAddress,
+        "servings": donation.serving,
+        "date": donation.date,
+      },
+    );
+    var doc =
+        await firebaseFirestore.collection("donations").doc(donation.id).get();
+    var donationDocument = doc.data();
+    donationDocument["status"] = "collecting";
+    firebaseFirestore
+        .collection("donations")
+        .doc(donation.id)
+        .update(donationDocument);
   }
 }

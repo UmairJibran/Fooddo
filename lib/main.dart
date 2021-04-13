@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 //Screens Import
+import 'screens/screen_charity_delivery_person_select.dart';
 import 'screens/screen_charity_home.dart';
 import 'screens/screen_charity_rejected.dart';
 import 'screens/screen_check_reg_status.dart';
@@ -52,6 +53,8 @@ class MyApp extends StatelessWidget {
         CharityAccepted.routeName: (ctx) => CharityAccepted(),
         CharityCompleted.routeName: (ctx) => CharityCompleted(),
         CharityEnRoute.routeName: (ctx) => CharityEnRoute(),
+        DeliveryPersonsAssignment.routeName: (ctx) =>
+            DeliveryPersonsAssignment(),
       },
     );
   }

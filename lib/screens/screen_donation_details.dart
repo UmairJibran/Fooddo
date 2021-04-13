@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/donation.dart';
 
 import '../services.dart';
+import 'screen_charity_delivery_person_select.dart';
 import 'screen_charity_update_loading.dart';
 
 class DonationDetails extends StatefulWidget {
@@ -224,7 +225,19 @@ class _DonationDetailsState extends State<DonationDetails> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          setState(() {
+                            updating = true;
+                          });
+                          await Services.fetchDeliveryPersons(donation.city);
+                          setState(() {
+                            updating = false;
+                          });
+                          Navigator.of(context).pushNamed(
+                            DeliveryPersonsAssignment.routeName,
+                            arguments: {"donation": donation},
+                          );
+                        },
                         child: Text(
                           "Assign Deliveryperson",
                           style: TextStyle(color: Colors.black),

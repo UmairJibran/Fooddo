@@ -8,6 +8,7 @@ class Donation {
   final String pickupAddress;
   final String donorId;
   final int waitingTime;
+  final String city;
 
   Donation({
     this.id,
@@ -19,5 +20,6 @@ class Donation {
     this.recepient,
     this.date,
     this.waitingTime,
+    this.city,
   });
 }

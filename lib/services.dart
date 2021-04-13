@@ -406,7 +406,7 @@ class Services {
         {
           "donationId": doc.id,
           "status": "accepted",
-          "timeStamp": DateTime.now().toString(),
+          "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
         },
       );
       donationDocument["status"] = "accepted";
@@ -431,7 +431,7 @@ class Services {
         {
           "donationId": doc.id,
           "status": "rejected",
-          "timeStamp": DateTime.now().toString(),
+          "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
         },
       );
       donationDocument["status"] = "rejected";

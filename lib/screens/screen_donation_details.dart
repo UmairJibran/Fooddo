@@ -232,6 +232,14 @@ class _DonationDetailsState extends State<DonationDetails> {
                       )
                     ],
                   )
+                else if (donation.status == "collecting")
+                  Text(
+                    "DeliveryPerson EnRoute",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
               ],
             ),
           ),

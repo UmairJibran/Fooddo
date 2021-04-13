@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fooddo/components/screens/home/home.dart';
 import 'package:fooddo/components/screens/home/notifications.dart';
-import 'package:fooddo/screens/screen_make_donation.dart';
 
+import '../services.dart';
 import 'screen_settings.dart';
 
 class Home extends StatefulWidget {
@@ -14,8 +14,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int selectedScreen = 0;
+  bool _loading;
 
   List<Widget> screens;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loading = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +59,7 @@ class _HomeState extends State<Home> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            if (_loading) LinearProgressIndicator(),
             Container(
               height: MediaQuery.of(context).size.height * 0.794,
               width: MediaQuery.of(context).size.width,
@@ -59,7 +68,9 @@ class _HomeState extends State<Home> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: _loading
+                  ? MediaQuery.of(context).size.height * 0.095
+                  : MediaQuery.of(context).size.height * 0.1,
               width: MediaQuery.of(context).size.width,
               color: Theme.of(context).primaryColor,
               child: Row(
@@ -99,11 +110,17 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    onTap: () {
-                      if (selectedScreen != 1)
+                    onTap: () async {
+                      if (selectedScreen != 1) {
+                        setState(() {
+                          _loading = true;
+                        });
+                        await Services.fetchNotifications(Data.userPhone);
                         setState(() {
                           selectedScreen = 1;
+                          _loading = false;
                         });
+                      }
                     },
                   ),
                 ],

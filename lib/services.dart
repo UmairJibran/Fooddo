@@ -6,6 +6,7 @@ import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
 
 import 'classes/donation.dart';
+import 'classes/notification.dart' as Notification;
 import 'classes/user.dart';
 import 'screens/screen_check_reg_status.dart';
 
@@ -17,6 +18,7 @@ class Data {
   static List<Donation> rejectedDonations = [];
   static List<Donation> acceptedDonations = [];
   static List<Donation> completedDonations = [];
+  static List<Notification.Notification> notifications = [];
 }
 
 class Services {
@@ -381,6 +383,34 @@ class Services {
           .collection("donations")
           .doc(donationId)
           .update(donationDocument);
+    }
+  }
+
+  static fetchNotifications(String userPhone) async {
+    Data.notifications.clear();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    QuerySnapshot notificationsQuerySnapshot = await firebaseFirestore
+        .collection("users")
+        .doc(userPhone)
+        .collection("notifications")
+        .get();
+    List<QueryDocumentSnapshot> notifications = notificationsQuerySnapshot.docs;
+    if (notifications.length > 0) {
+      notifications.forEach(
+        (notification) {
+          Data.notifications.add(
+            new Notification.Notification(
+              id: notification.id,
+              donationId: notification["donationId"],
+              status: notification["status"],
+              timeStamp: notification["timeStamp"],
+            ),
+          );
+        },
+      );
+    } else {
+      print("found nothing");
     }
   }
 }

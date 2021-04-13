@@ -53,7 +53,6 @@ class Services {
     await firebaseFirestore.collection("users").doc(phone).get().then(
       (DocumentSnapshot documentSnapshot) {
         Map<String, dynamic> userData = documentSnapshot.data();
-        print(userData);
         if (userData != null)
           Data.user = new User(
             id: phone,
@@ -106,7 +105,6 @@ class Services {
       await Services.fetchUserPastDonation();
       posted = true;
     });
-    print("posted: " + posted.toString());
     return posted;
   }
 
@@ -126,7 +124,7 @@ class Services {
             arguments: {"user": user},
           );
         } else {
-          print("errors");
+          print("error occurred when adding user");
         }
       },
       verificationFailed: (FirebaseException e) {
@@ -181,7 +179,7 @@ class Services {
                         arguments: {"user": user},
                       );
                     } else {
-                      print("errors");
+                      print("error occurred when adding user");
                     }
                   },
                 ),
@@ -409,8 +407,6 @@ class Services {
           );
         },
       );
-    } else {
-      print("found nothing");
     }
   }
 }

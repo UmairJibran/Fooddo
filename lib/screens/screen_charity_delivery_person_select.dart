@@ -60,7 +60,9 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
               )
             else
               Container(
-                height: MediaQuery.of(context).size.height * 0.88,
+                height: _loading
+                    ? MediaQuery.of(context).size.height * 0.87
+                    : MediaQuery.of(context).size.height * 0.88,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                   itemCount: Data.deliveryPersons.length,

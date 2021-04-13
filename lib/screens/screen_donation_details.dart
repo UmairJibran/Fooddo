@@ -149,7 +149,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                           )
                         else if (donation.status == "accepted")
                           Icon(
-                            Icons.local_shipping_outlined,
+                            Icons.check,
                             color: Colors.green,
                             size: 30,
                           )
@@ -158,6 +158,11 @@ class _DonationDetailsState extends State<DonationDetails> {
                             Icons.close,
                             color: Colors.red,
                             size: 30,
+                          )
+                        else if (donation.status == "collecting")
+                          Icon(
+                            Icons.local_shipping_outlined,
+                            color: Colors.cyan,
                           )
                       ],
                     ),

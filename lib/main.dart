@@ -16,6 +16,7 @@ import 'screens/screen_settings.dart';
 import 'screens/screen_charity_accepted.dart';
 import 'screens/screen_charity_completed.dart';
 import 'screens/screen_donation_details.dart';
+import 'screens/screen_charity_en_route.dart';
 import 'screens/screen_splash.dart';
 import 'screens/screen_charity_update_loading.dart';
 
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         CharityRejected.routeName: (ctx) => CharityRejected(),
         CharityAccepted.routeName: (ctx) => CharityAccepted(),
         CharityCompleted.routeName: (ctx) => CharityCompleted(),
+        CharityEnRoute.routeName: (ctx) => CharityEnRoute(),
       },
     );
   }

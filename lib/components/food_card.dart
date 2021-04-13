@@ -61,13 +61,18 @@ class FoodCardTile extends StatelessWidget {
                       )
                     else if (status == "accepted")
                       Icon(
-                        Icons.local_shipping_outlined,
+                        Icons.check,
                         color: Colors.green,
                       )
                     else if (status == "rejected")
                       Icon(
                         Icons.close,
                         color: Colors.red,
+                      )
+                    else if (status == "collecting")
+                      Icon(
+                        Icons.local_shipping_outlined,
+                        color: Colors.cyan,
                       )
                   ],
                 ),
@@ -139,13 +144,18 @@ class FoodCardTile extends StatelessWidget {
                         )
                       else if (status == "accepted")
                         Icon(
-                          Icons.local_shipping_outlined,
+                          Icons.check,
                           color: Colors.green,
                         )
                       else if (status == "rejected")
                         Icon(
                           Icons.close,
                           color: Colors.red,
+                        )
+                      else if (status == "collecting")
+                        Icon(
+                          Icons.local_shipping_outlined,
+                          color: Colors.cyan,
                         )
                     ],
                   ),

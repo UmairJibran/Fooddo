@@ -18,6 +18,7 @@ class Data {
   static List<Donation> rejectedDonations = [];
   static List<Donation> acceptedDonations = [];
   static List<Donation> completedDonations = [];
+  static List<Donation> enRouteDonations = [];
   static List<Notification.Notification> notifications = [];
 }
 
@@ -352,6 +353,32 @@ class Services {
           waitingTime: data["waitingTime"],
         );
         Data.completedDonations.add(donation);
+      });
+    });
+  }
+
+  static fetchEnRouteDonations() async {
+    Data.enRouteDonations.clear();
+    Query enRouteDonations = FirebaseFirestore.instance
+        .collection("donations")
+        .where("status", isEqualTo: "collecting");
+    await enRouteDonations.get().then((QuerySnapshot querySnapshot) {
+      var docs = querySnapshot.docs;
+      docs.forEach((doc) {
+        print(doc.id);
+        Map<String, dynamic> data = doc.data();
+        Donation donation = new Donation(
+          id: doc.id,
+          date: data["date"],
+          pickupAddress: data["pickupAddress"],
+          serving: data["servings"],
+          status: data["status"],
+          imgUrl: data["imgUrl"],
+          recepient: data["recipient"],
+          donorId: data["donorId"],
+          waitingTime: data["waitingTime"],
+        );
+        Data.enRouteDonations.add(donation);
       });
     });
   }

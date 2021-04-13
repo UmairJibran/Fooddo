@@ -77,13 +77,18 @@ class CharityFoodCard extends StatelessWidget {
                         )
                       else if (donation.status == "accepted")
                         Icon(
-                          Icons.local_shipping_outlined,
+                          Icons.check,
                           color: Colors.green,
                         )
                       else if (donation.status == "rejected")
                         Icon(
                           Icons.close,
                           color: Colors.red,
+                        )
+                      else if (donation.status == "collecting")
+                        Icon(
+                          Icons.local_shipping_outlined,
+                          color: Colors.cyan,
                         )
                     ],
                   ),

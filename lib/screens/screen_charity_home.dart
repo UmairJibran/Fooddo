@@ -6,6 +6,7 @@ import '../services.dart';
 import 'screen_charity_accepted.dart';
 import 'screen_charity_rejected.dart';
 import 'screen_charity_completed.dart';
+import 'screen_charity_en_route.dart';
 import 'screen_charity_update_loading.dart';
 import 'screen_settings.dart';
 
@@ -87,8 +88,22 @@ class _CharityDashboardState extends State<CharityDashboard> {
               },
             ),
             Divider(),
+            FlatButton(
+              child: Text("EnRoute Donation"),
+              onPressed: () async {
+                setState(() {
+                  loading = true;
+                });
+                await Services.fetchEnRouteDonations();
+                setState(() {
+                  loading = false;
+                });
+                Navigator.pushNamed(context, CharityEnRoute.routeName);
+              },
+            ),
+            Divider(),
             Container(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: Center(
                 child: (loading) ? CircularProgressIndicator() : SizedBox(),
               ),

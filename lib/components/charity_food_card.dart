@@ -42,8 +42,8 @@ class CharityFoodCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   donation.imgUrl,
-                  height: height * 0.78,
-                  width: height * 0.78,
+                  height: height * 0.7,
+                  width: height * 0.7,
                   fit: BoxFit.cover,
                 ),
               ),

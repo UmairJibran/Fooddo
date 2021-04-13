@@ -387,6 +387,17 @@ class Services {
         await firebaseFirestore.collection("donations").doc(donationId).get();
     if (doc.exists) {
       var donationDocument = doc.data();
+      await firebaseFirestore
+          .collection("users")
+          .doc(donationDocument["donorId"])
+          .collection("notifications")
+          .add(
+        {
+          "donationId": doc.id,
+          "status": "rejected",
+          "timeStamp": DateTime.now().toString(),
+        },
+      );
       donationDocument["status"] = "rejected";
       firebaseFirestore
           .collection("donations")

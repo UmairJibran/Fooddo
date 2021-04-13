@@ -519,7 +519,7 @@ class Services {
       },
     );
     await firebaseFirestore
-        .collection("donations")
+        .collection("deliverypersons")
         .doc(deliveryPersons.id)
         .collection("assignments")
         .add(

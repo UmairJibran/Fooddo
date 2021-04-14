@@ -3,10 +3,19 @@ import 'package:flutter/material.dart';
 
 //Component Import
 import 'package:fooddo/components/continuation_button.dart';
-import 'package:fooddo/screens/screen_register_as_donor.dart';
 
-class Login extends StatelessWidget {
+import '../services.dart';
+
+class Login extends StatefulWidget {
   static final routeName = "/login";
+
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  String _phoneNumber = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +36,11 @@ class Login extends StatelessWidget {
                   enabled: true,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.left,
+                  onChanged: (value) {
+                    setState(() {
+                      _phoneNumber = value;
+                    });
+                  },
                   decoration: InputDecoration(
                     prefixText: "+92",
                     hintText: "3123456789",
@@ -39,9 +53,10 @@ class Login extends StatelessWidget {
                 children: [
                   ContinuationButton(
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed(
-                        RegisterAsDonor.routeName,
-                      );
+                      if (_phoneNumber.isNotEmpty &&
+                          _phoneNumber.length == 10) {
+                        Services.verifyPhone("+92" + _phoneNumber, context);
+                      }
                     },
                     buttonText: "Continue",
                   ),

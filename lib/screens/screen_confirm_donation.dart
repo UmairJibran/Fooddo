@@ -26,7 +26,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
     );
     return {
       "longitude": position.longitude,
-      "latitute": position.latitude,
+      "latitude": position.latitude,
     };
   }
 

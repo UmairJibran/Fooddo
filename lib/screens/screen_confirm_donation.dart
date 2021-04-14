@@ -3,6 +3,7 @@ import 'package:fooddo/classes/donation.dart';
 import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_loading.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
 import '../services.dart';
@@ -18,6 +19,16 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   String _name = Data.user.name;
   String _pickUpAddress = Data.user.address;
   int _waitingTime = 60;
+
+  dynamic getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+    );
+    return {
+      "longitude": position.longitude,
+      "latitute": position.latitude,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +103,8 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
               children: [
                 ContinuationButton(
                   buttonText: "Donate",
-                  onTap: () {
-                    //TODO: post donation request
+                  onTap: () async {
+                    Map<String, double> longlat = await getCurrentLocation();
                     Services.postUserDonation(
                       new Donation(
                         date: DateFormat().add_yMd().format(DateTime.now()),
@@ -101,9 +112,9 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         serving: int.parse(args["servings"].round().toString()),
                         status: "waiting",
                         donorId: Data.userPhone,
+                        longlat: longlat,
                       ),
                       name: _name,
-                      address: _pickUpAddress,
                       waitingTime: _waitingTime,
                     );
                     Navigator.of(context).pushReplacementNamed(

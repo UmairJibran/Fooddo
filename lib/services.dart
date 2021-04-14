@@ -87,8 +87,12 @@ class Services {
     return isLoggedIn;
   }
 
-  static postUserDonation(Donation donation,
-      {String name, String address, String phone, int waitingTime}) async {
+  static postUserDonation(
+    Donation donation, {
+    String name,
+    String phone,
+    int waitingTime,
+  }) async {
     bool posted = false;
     CollectionReference donations =
         FirebaseFirestore.instance.collection("donations");
@@ -103,7 +107,7 @@ class Services {
       "status": donation.status,
       "contact": Data.user.phone,
       "name": name.isNotEmpty ? name : Data.user.name,
-      "address": address.isNotEmpty ? address : Data.user.address,
+      "address": donation.longlat,
       "waitingTime": waitingTime > 0 ? waitingTime : 30,
       "city": Data.user.city,
     }).then((documentReference) async {

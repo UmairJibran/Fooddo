@@ -9,6 +9,7 @@ class Donation {
   final String donorId;
   final int waitingTime;
   final String city;
+  final Map<String, double> longlat;
 
   Donation({
     this.id,
@@ -21,5 +22,6 @@ class Donation {
     this.date,
     this.waitingTime,
     this.city,
+    this.longlat,
   });
 }

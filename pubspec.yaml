@@ -33,6 +33,7 @@ dependencies:
   firebase_core:
   cloud_firestore:
   firebase_auth:
+  geolocator:
 
 dev_dependencies:
   flutter_test:

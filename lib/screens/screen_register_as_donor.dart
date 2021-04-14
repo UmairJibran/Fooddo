@@ -12,6 +12,7 @@ class RegisterAsDonor extends StatefulWidget {
 }
 
 class _RegisterAsDonorState extends State<RegisterAsDonor> {
+  var _formKey;
   List<City> cities = <City>[
     const City("Peshawar"),
     const City("Lahore"),
@@ -25,6 +26,12 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
   String donorPickUpAddress = "";
   String donorName = "";
   String registerationNumber = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _formKey = GlobalKey<FormState>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,60 +149,91 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                     ],
                   ),
                   Form(
-                      child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: "mail@example.com",
-                          helperText:
-                              "Please provide email for mportant communication",
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "mail@example.com",
+                            helperText:
+                                "Please provide email for mportant communication",
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              donorEmail = value;
+                            });
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Please Enter your Email";
+                            } else if (value.contains(' ') ||
+                                !(value.contains('@') && value.contains('.'))) {
+                              return "Please Enter a valid Email";
+                            } else {
+                              return null;
+                            }
+                          },
+                          textCapitalization: TextCapitalization.none,
+                          enableSuggestions: false,
+                          keyboardType: TextInputType.emailAddress,
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) {
-                          setState(() {
-                            donorEmail = value;
-                          });
-                        },
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: "Street#1, Building#4, xyz road",
-                          helperText: "Please provide address for pickup",
+                        TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "Street#1, Building#4, xyz road",
+                            helperText: "Please provide address for pickup",
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) {
+                            setState(() {
+                              donorPickUpAddress = value;
+                            });
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) return "Please Enter Address";
+                            return null;
+                          },
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) {
-                          setState(() {
-                            donorPickUpAddress = value;
-                          });
-                        },
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: donorType == "Individual"
-                              ? "John Doe"
-                              : "xyz Marquee",
-                          helperText: donorType == "Individual"
-                              ? "Your good name for human identification"
-                              : "Representative of the Establishment",
+                        TextFormField(
+                          decoration: InputDecoration(
+                            hintText: donorType == "Individual"
+                                ? "John Doe"
+                                : "xyz Marquee",
+                            helperText: donorType == "Individual"
+                                ? "Your good name for human identification"
+                                : "Representative of the Establishment",
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Please Enter a name";
+                            }
+                            if (value.contains('1') ||
+                                value.contains('2') ||
+                                value.contains('3') ||
+                                value.contains('4') ||
+                                value.contains('5') ||
+                                value.contains('6') ||
+                                value.contains('6') ||
+                                value.contains('7') ||
+                                value.contains('8') ||
+                                value.contains('9') ||
+                                value.contains('0')) {
+                              return "Name can not have numbers";
+                            } else if (value.trim().length < 3) {
+                              return "Please Enter your Complete Name";
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              donorName = value;
+                            });
+                          },
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) {
-                          setState(() {
-                            donorName = value;
-                          });
-                        },
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                    ],
-                  ))
+                      ],
+                    ),
+                  )
                 ],
               ),
               Row(
@@ -204,17 +242,20 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                   ContinuationButton(
                     buttonText: "Continue",
                     onTap: () {
-                      Services.registerDonor(
-                        User(
-                          address: donorPickUpAddress,
-                          city: donorSelectedCity.name,
-                          email: donorEmail,
-                          name: donorName,
-                          type: donorType,
-                          phone: args["phoneNumber"],
-                        ),
-                        context,
-                      );
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        Services.registerDonor(
+                          User(
+                            address: donorPickUpAddress,
+                            city: donorSelectedCity.name,
+                            email: donorEmail,
+                            name: donorName,
+                            type: donorType,
+                            phone: args["phoneNumber"],
+                          ),
+                          context,
+                        );
+                      }
                     },
                   ),
                 ],

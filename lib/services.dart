@@ -522,19 +522,6 @@ class Services {
         "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
       },
     );
-    await firebaseFirestore
-        .collection("deliverypersons")
-        .doc(deliveryPersons.id)
-        .collection("assignments")
-        .add(
-      {
-        "donationId": donation.id,
-        "donorContact": donation.donorId,
-        "pickUpAddress": donation.pickupAddress,
-        "servings": donation.serving,
-        "date": donation.date,
-      },
-    );
     var doc =
         await firebaseFirestore.collection("donations").doc(donation.id).get();
     var donationDocument = doc.data();

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fooddo/components/screens/charity_home/home.dart';
-import 'package:fooddo/components/screens/charity_home/notifications.dart';
+import 'package:fooddo/classes/donation.dart';
+import 'package:fooddo/components/charity_food_card.dart';
 
 import '../services.dart';
 import 'screen_charity_accepted.dart';
 import 'screen_charity_rejected.dart';
 import 'screen_charity_completed.dart';
+import 'screen_charity_en_route.dart';
+import 'screen_charity_update_loading.dart';
 import 'screen_settings.dart';
 
 class CharityDashboard extends StatefulWidget {
@@ -16,9 +18,7 @@ class CharityDashboard extends StatefulWidget {
 }
 
 class _CharityDashboardState extends State<CharityDashboard> {
-  int selectedScreen = 0;
   bool loading;
-  List<Widget> screens;
 
   @override
   void initState() {
@@ -29,10 +29,7 @@ class _CharityDashboardState extends State<CharityDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    screens = [
-      ChairyHomeComponent(height: MediaQuery.of(context).size.height),
-      CharityNotificationsComponent()
-    ];
+    final double height = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: Drawer(
         child: Column(
@@ -91,8 +88,22 @@ class _CharityDashboardState extends State<CharityDashboard> {
               },
             ),
             Divider(),
+            FlatButton(
+              child: Text("EnRoute Donation"),
+              onPressed: () async {
+                setState(() {
+                  loading = true;
+                });
+                await Services.fetchEnRouteDonations();
+                setState(() {
+                  loading = false;
+                });
+                Navigator.pushNamed(context, CharityEnRoute.routeName);
+              },
+            ),
+            Divider(),
             Container(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: Center(
                 child: (loading) ? CircularProgressIndicator() : SizedBox(),
               ),
@@ -135,68 +146,45 @@ class _CharityDashboardState extends State<CharityDashboard> {
         ],
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.794,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                child: screens[selectedScreen],
-              ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).primaryColor,
-              child: Row(
-                children: [
-                  InkWell(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: Center(
-                        child: Text(
-                          "Home",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+        height: height,
+        child: ListView.builder(
+          itemBuilder: (BuildContext context, index) {
+            return index == 0
+                ? Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacementNamed(
+                          (CharityUpdateLoading.routeName),
+                        );
+                      },
+                      child: Text(
+                        "Refresh",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
                         ),
                       ),
                     ),
-                    onTap: () {
-                      if (selectedScreen != 0)
-                        setState(() {
-                          selectedScreen = 0;
-                        });
-                    },
-                  ),
-                  InkWell(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: Center(
-                        child: Text(
-                          "Notifications",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                  )
+                : CharityFoodCard(
+                    donation: new Donation(
+                      id: Data.unclaimedDonations[index - 1].id,
+                      date: Data.unclaimedDonations[index - 1].date,
+                      serving: Data.unclaimedDonations[index - 1].serving,
+                      imgUrl: Data.unclaimedDonations[index - 1].imgUrl,
+                      status: Data.unclaimedDonations[index - 1].status,
+                      recepient: Data.unclaimedDonations[index - 1].recepient,
+                      donorId: Data.unclaimedDonations[index - 1].donorId,
+                      pickupAddress:
+                          Data.unclaimedDonations[index - 1].pickupAddress,
+                      waitingTime:
+                          Data.unclaimedDonations[index - 1].waitingTime,
                     ),
-                    onTap: () {
-                      if (selectedScreen != 1)
-                        setState(() {
-                          selectedScreen = 1;
-                        });
-                    },
-                  ),
-                ],
-              ),
-            )
-          ],
+                    height: height * 0.25,
+                  );
+          },
+          itemCount: Data.unclaimedDonations.length + 1,
         ),
       ),
     );

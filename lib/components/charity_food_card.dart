@@ -42,8 +42,8 @@ class CharityFoodCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   donation.imgUrl,
-                  height: height * 0.78,
-                  width: height * 0.78,
+                  height: height * 0.7,
+                  width: height * 0.7,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -77,13 +77,18 @@ class CharityFoodCard extends StatelessWidget {
                         )
                       else if (donation.status == "accepted")
                         Icon(
-                          Icons.local_shipping_outlined,
+                          Icons.check,
                           color: Colors.green,
                         )
                       else if (donation.status == "rejected")
                         Icon(
                           Icons.close,
                           color: Colors.red,
+                        )
+                      else if (donation.status == "collecting")
+                        Icon(
+                          Icons.local_shipping_outlined,
+                          color: Colors.cyan,
                         )
                     ],
                   ),

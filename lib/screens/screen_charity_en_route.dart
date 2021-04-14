@@ -4,8 +4,8 @@ import 'package:fooddo/components/charity_food_card.dart';
 
 import '../services.dart';
 
-class CharityAccepted extends StatelessWidget {
-  static final routeName = "/charity-accepted";
+class CharityEnRoute extends StatelessWidget {
+  static final routeName = "/charity-en-route";
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +38,20 @@ class CharityAccepted extends StatelessWidget {
         itemBuilder: (BuildContext context, index) {
           return CharityFoodCard(
             donation: new Donation(
-              id: Data.acceptedDonations[index].id,
-              date: Data.acceptedDonations[index].date,
-              serving: Data.acceptedDonations[index].serving,
-              imgUrl: Data.acceptedDonations[index].imgUrl,
-              status: Data.acceptedDonations[index].status,
-              recepient: Data.acceptedDonations[index].recepient,
-              donorId: Data.acceptedDonations[index].donorId,
-              pickupAddress: Data.acceptedDonations[index].pickupAddress,
-              waitingTime: Data.acceptedDonations[index].waitingTime,
-              city: Data.acceptedDonations[index].city,
-              longlat: Data.acceptedDonations[index].longlat,
+              id: Data.enRouteDonations[index].id,
+              date: Data.enRouteDonations[index].date,
+              serving: Data.enRouteDonations[index].serving,
+              imgUrl: Data.enRouteDonations[index].imgUrl,
+              status: Data.enRouteDonations[index].status,
+              recepient: Data.enRouteDonations[index].recepient,
+              donorId: Data.enRouteDonations[index].donorId,
+              pickupAddress: Data.enRouteDonations[index].pickupAddress,
+              waitingTime: Data.enRouteDonations[index].waitingTime,
             ),
             height: height * 0.25,
           );
         },
-        itemCount: Data.acceptedDonations.length,
+        itemCount: Data.enRouteDonations.length,
       ),
     );
   }

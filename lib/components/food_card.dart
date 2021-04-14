@@ -8,7 +8,9 @@ class FoodCardTile extends StatelessWidget {
   final double height;
   final String recepient;
   final String donationId;
+  final String pickupAddress;
   FoodCardTile({
+    this.pickupAddress,
     this.date,
     this.donationId,
     this.imgUrl,
@@ -49,12 +51,31 @@ class FoodCardTile extends StatelessWidget {
                         fontSize: 22,
                       ),
                     ),
-                    Icon(
-                      status == "delivered" ? Icons.check : Icons.query_builder,
-                      color: status == "delivered"
-                          ? Colors.greenAccent
-                          : Colors.indigo,
-                    ),
+                    if (status == "completed")
+                      Icon(
+                        Icons.done_all_outlined,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    else if (status == "waiting")
+                      Icon(
+                        Icons.schedule_outlined,
+                        color: Colors.indigo,
+                      )
+                    else if (status == "accepted")
+                      Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      )
+                    else if (status == "rejected")
+                      Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      )
+                    else if (status == "collecting")
+                      Icon(
+                        Icons.local_shipping_outlined,
+                        color: Colors.cyan,
+                      )
                   ],
                 ),
                 content: Column(
@@ -76,6 +97,11 @@ class FoodCardTile extends StatelessWidget {
                       "Meal for $serving was donated to $recepient on $date",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
+                    SizedBox(height: 20),
+                    Text(
+                      "$pickupAddress",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
                   ],
                 ),
               );
@@ -90,8 +116,8 @@ class FoodCardTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   imgUrl,
-                  height: height * 0.78,
-                  width: height * 0.78,
+                  height: height * 0.7,
+                  width: height * 0.7,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -113,14 +139,31 @@ class FoodCardTile extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Icon(
-                        status == "delivered"
-                            ? Icons.check
-                            : Icons.query_builder,
-                        color: status == "delivered"
-                            ? Colors.greenAccent
-                            : Colors.indigo,
-                      ),
+                      if (status == "completed")
+                        Icon(
+                          Icons.done_all_outlined,
+                          color: Theme.of(context).primaryColor,
+                        )
+                      else if (status == "waiting")
+                        Icon(
+                          Icons.schedule_outlined,
+                          color: Colors.indigo,
+                        )
+                      else if (status == "accepted")
+                        Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        )
+                      else if (status == "rejected")
+                        Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        )
+                      else if (status == "collecting")
+                        Icon(
+                          Icons.local_shipping_outlined,
+                          color: Colors.cyan,
+                        )
                     ],
                   ),
                   Text(

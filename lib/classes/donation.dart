@@ -8,6 +8,8 @@ class Donation {
   final String pickupAddress;
   final String donorId;
   final int waitingTime;
+  final String city;
+  final Map<String, dynamic> longlat;
 
   Donation({
     this.id,
@@ -19,5 +21,7 @@ class Donation {
     this.recepient,
     this.date,
     this.waitingTime,
+    this.city,
+    this.longlat,
   });
 }

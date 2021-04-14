@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
+import 'package:intl/intl.dart';
 
+import 'classes/delivery_person.dart';
 import 'classes/donation.dart';
+import 'classes/notification.dart' as Notification;
 import 'classes/user.dart';
 import 'screens/screen_check_reg_status.dart';
 
@@ -17,6 +20,9 @@ class Data {
   static List<Donation> rejectedDonations = [];
   static List<Donation> acceptedDonations = [];
   static List<Donation> completedDonations = [];
+  static List<Donation> enRouteDonations = [];
+  static List<Notification.Notification> notifications = [];
+  static List<DeliveryPerson> deliveryPersons = [];
 }
 
 class Services {
@@ -51,7 +57,6 @@ class Services {
     await firebaseFirestore.collection("users").doc(phone).get().then(
       (DocumentSnapshot documentSnapshot) {
         Map<String, dynamic> userData = documentSnapshot.data();
-        print(userData);
         if (userData != null)
           Data.user = new User(
             id: phone,
@@ -82,29 +87,32 @@ class Services {
     return isLoggedIn;
   }
 
-  static postUserDonation(Donation donation,
-      {String name, String address, String phone, int waitingTime}) async {
+  static postUserDonation(
+    Donation donation, {
+    String name,
+    String phone,
+    int waitingTime,
+  }) async {
     bool posted = false;
     CollectionReference donations =
         FirebaseFirestore.instance.collection("donations");
     await donations.add({
       "date": donation.date,
       "donorId": Data.user.id,
-      "imgUrl":
-          "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg",
+      "imgUrl": donation.imgUrl,
       "pickupAddress": donation.pickupAddress,
       "recipient": "Edhi Care Center",
       "servings": donation.serving,
       "status": donation.status,
       "contact": Data.user.phone,
       "name": name.isNotEmpty ? name : Data.user.name,
-      "address": address.isNotEmpty ? address : Data.user.address,
+      "address": donation.longlat,
       "waitingTime": waitingTime > 0 ? waitingTime : 30,
+      "city": Data.user.city,
     }).then((documentReference) async {
       await Services.fetchUserPastDonation();
       posted = true;
     });
-    print("posted: " + posted.toString());
     return posted;
   }
 
@@ -124,7 +132,7 @@ class Services {
             arguments: {"user": user},
           );
         } else {
-          print("errors");
+          print("error occurred when adding user");
         }
       },
       verificationFailed: (FirebaseException e) {
@@ -179,7 +187,7 @@ class Services {
                         arguments: {"user": user},
                       );
                     } else {
-                      print("errors");
+                      print("error occurred when adding user");
                     }
                   },
                 ),
@@ -275,6 +283,8 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
+          longlat: data["address"],
         );
         Data.unclaimedDonations.add(donation);
       });
@@ -300,6 +310,8 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
+          longlat: data["address"],
         );
         Data.acceptedDonations.add(donation);
       });
@@ -325,6 +337,8 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
+          longlat: data["address"],
         );
         Data.rejectedDonations.add(donation);
       });
@@ -350,8 +364,38 @@ class Services {
           recepient: data["recipient"],
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
+          city: data["city"],
+          longlat: data["address"],
         );
         Data.completedDonations.add(donation);
+      });
+    });
+  }
+
+  static fetchEnRouteDonations() async {
+    Data.enRouteDonations.clear();
+    Query enRouteDonations = FirebaseFirestore.instance
+        .collection("donations")
+        .where("status", isEqualTo: "collecting");
+    await enRouteDonations.get().then((QuerySnapshot querySnapshot) {
+      var docs = querySnapshot.docs;
+      docs.forEach((doc) {
+        print(doc.id);
+        Map<String, dynamic> data = doc.data();
+        Donation donation = new Donation(
+          id: doc.id,
+          date: data["date"],
+          pickupAddress: data["pickupAddress"],
+          serving: data["servings"],
+          status: data["status"],
+          imgUrl: data["imgUrl"],
+          recepient: data["recipient"],
+          donorId: data["donorId"],
+          waitingTime: data["waitingTime"],
+          city: data["city"],
+          longlat: data["address"],
+        );
+        Data.enRouteDonations.add(donation);
       });
     });
   }
@@ -362,6 +406,17 @@ class Services {
         await firebaseFirestore.collection("donations").doc(donationId).get();
     if (doc.exists) {
       var donationDocument = doc.data();
+      await firebaseFirestore
+          .collection("users")
+          .doc(donationDocument["donorId"])
+          .collection("notifications")
+          .add(
+        {
+          "donationId": doc.id,
+          "status": "accepted",
+          "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
+        },
+      );
       donationDocument["status"] = "accepted";
       firebaseFirestore
           .collection("donations")
@@ -376,11 +431,109 @@ class Services {
         await firebaseFirestore.collection("donations").doc(donationId).get();
     if (doc.exists) {
       var donationDocument = doc.data();
+      await firebaseFirestore
+          .collection("users")
+          .doc(donationDocument["donorId"])
+          .collection("notifications")
+          .add(
+        {
+          "donationId": doc.id,
+          "status": "rejected",
+          "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
+        },
+      );
       donationDocument["status"] = "rejected";
       firebaseFirestore
           .collection("donations")
           .doc(donationId)
           .update(donationDocument);
     }
+  }
+
+  static fetchNotifications(String userPhone) async {
+    Data.notifications.clear();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    QuerySnapshot notificationsQuerySnapshot = await firebaseFirestore
+        .collection("users")
+        .doc(userPhone)
+        .collection("notifications")
+        .get();
+    List<QueryDocumentSnapshot> notifications = notificationsQuerySnapshot.docs;
+    if (notifications.length > 0) {
+      notifications.forEach(
+        (notification) {
+          Data.notifications.add(
+            new Notification.Notification(
+              id: notification.id,
+              donationId: notification["donationId"],
+              status: notification["status"],
+              timeStamp: notification["timeStamp"],
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  static fetchDeliveryPersons(String city) async {
+    Data.deliveryPersons.clear();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var documents = await firebaseFirestore
+        .collection("deliverypersons")
+        .where("city", isEqualTo: city)
+        .get();
+    if (documents.docs.length > 0) {
+      documents.docs.forEach(
+        (doc) {
+          Data.deliveryPersons.add(
+            new DeliveryPerson(
+              id: doc.id,
+              name: doc["name"],
+              contact: doc["phone"],
+              vehicleCapacity: doc["vehicleCapacity"],
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  static assignDeliveryPerson(
+      {Donation donation, DeliveryPerson deliveryPersons}) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection("deliverypersons")
+        .doc(deliveryPersons.id)
+        .collection("assignments")
+        .add(
+      {
+        "donationId": donation.id,
+        "donorContact": donation.donorId,
+        "pickUpAddress": donation.pickupAddress,
+        "servings": donation.serving,
+        "date": donation.date,
+        "address": donation.longlat,
+      },
+    );
+    await firebaseFirestore
+        .collection("users")
+        .doc(donation.donorId)
+        .collection("notifications")
+        .add(
+      {
+        "donationId": donation.id,
+        "status": "EnRoute",
+        "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
+      },
+    );
+    var doc =
+        await firebaseFirestore.collection("donations").doc(donation.id).get();
+    var donationDocument = doc.data();
+    donationDocument["status"] = "collecting";
+    firebaseFirestore
+        .collection("donations")
+        .doc(donation.id)
+        .update(donationDocument);
   }
 }

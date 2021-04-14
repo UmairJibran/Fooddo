@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/donation.dart';
 
 import '../services.dart';
+import 'screen_charity_delivery_person_select.dart';
 import 'screen_charity_update_loading.dart';
 
 class DonationDetails extends StatefulWidget {
@@ -126,6 +127,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Pick Up Address",
@@ -134,6 +136,35 @@ class _DonationDetailsState extends State<DonationDetails> {
                             fontSize: 30,
                           ),
                         ),
+                        if (donation.status == "completed")
+                          Icon(
+                            Icons.done_all_outlined,
+                            color: Theme.of(context).primaryColor,
+                            size: 30,
+                          )
+                        else if (donation.status == "waiting")
+                          Icon(
+                            Icons.schedule_outlined,
+                            color: Colors.indigo,
+                            size: 30,
+                          )
+                        else if (donation.status == "accepted")
+                          Icon(
+                            Icons.check,
+                            color: Colors.green,
+                            size: 30,
+                          )
+                        else if (donation.status == "rejected")
+                          Icon(
+                            Icons.close,
+                            color: Colors.red,
+                            size: 30,
+                          )
+                        else if (donation.status == "collecting")
+                          Icon(
+                            Icons.local_shipping_outlined,
+                            color: Colors.cyan,
+                          )
                       ],
                     ),
                     Padding(
@@ -188,6 +219,39 @@ class _DonationDetailsState extends State<DonationDetails> {
                         },
                       ),
                     ],
+                  )
+                else if (donation.status == "accepted")
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton(
+                        onPressed: () async {
+                          setState(() {
+                            updating = true;
+                          });
+                          await Services.fetchDeliveryPersons(donation.city);
+                          setState(() {
+                            updating = false;
+                          });
+                          Navigator.of(context).pushNamed(
+                            DeliveryPersonsAssignment.routeName,
+                            arguments: {"donation": donation},
+                          );
+                        },
+                        child: Text(
+                          "Assign Deliveryperson",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )
+                    ],
+                  )
+                else if (donation.status == "collecting")
+                  Text(
+                    "DeliveryPerson EnRoute",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
               ],
             ),

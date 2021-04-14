@@ -34,6 +34,11 @@ dependencies:
   cloud_firestore:
   firebase_auth:
   geolocator:
+  image:
+  image_picker:
+  path_provider:
+  uuid:
+  firebase_storage:
 
 dev_dependencies:
   flutter_test:

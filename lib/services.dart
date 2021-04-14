@@ -99,8 +99,7 @@ class Services {
     await donations.add({
       "date": donation.date,
       "donorId": Data.user.id,
-      "imgUrl":
-          "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg",
+      "imgUrl": donation.imgUrl,
       "pickupAddress": donation.pickupAddress,
       "recipient": "Edhi Care Center",
       "servings": donation.serving,

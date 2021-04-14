@@ -12,7 +12,7 @@ class _NotificationsComponetState extends State<NotificationsComponet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height * 0.78,
       margin: EdgeInsets.only(top: 10),
       child: Data.notifications.length > 0
           ? ListView.builder(

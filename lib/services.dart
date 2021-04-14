@@ -285,6 +285,7 @@ class Services {
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
           city: data["city"],
+          longlat: data["address"],
         );
         Data.unclaimedDonations.add(donation);
       });
@@ -311,6 +312,7 @@ class Services {
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
           city: data["city"],
+          longlat: data["address"],
         );
         Data.acceptedDonations.add(donation);
       });
@@ -337,6 +339,7 @@ class Services {
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
           city: data["city"],
+          longlat: data["address"],
         );
         Data.rejectedDonations.add(donation);
       });
@@ -363,6 +366,7 @@ class Services {
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
           city: data["city"],
+          longlat: data["address"],
         );
         Data.completedDonations.add(donation);
       });
@@ -390,6 +394,7 @@ class Services {
           donorId: data["donorId"],
           waitingTime: data["waitingTime"],
           city: data["city"],
+          longlat: data["address"],
         );
         Data.enRouteDonations.add(donation);
       });
@@ -509,6 +514,7 @@ class Services {
         "pickUpAddress": donation.pickupAddress,
         "servings": donation.serving,
         "date": donation.date,
+        "address": donation.longlat,
       },
     );
     await firebaseFirestore

@@ -9,7 +9,7 @@ class Donation {
   final String donorId;
   final int waitingTime;
   final String city;
-  final Map<String, double> longlat;
+  final Map<String, dynamic> longlat;
 
   Donation({
     this.id,

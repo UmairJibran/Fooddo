@@ -19,6 +19,7 @@ class HomeComponent extends StatelessWidget {
             return index == 0
                 ? AddDonation(height: height)
                 : FoodCardTile(
+                    pickupAddress: Data.pastDonations[index - 1].pickupAddress,
                     donationId: Data.pastDonations[index - 1].id,
                     date: Data.pastDonations[index - 1].date,
                     serving: Data.pastDonations[index - 1].serving,

@@ -8,7 +8,9 @@ class FoodCardTile extends StatelessWidget {
   final double height;
   final String recepient;
   final String donationId;
+  final String pickupAddress;
   FoodCardTile({
+    this.pickupAddress,
     this.date,
     this.donationId,
     this.imgUrl,
@@ -93,6 +95,11 @@ class FoodCardTile extends StatelessWidget {
                     SizedBox(height: 20),
                     Text(
                       "Meal for $serving was donated to $recepient on $date",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "$pickupAddress",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ],

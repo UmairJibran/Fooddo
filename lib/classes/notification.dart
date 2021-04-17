@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Notification {
   final String id;
   final String donationId;
@@ -5,9 +7,9 @@ class Notification {
   final String timeStamp;
 
   Notification({
-    this.id,
-    this.donationId,
-    this.status,
-    this.timeStamp,
+    @required this.id,
+    @required this.donationId,
+    @required this.status,
+    @required this.timeStamp,
   });
 }

@@ -91,11 +91,17 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    onTap: () {
-                      if (selectedScreen != 0)
+                    onTap: () async {
+                      if (selectedScreen != 0) {
+                        setState(() {
+                          _loading = true;
+                        });
+                        await Services.fetchUserPastDonation();
                         setState(() {
                           selectedScreen = 0;
+                          _loading = false;
                         });
+                      }
                     },
                   ),
                   InkWell(

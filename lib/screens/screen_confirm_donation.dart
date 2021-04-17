@@ -151,6 +151,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                     setState(() {
                       _loading = false;
                     });
+                    await Services.fetchUserPastDonation();
                     Navigator.of(context).pushReplacementNamed(
                       LoadingScreen.routeName,
                       arguments: {

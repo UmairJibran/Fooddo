@@ -30,7 +30,8 @@ class Services {
     Data.pastDonations.clear();
     Query pastDonations = FirebaseFirestore.instance
         .collection("donations")
-        .where("donorId", isEqualTo: Data.user.id);
+        .where("donorId", isEqualTo: Data.user.id)
+        .orderBy("timeStamp");
     await pastDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {
@@ -104,11 +105,12 @@ class Services {
       "recipient": "Edhi Care Center",
       "servings": donation.serving,
       "status": donation.status,
-      "contact": Data.user.phone,
+      "contact": Data.userPhone,
       "name": name.isNotEmpty ? name : Data.user.name,
       "address": donation.longlat,
       "waitingTime": waitingTime > 0 ? waitingTime : 30,
       "city": Data.user.city,
+      "timeStamp": DateTime.now(),
     }).then((documentReference) async {
       await Services.fetchUserPastDonation();
       posted = true;

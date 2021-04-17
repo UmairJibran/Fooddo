@@ -9,6 +9,7 @@ class User {
   final String address;
   final String name;
   final bool isDonor;
+  final bool unreadNotifications;
 
   User({
     @required this.id,
@@ -19,5 +20,6 @@ class User {
     @required this.address,
     @required this.name,
     @required this.isDonor,
+    @required this.unreadNotifications,
   });
 }

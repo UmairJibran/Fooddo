@@ -107,15 +107,42 @@ class _HomeState extends State<Home> {
                   InkWell(
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.5,
-                      child: Center(
-                        child: Text(
-                          "Notifications",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Text(
+                              "Notifications",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
+                          if (Data.user.unreadNotifications)
+                            Positioned(
+                              top: 10,
+                              right: 20,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                height: 25,
+                                width: 50,
+                                child: Center(
+                                  child: Text(
+                                    "New",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                     onTap: () async {

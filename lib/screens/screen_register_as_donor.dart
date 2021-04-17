@@ -249,6 +249,8 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                         _formKey.currentState.save();
                         Services.registerDonor(
                           User(
+                            unreadNotifications: false,
+                            isDonor: true,
                             address: donorPickUpAddress,
                             city: donorSelectedCity.name,
                             email: donorEmail,

@@ -68,6 +68,7 @@ class Services {
             phone: phone,
             type: userData["type"],
             isDonor: userData["isDonor"],
+            unreadNotifications: userData["unreadnotifs"],
           );
       },
     );
@@ -219,6 +220,7 @@ class Services {
         phone: userData["userPhone"],
         type: userData["type"],
         isDonor: userData["isDonor"],
+        unreadNotifications: userData["unreadnotifs"],
       );
       await Services.fetchUserPastDonation();
       Navigator.of(context).pushReplacementNamed(

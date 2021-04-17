@@ -36,13 +36,14 @@ class _LoginState extends State<Login> {
                   enabled: true,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.left,
+                  style: TextStyle(fontFamily: "Roboto"),
                   onChanged: (value) {
                     setState(() {
                       _phoneNumber = value;
                     });
                   },
                   decoration: InputDecoration(
-                    prefixText: "+92",
+                    prefixText: "+92 - ",
                     hintText: "3123456789",
                     helperText: "Please Enter Your Mobile Number",
                   ),

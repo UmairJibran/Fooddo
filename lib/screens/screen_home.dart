@@ -150,7 +150,8 @@ class _HomeState extends State<Home> {
                         setState(() {
                           _loading = true;
                         });
-                        await Services.notificationRead();
+                        if (Data.user.unreadNotifications)
+                          await Services.notificationRead();
                         await Services.fetchNotifications(Data.userPhone);
                         setState(() {
                           selectedScreen = 1;

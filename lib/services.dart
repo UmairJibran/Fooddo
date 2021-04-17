@@ -428,6 +428,7 @@ class Services {
           .doc(donationId)
           .update(donationDocument);
     }
+    await Services.generateNotification(doc["donorId"]);
   }
 
   static rejectDonation(String donationId) async {
@@ -453,6 +454,7 @@ class Services {
           .doc(donationId)
           .update(donationDocument);
     }
+    await Services.generateNotification(doc["donorId"]);
   }
 
   static fetchNotifications(String userPhone) async {
@@ -540,6 +542,7 @@ class Services {
         .collection("donations")
         .doc(donation.id)
         .update(donationDocument);
+    await Services.generateNotification(donation.donorId);
   }
 
   static notificationRead() async {
@@ -549,5 +552,13 @@ class Services {
         .doc(Data.userPhone)
         .update({"unreadnotifs": false});
     await Services.fetchUserData(Data.userPhone);
+  }
+
+  static generateNotification(String userPhone) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection("users")
+        .doc(userPhone)
+        .update({"unreadnotifs": true});
   }
 }

@@ -100,13 +100,13 @@ class Services {
         FirebaseFirestore.instance.collection("donations");
     await donations.add({
       "date": donation.date,
-      "donorId": Data.user.id,
+      "donorId": donation.donorId,
       "imgUrl": donation.imgUrl,
       "pickupAddress": donation.pickupAddress,
-      "recipient": "Edhi Care Center",
+      "recipient": donation.recepient,
       "servings": donation.serving,
       "status": donation.status,
-      "contact": Data.userPhone,
+      "contact": donation.donorId,
       "name": name.isNotEmpty ? name : Data.user.name,
       "address": donation.longlat,
       "waitingTime": waitingTime > 0 ? waitingTime : 30,

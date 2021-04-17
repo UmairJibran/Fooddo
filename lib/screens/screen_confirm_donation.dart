@@ -136,6 +136,8 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                     if (_customImage) _imgUrl = await uploadImage();
                     Services.postUserDonation(
                       new Donation(
+                        city: Data.user.city,
+                        recepient: "Edhi Care Center",
                         imgUrl: _imgUrl,
                         date: DateFormat().add_yMd().format(DateTime.now()),
                         pickupAddress: _pickUpAddress,

@@ -245,6 +245,7 @@ class Services {
         "type": user.type,
         "donorId": user.phone,
         "isDonor": true,
+        "unreadnotifs": false,
       },
     ).then((_d) async {
       await Services.fetchUserData(user.phone);

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/donation.dart';
 import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/screens/screen_home.dart';
-import 'package:fooddo/screens/screen_loading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:image/image.dart' as im;
@@ -152,12 +151,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       _loading = false;
                     });
                     await Services.fetchUserPastDonation();
-                    Navigator.of(context).pushReplacementNamed(
-                      LoadingScreen.routeName,
-                      arguments: {
-                        "target": Home.routeName,
-                      },
-                    );
+                    Navigator.of(context).pushReplacementNamed(Home.routeName);
                   },
                 ),
               ],

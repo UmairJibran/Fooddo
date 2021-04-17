@@ -117,7 +117,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: Icon(Icons.camera),
+                  icon: Icon(_customImage ? Icons.check : Icons.camera),
                   onPressed: () async {
                     setState(() {
                       _customImage = true;

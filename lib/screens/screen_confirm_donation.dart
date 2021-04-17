@@ -11,7 +11,6 @@ import 'package:image/image.dart' as im;
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../services.dart';
 
@@ -29,10 +28,11 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   Map<String, String> tempMap;
   String uniqueId;
   File _file;
-  bool _customImage = false;
+  List<File> _moreImages;
   bool _loading = false;
   String _imgUrl =
       "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg";
+  int _numberOfImages = 0;
 
   dynamic getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
@@ -116,15 +116,30 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: Icon(_customImage ? Icons.check : Icons.camera),
-                  onPressed: () async {
-                    setState(() {
-                      _customImage = true;
-                    });
-                    await imageProcessing(
-                        context, MediaQuery.of(context).size.height);
-                  },
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(_file != null ? Icons.check : Icons.camera),
+                      onPressed: () async {
+                        await imageProcessing(
+                            context, MediaQuery.of(context).size.height);
+                      },
+                    ),
+                    Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _numberOfImages > 3 ? 3 : _numberOfImages,
+                        itemBuilder: (_, index) {
+                          return IconButton(
+                            icon: Icon(Icons.add, color: Colors.black),
+                            onPressed: () {},
+                          );
+                        },
+                      ),
+                    )
+                  ],
                 ),
                 ContinuationButton(
                   buttonText: "Donate",
@@ -133,7 +148,11 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       _loading = true;
                     });
                     Map<String, double> longlat = await getCurrentLocation();
-                    if (_customImage) _imgUrl = await uploadImage();
+                    if (_file != null)
+                      _imgUrl = await Services.uploadImage(
+                        _file,
+                        fileName: uniqueId,
+                      );
                     Services.postUserDonation(
                       new Donation(
                         city: Data.user.city,
@@ -164,18 +183,6 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
     );
   }
 
-  Future<String> uploadImage() async {
-    firebase_storage.UploadTask uploadTask = firebase_storage
-        .FirebaseStorage.instance
-        .ref()
-        .child("donations/$uniqueId.jpg")
-        .putFile(_file);
-    firebase_storage.TaskSnapshot storagesnap = await uploadTask;
-    String imageURL = await storagesnap.ref.getDownloadURL();
-    print('download URL: $imageURL');
-    return imageURL;
-  }
-
   compressImage() async {
     final _tempDir = await getTemporaryDirectory();
     final _path = _tempDir.path;
@@ -185,6 +192,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
       ..writeAsBytesSync(im.encodeJpg(imageFile, quality: 80));
     setState(() {
       _file = compressedImageFile;
+      _numberOfImages += 1;
     });
   }
 
@@ -215,6 +223,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   }
 
   imageProcessing(context, height) {
+    //only showing modal bottom sheet
     showModalBottomSheet(
       context: context,
       builder: (_) => Container(

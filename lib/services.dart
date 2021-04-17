@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as FAuth;
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'classes/delivery_person.dart';
 import 'classes/donation.dart';
@@ -560,5 +563,17 @@ class Services {
         .collection("users")
         .doc(userPhone)
         .update({"unreadnotifs": true});
+  }
+
+  // Image Utilities
+  static Future<String> uploadImage(File _file, {String fileName}) async {
+    firebase_storage.UploadTask uploadTask = firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child("donations/$fileName.jpg")
+        .putFile(_file);
+    firebase_storage.TaskSnapshot storagesnap = await uploadTask;
+    String imageURL = await storagesnap.ref.getDownloadURL();
+    return imageURL;
   }
 }

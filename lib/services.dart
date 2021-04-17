@@ -540,4 +540,13 @@ class Services {
         .doc(donation.id)
         .update(donationDocument);
   }
+
+  static notificationRead() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection("users")
+        .doc(Data.userPhone)
+        .update({"unreadnotifs": false});
+    await Services.fetchUserData(Data.userPhone);
+  }
 }

@@ -139,7 +139,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                         if (donation.status == "completed")
                           Icon(
                             Icons.done_all_outlined,
-                            color: Theme.of(context).primaryColor,
+                            color: Colors.blue[700],
                             size: 30,
                           )
                         else if (donation.status == "waiting")

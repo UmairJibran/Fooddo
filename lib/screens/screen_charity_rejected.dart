@@ -37,17 +37,7 @@ class CharityRejected extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (BuildContext context, index) {
           return CharityFoodCard(
-            donation: new Donation(
-              id: Data.rejectedDonations[index].id,
-              date: Data.rejectedDonations[index].date,
-              serving: Data.rejectedDonations[index].serving,
-              imgUrl: Data.rejectedDonations[index].imgUrl,
-              status: Data.rejectedDonations[index].status,
-              recepient: Data.rejectedDonations[index].recepient,
-              donorId: Data.rejectedDonations[index].donorId,
-              pickupAddress: Data.rejectedDonations[index].pickupAddress,
-              waitingTime: Data.rejectedDonations[index].waitingTime,
-            ),
+            donation: Data.rejectedDonations[index],
             height: height * 0.25,
           );
         },

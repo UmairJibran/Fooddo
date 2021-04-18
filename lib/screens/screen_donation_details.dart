@@ -58,32 +58,41 @@ class _DonationDetailsState extends State<DonationDetails> {
               backgroundColor: Colors.green,
             ),
           Container(
-            height: height * 0.3,
+            height: height * 0.365,
             width: width,
-            child: Image.network(
-              "${donation.imgUrl}",
-              fit: BoxFit.cover,
+            child: ListView.builder(
+              itemCount:
+                  donation.moreImages == null ? 1 : donation.moreImages.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (_, index) {
+                return Image.network(
+                  index == 0 ? donation.imgUrl : donation.moreImages[index - 1],
+                  height: height * 0.365,
+                  width: width,
+                  fit: BoxFit.cover,
+                );
+              },
             ),
           ),
-          Container(
-            color: Color(0xffEBF4FF),
-            height: height * 0.065,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Waiting Time: ${donation.waitingTime} Minutes",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Icon(Icons.timer, size: 20, color: Colors.black),
-              ],
-            ),
-          ),
+          // Container(
+          //   color: Color(0xffEBF4FF),
+          //   height: height * 0.0,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: <Widget>[
+          //       Text(
+          //         "Waiting Time: ${donation.waitingTime} Minutes",
+          //         style: TextStyle(
+          //           fontWeight: FontWeight.bold,
+          //           fontSize: 20,
+          //           color: Colors.black,
+          //         ),
+          //       ),
+          //       SizedBox(width: 10),
+          //       Icon(Icons.timer, size: 20, color: Colors.black),
+          //     ],
+          //   ),
+          // ),
           Container(
             color: Color(0xffEBF4FF),
             height: height * 0.065,

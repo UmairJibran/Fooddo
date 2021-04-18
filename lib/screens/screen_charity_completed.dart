@@ -37,17 +37,7 @@ class CharityCompleted extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (BuildContext context, index) {
           return CharityFoodCard(
-            donation: new Donation(
-              id: Data.completedDonations[index].id,
-              date: Data.completedDonations[index].date,
-              serving: Data.completedDonations[index].serving,
-              imgUrl: Data.completedDonations[index].imgUrl,
-              status: Data.completedDonations[index].status,
-              recepient: Data.completedDonations[index].recepient,
-              donorId: Data.completedDonations[index].donorId,
-              pickupAddress: Data.completedDonations[index].pickupAddress,
-              waitingTime: Data.completedDonations[index].waitingTime,
-            ),
+            donation: Data.completedDonations[index],
             height: height * 0.25,
           );
         },

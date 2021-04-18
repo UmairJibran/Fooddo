@@ -12,6 +12,7 @@ class Donation {
   final int waitingTime;
   final String city;
   final Map<String, dynamic> longlat;
+  final List<dynamic> moreImages;
 
   Donation({
     @required this.id,
@@ -25,5 +26,6 @@ class Donation {
     @required this.waitingTime,
     @required this.city,
     @required this.longlat,
+    this.moreImages,
   });
 }

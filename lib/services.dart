@@ -97,6 +97,7 @@ class Services {
     String name,
     String phone,
     int waitingTime,
+    List<String> moreImages,
   }) async {
     bool posted = false;
     CollectionReference donations =
@@ -115,6 +116,7 @@ class Services {
       "waitingTime": waitingTime > 0 ? waitingTime : 30,
       "city": Data.user.city,
       "timeStamp": DateTime.now(),
+      "moreImages": moreImages,
     }).then((documentReference) async {
       await Services.fetchUserPastDonation();
       posted = true;

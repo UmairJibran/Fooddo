@@ -22,17 +22,24 @@ class ConfirmDonation extends StatefulWidget {
 }
 
 class _ConfirmDonationState extends State<ConfirmDonation> {
+  int _selectedImage = 0;
   String _name = Data.user.name;
   String _pickUpAddress = Data.user.address;
   int _waitingTime = 60;
   Map<String, String> tempMap;
   String uniqueId;
   File _file;
-  List<File> _moreImages;
+  var _moreImages = List<File>.filled(3, null, growable: false);
   bool _loading = false;
   String _imgUrl =
       "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg";
   int _numberOfImages = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    uniqueId = Uuid().v4();
+  }
 
   dynamic getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
@@ -133,8 +140,19 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         itemCount: _numberOfImages > 3 ? 3 : _numberOfImages,
                         itemBuilder: (_, index) {
                           return IconButton(
-                            icon: Icon(Icons.add, color: Colors.black),
-                            onPressed: () {},
+                            icon: Icon(
+                              _moreImages[index] == null
+                                  ? Icons.add
+                                  : Icons.check,
+                              color: Colors.black,
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                _selectedImage = (index + 1);
+                              });
+                              await imageProcessing(
+                                  context, MediaQuery.of(context).size.height);
+                            },
                           );
                         },
                       ),
@@ -148,11 +166,34 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       _loading = true;
                     });
                     Map<String, double> longlat = await getCurrentLocation();
+                    var moreImages =
+                        List<String>.filled(3, "", growable: false);
                     if (_file != null)
                       _imgUrl = await Services.uploadImage(
                         _file,
-                        fileName: uniqueId,
+                        fileName: uniqueId + "0",
                       );
+                    if (_moreImages[0] != null) {
+                      var tempImage = await Services.uploadImage(
+                        _moreImages[0],
+                        fileName: uniqueId + "1",
+                      );
+                      moreImages[0] = (tempImage);
+                    }
+                    if (_moreImages[1] != null) {
+                      var tempImage = await Services.uploadImage(
+                        _moreImages[1],
+                        fileName: uniqueId + "2",
+                      );
+                      moreImages[1] = (tempImage);
+                    }
+                    if (_moreImages[2] != null) {
+                      var tempImage = await Services.uploadImage(
+                        _moreImages[2],
+                        fileName: uniqueId + "3",
+                      );
+                      moreImages[2] = (tempImage);
+                    }
                     Services.postUserDonation(
                       new Donation(
                         city: Data.user.city,
@@ -165,6 +206,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         donorId: Data.userPhone,
                         longlat: longlat,
                       ),
+                      moreImages: moreImages,
                       name: _name,
                       waitingTime: _waitingTime,
                     );
@@ -187,8 +229,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
     final _tempDir = await getTemporaryDirectory();
     final _path = _tempDir.path;
     im.Image imageFile = im.decodeImage(_file.readAsBytesSync());
-    uniqueId = Uuid().v4();
-    final compressedImageFile = File('$_path/img_$uniqueId.jpg')
+    final compressedImageFile = File('$_path/img_$uniqueId$_selectedImage.jpg')
       ..writeAsBytesSync(im.encodeJpg(imageFile, quality: 80));
     setState(() {
       _file = compressedImageFile;
@@ -204,7 +245,13 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
       imageQuality: 50,
     );
     setState(() {
-      _file = image;
+      if (_selectedImage == 0)
+        _file = image;
+      else if (_selectedImage == 1)
+        _moreImages[0] = image;
+      else if (_selectedImage == 2)
+        _moreImages[1] = image;
+      else if (_selectedImage == 3) _moreImages[2] = image;
     });
     await compressImage();
   }
@@ -217,7 +264,13 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
       imageQuality: 50,
     );
     setState(() {
-      _file = image;
+      if (_selectedImage == 0)
+        _file = image;
+      else if (_selectedImage == 1)
+        _moreImages[0] = image;
+      else if (_selectedImage == 2)
+        _moreImages[1] = image;
+      else if (_selectedImage == 3) _moreImages[2] = image;
     });
     await compressImage();
   }

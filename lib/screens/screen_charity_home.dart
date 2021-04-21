@@ -168,19 +168,7 @@ class _CharityDashboardState extends State<CharityDashboard> {
                     ),
                   )
                 : CharityFoodCard(
-                    donation: new Donation(
-                      id: Data.unclaimedDonations[index - 1].id,
-                      date: Data.unclaimedDonations[index - 1].date,
-                      serving: Data.unclaimedDonations[index - 1].serving,
-                      imgUrl: Data.unclaimedDonations[index - 1].imgUrl,
-                      status: Data.unclaimedDonations[index - 1].status,
-                      recepient: Data.unclaimedDonations[index - 1].recepient,
-                      donorId: Data.unclaimedDonations[index - 1].donorId,
-                      pickupAddress:
-                          Data.unclaimedDonations[index - 1].pickupAddress,
-                      waitingTime:
-                          Data.unclaimedDonations[index - 1].waitingTime,
-                    ),
+                    donation: Data.unclaimedDonations[index - 1],
                     height: height * 0.25,
                   );
           },

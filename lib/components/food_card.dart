@@ -54,7 +54,7 @@ class FoodCardTile extends StatelessWidget {
                     if (status == "completed")
                       Icon(
                         Icons.done_all_outlined,
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.blue[700],
                       )
                     else if (status == "waiting")
                       Icon(
@@ -142,7 +142,7 @@ class FoodCardTile extends StatelessWidget {
                       if (status == "completed")
                         Icon(
                           Icons.done_all_outlined,
-                          color: Theme.of(context).primaryColor,
+                          color: Colors.blue[700],
                         )
                       else if (status == "waiting")
                         Icon(

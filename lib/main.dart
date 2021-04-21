@@ -12,7 +12,6 @@ import 'screens/screen_login.dart';
 import 'screens/screen_make_donation.dart';
 import 'screens/screen_register_as_donor.dart';
 import 'screens/screen_confirm_donation.dart';
-import 'screens/screen_loading.dart';
 import 'screens/screen_settings.dart';
 import 'screens/screen_charity_accepted.dart';
 import 'screens/screen_charity_completed.dart';
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
         Home.routeName: (ctx) => Home(),
         MakeDonation.routeName: (ctx) => MakeDonation(),
         ConfirmDonation.routeName: (ctx) => ConfirmDonation(),
-        LoadingScreen.routeName: (ctx) => LoadingScreen(),
         CheckRegisterationStatus.routeName: (ctx) => CheckRegisterationStatus(),
         Settings.routeName: (ctx) => Settings(),
         DonationDetails.routeName: (ctx) => DonationDetails(),

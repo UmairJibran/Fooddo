@@ -31,6 +31,7 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
   void initState() {
     super.initState();
     _formKey = GlobalKey<FormState>();
+    donorSelectedCity = cities[0];
   }
 
   @override
@@ -226,9 +227,11 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                             }
                           },
                           onChanged: (value) {
-                            setState(() {
-                              donorName = value;
-                            });
+                            setState(
+                              () {
+                                donorName = value;
+                              },
+                            );
                           },
                         ),
                       ],
@@ -246,6 +249,8 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                         _formKey.currentState.save();
                         Services.registerDonor(
                           User(
+                            unreadNotifications: false,
+                            isDonor: true,
                             address: donorPickUpAddress,
                             city: donorSelectedCity.name,
                             email: donorEmail,

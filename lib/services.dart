@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as FAuth;
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/screens/screen_home.dart';
 import 'package:fooddo/screens/screen_register_as_donor.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'classes/delivery_person.dart';
 import 'classes/donation.dart';
@@ -30,7 +33,8 @@ class Services {
     Data.pastDonations.clear();
     Query pastDonations = FirebaseFirestore.instance
         .collection("donations")
-        .where("donorId", isEqualTo: Data.user.id);
+        .where("donorId", isEqualTo: Data.user.id)
+        .orderBy("timeStamp");
     await pastDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {
@@ -67,6 +71,7 @@ class Services {
             phone: phone,
             type: userData["type"],
             isDonor: userData["isDonor"],
+            unreadNotifications: userData["unreadnotifs"],
           );
       },
     );
@@ -92,23 +97,26 @@ class Services {
     String name,
     String phone,
     int waitingTime,
+    List<String> moreImages,
   }) async {
     bool posted = false;
     CollectionReference donations =
         FirebaseFirestore.instance.collection("donations");
     await donations.add({
       "date": donation.date,
-      "donorId": Data.user.id,
+      "donorId": donation.donorId,
       "imgUrl": donation.imgUrl,
       "pickupAddress": donation.pickupAddress,
-      "recipient": "Edhi Care Center",
+      "recipient": donation.recepient,
       "servings": donation.serving,
       "status": donation.status,
-      "contact": Data.user.phone,
+      "contact": donation.donorId,
       "name": name.isNotEmpty ? name : Data.user.name,
       "address": donation.longlat,
       "waitingTime": waitingTime > 0 ? waitingTime : 30,
       "city": Data.user.city,
+      "timeStamp": DateTime.now(),
+      "moreImages": moreImages,
     }).then((documentReference) async {
       await Services.fetchUserPastDonation();
       posted = true;
@@ -217,6 +225,7 @@ class Services {
         phone: userData["userPhone"],
         type: userData["type"],
         isDonor: userData["isDonor"],
+        unreadNotifications: userData["unreadnotifs"],
       );
       await Services.fetchUserPastDonation();
       Navigator.of(context).pushReplacementNamed(
@@ -241,6 +250,7 @@ class Services {
         "type": user.type,
         "donorId": user.phone,
         "isDonor": true,
+        "unreadnotifs": false,
       },
     ).then((_d) async {
       await Services.fetchUserData(user.phone);
@@ -285,6 +295,7 @@ class Services {
           waitingTime: data["waitingTime"],
           city: data["city"],
           longlat: data["address"],
+          moreImages: data["moreImages"],
         );
         Data.unclaimedDonations.add(donation);
       });
@@ -312,6 +323,7 @@ class Services {
           waitingTime: data["waitingTime"],
           city: data["city"],
           longlat: data["address"],
+          moreImages: data["moreImages"],
         );
         Data.acceptedDonations.add(donation);
       });
@@ -339,6 +351,7 @@ class Services {
           waitingTime: data["waitingTime"],
           city: data["city"],
           longlat: data["address"],
+          moreImages: data["moreImages"],
         );
         Data.rejectedDonations.add(donation);
       });
@@ -366,6 +379,7 @@ class Services {
           waitingTime: data["waitingTime"],
           city: data["city"],
           longlat: data["address"],
+          moreImages: data["moreImages"],
         );
         Data.completedDonations.add(donation);
       });
@@ -394,6 +408,7 @@ class Services {
           waitingTime: data["waitingTime"],
           city: data["city"],
           longlat: data["address"],
+          moreImages: data["moreImages"],
         );
         Data.enRouteDonations.add(donation);
       });
@@ -423,6 +438,7 @@ class Services {
           .doc(donationId)
           .update(donationDocument);
     }
+    await Services.generateNotification(doc["donorId"]);
   }
 
   static rejectDonation(String donationId) async {
@@ -448,6 +464,7 @@ class Services {
           .doc(donationId)
           .update(donationDocument);
     }
+    await Services.generateNotification(doc["donorId"]);
   }
 
   static fetchNotifications(String userPhone) async {
@@ -535,5 +552,35 @@ class Services {
         .collection("donations")
         .doc(donation.id)
         .update(donationDocument);
+    await Services.generateNotification(donation.donorId);
+  }
+
+  static notificationRead() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection("users")
+        .doc(Data.userPhone)
+        .update({"unreadnotifs": false});
+    await Services.fetchUserData(Data.userPhone);
+  }
+
+  static generateNotification(String userPhone) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection("users")
+        .doc(userPhone)
+        .update({"unreadnotifs": true});
+  }
+
+  // Image Utilities
+  static Future<String> uploadImage(File _file, {String fileName}) async {
+    firebase_storage.UploadTask uploadTask = firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child("donations/$fileName.jpg")
+        .putFile(_file);
+    firebase_storage.TaskSnapshot storagesnap = await uploadTask;
+    String imageURL = await storagesnap.ref.getDownloadURL();
+    return imageURL;
   }
 }

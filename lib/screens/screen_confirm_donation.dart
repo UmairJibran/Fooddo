@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/donation.dart';
 import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/screens/screen_home.dart';
-import 'package:fooddo/screens/screen_loading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:image/image.dart' as im;
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../services.dart';
 
@@ -24,16 +22,24 @@ class ConfirmDonation extends StatefulWidget {
 }
 
 class _ConfirmDonationState extends State<ConfirmDonation> {
+  int _selectedImage = 0;
   String _name = Data.user.name;
   String _pickUpAddress = Data.user.address;
   int _waitingTime = 60;
   Map<String, String> tempMap;
   String uniqueId;
   File _file;
-  bool _customImage = false;
+  var _moreImages = List<File>.filled(3, null, growable: false);
   bool _loading = false;
   String _imgUrl =
       "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg";
+  int _numberOfImages = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    uniqueId = Uuid().v4();
+  }
 
   dynamic getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
@@ -117,15 +123,41 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: Icon(Icons.camera),
-                  onPressed: () async {
-                    setState(() {
-                      _customImage = true;
-                    });
-                    await imageProcessing(
-                        context, MediaQuery.of(context).size.height);
-                  },
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(_file != null ? Icons.check : Icons.camera),
+                      onPressed: () async {
+                        await imageProcessing(
+                            context, MediaQuery.of(context).size.height);
+                      },
+                    ),
+                    Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _numberOfImages > 3 ? 3 : _numberOfImages,
+                        itemBuilder: (_, index) {
+                          return IconButton(
+                            icon: Icon(
+                              _moreImages[index] == null
+                                  ? Icons.add
+                                  : Icons.check,
+                              color: Colors.black,
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                _selectedImage = (index + 1);
+                              });
+                              await imageProcessing(
+                                  context, MediaQuery.of(context).size.height);
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  ],
                 ),
                 ContinuationButton(
                   buttonText: "Donate",
@@ -134,9 +166,38 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       _loading = true;
                     });
                     Map<String, double> longlat = await getCurrentLocation();
-                    if (_customImage) _imgUrl = await uploadImage();
+                    var moreImages =
+                        List<String>.filled(3, "", growable: false);
+                    if (_file != null)
+                      _imgUrl = await Services.uploadImage(
+                        _file,
+                        fileName: uniqueId + "0",
+                      );
+                    if (_moreImages[0] != null) {
+                      var tempImage = await Services.uploadImage(
+                        _moreImages[0],
+                        fileName: uniqueId + "1",
+                      );
+                      moreImages[0] = (tempImage);
+                    }
+                    if (_moreImages[1] != null) {
+                      var tempImage = await Services.uploadImage(
+                        _moreImages[1],
+                        fileName: uniqueId + "2",
+                      );
+                      moreImages[1] = (tempImage);
+                    }
+                    if (_moreImages[2] != null) {
+                      var tempImage = await Services.uploadImage(
+                        _moreImages[2],
+                        fileName: uniqueId + "3",
+                      );
+                      moreImages[2] = (tempImage);
+                    }
                     Services.postUserDonation(
                       new Donation(
+                        city: Data.user.city,
+                        recepient: "Edhi Care Center",
                         imgUrl: _imgUrl,
                         date: DateFormat().add_yMd().format(DateTime.now()),
                         pickupAddress: _pickUpAddress,
@@ -145,18 +206,15 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         donorId: Data.userPhone,
                         longlat: longlat,
                       ),
+                      moreImages: moreImages,
                       name: _name,
                       waitingTime: _waitingTime,
                     );
                     setState(() {
                       _loading = false;
                     });
-                    Navigator.of(context).pushReplacementNamed(
-                      LoadingScreen.routeName,
-                      arguments: {
-                        "target": Home.routeName,
-                      },
-                    );
+                    await Services.fetchUserPastDonation();
+                    Navigator.of(context).pushReplacementNamed(Home.routeName);
                   },
                 ),
               ],
@@ -167,27 +225,15 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
     );
   }
 
-  Future<String> uploadImage() async {
-    firebase_storage.UploadTask uploadTask = firebase_storage
-        .FirebaseStorage.instance
-        .ref()
-        .child("donations/$uniqueId.jpg")
-        .putFile(_file);
-    firebase_storage.TaskSnapshot storagesnap = await uploadTask;
-    String imageURL = await storagesnap.ref.getDownloadURL();
-    print('download URL: $imageURL');
-    return imageURL;
-  }
-
   compressImage() async {
     final _tempDir = await getTemporaryDirectory();
     final _path = _tempDir.path;
     im.Image imageFile = im.decodeImage(_file.readAsBytesSync());
-    uniqueId = Uuid().v4();
-    final compressedImageFile = File('$_path/img_$uniqueId.jpg')
+    final compressedImageFile = File('$_path/img_$uniqueId$_selectedImage.jpg')
       ..writeAsBytesSync(im.encodeJpg(imageFile, quality: 80));
     setState(() {
       _file = compressedImageFile;
+      _numberOfImages += 1;
     });
   }
 
@@ -199,7 +245,13 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
       imageQuality: 50,
     );
     setState(() {
-      _file = image;
+      if (_selectedImage == 0)
+        _file = image;
+      else if (_selectedImage == 1)
+        _moreImages[0] = image;
+      else if (_selectedImage == 2)
+        _moreImages[1] = image;
+      else if (_selectedImage == 3) _moreImages[2] = image;
     });
     await compressImage();
   }
@@ -212,12 +264,19 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
       imageQuality: 50,
     );
     setState(() {
-      _file = image;
+      if (_selectedImage == 0)
+        _file = image;
+      else if (_selectedImage == 1)
+        _moreImages[0] = image;
+      else if (_selectedImage == 2)
+        _moreImages[1] = image;
+      else if (_selectedImage == 3) _moreImages[2] = image;
     });
     await compressImage();
   }
 
   imageProcessing(context, height) {
+    //only showing modal bottom sheet
     showModalBottomSheet(
       context: context,
       builder: (_) => Container(

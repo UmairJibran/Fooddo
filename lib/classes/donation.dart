@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Donation {
   final String id;
   final String imgUrl;
@@ -10,18 +12,20 @@ class Donation {
   final int waitingTime;
   final String city;
   final Map<String, dynamic> longlat;
+  final List<dynamic> moreImages;
 
   Donation({
-    this.id,
-    this.donorId,
-    this.pickupAddress,
-    this.imgUrl,
-    this.serving,
-    this.status,
-    this.recepient,
-    this.date,
-    this.waitingTime,
-    this.city,
-    this.longlat,
+    @required this.id,
+    @required this.donorId,
+    @required this.pickupAddress,
+    @required this.imgUrl,
+    @required this.serving,
+    @required this.status,
+    @required this.recepient,
+    @required this.date,
+    @required this.waitingTime,
+    @required this.city,
+    @required this.longlat,
+    this.moreImages,
   });
 }

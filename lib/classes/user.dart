@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class User {
   final String id;
   final String city;
@@ -7,15 +9,17 @@ class User {
   final String address;
   final String name;
   final bool isDonor;
+  final bool unreadNotifications;
 
   User({
-    this.id,
-    this.city,
-    this.email,
-    this.phone,
-    this.type,
-    this.address,
-    this.name,
-    this.isDonor,
+    @required this.id,
+    @required this.city,
+    @required this.email,
+    @required this.phone,
+    @required this.type,
+    @required this.address,
+    @required this.name,
+    @required this.isDonor,
+    @required this.unreadNotifications,
   });
 }

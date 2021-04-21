@@ -68,7 +68,7 @@ class CharityFoodCard extends StatelessWidget {
                       if (donation.status == "completed")
                         Icon(
                           Icons.done_all_outlined,
-                          color: Theme.of(context).primaryColor,
+                          color: Colors.blue[700],
                         )
                       else if (donation.status == "waiting")
                         Icon(

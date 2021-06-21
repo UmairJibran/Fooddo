@@ -25,6 +25,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   int _selectedImage = 0;
   String _name = Data.user.name;
   String _pickUpAddress = Data.user.address;
+  bool freshFoodAgreement = true;
   int _waitingTime = 60;
   Map<String, String> tempMap;
   String uniqueId;
@@ -164,93 +165,139 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       ),
                       ContinuationButton(
                         buttonText: "Donate",
-                        onTap: () {
-                          return showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              content: Text('Confirm Donation?'),
-                              actions: [
-                                FlatButton(
-                                  textColor: Colors.black,
-                                  onPressed: () => Navigator.pop(context),
-                                  child: Text('CANCEL'),
-                                ),
-                                FlatButton(
-                                  textColor: Colors.black,
-                                  onPressed: () async {
-                                    Navigator.pop(context);
-                                    setState(() {
-                                      _loading = true;
-                                    });
-                                    Map<String, double> longlat =
-                                        await getCurrentLocation();
-                                    var moreImages = List<String>.filled(3, "",
-                                        growable: false);
-                                    if (_file != null)
-                                      _imgUrl = await Services.uploadImage(
-                                        _file,
-                                        fileName: uniqueId + "0",
-                                      );
-                                    if (_moreImages[0] != null) {
-                                      var tempImage =
-                                          await Services.uploadImage(
-                                        _moreImages[0],
-                                        fileName: uniqueId + "1",
-                                      );
-                                      moreImages[0] = (tempImage);
-                                    }
-                                    if (_moreImages[1] != null) {
-                                      var tempImage =
-                                          await Services.uploadImage(
-                                        _moreImages[1],
-                                        fileName: uniqueId + "2",
-                                      );
-                                      moreImages[1] = (tempImage);
-                                    }
-                                    if (_moreImages[2] != null) {
-                                      var tempImage =
-                                          await Services.uploadImage(
-                                        _moreImages[2],
-                                        fileName: uniqueId + "3",
-                                      );
-                                      moreImages[2] = (tempImage);
-                                    }
-                                    Services.postUserDonation(
-                                      new Donation(
-                                        city: Data.user.city,
-                                        recepient: "Edhi Care Center",
-                                        imgUrl: _imgUrl,
-                                        date: DateFormat()
-                                            .add_yMd()
-                                            .format(DateTime.now()),
-                                        pickupAddress: _pickUpAddress,
-                                        serving: int.parse(args["servings"]
-                                            .round()
-                                            .toString()),
-                                        status: "waiting",
-                                        donorId: Data.userPhone,
-                                        longlat: longlat,
+                        onTap: freshFoodAgreement
+                            ? () {
+                                return showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    content: Text('Confirm Donation?'),
+                                    actions: [
+                                      FlatButton(
+                                        textColor: Colors.black,
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text('CANCEL'),
                                       ),
-                                      moreImages: moreImages,
-                                      name: _name,
-                                      waitingTime: _waitingTime,
-                                    );
-                                    setState(() {
-                                      _loading = false;
-                                    });
-                                    await Services.fetchUserPastDonation();
-                                    Navigator.of(context)
-                                        .pushReplacementNamed(Home.routeName);
-                                  },
-                                  child: Text('ACCEPT'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                                      FlatButton(
+                                        textColor: Colors.black,
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            _loading = true;
+                                          });
+                                          Map<String, double> longlat =
+                                              await getCurrentLocation();
+                                          var moreImages = List<String>.filled(
+                                              3, "",
+                                              growable: false);
+                                          if (_file != null)
+                                            _imgUrl =
+                                                await Services.uploadImage(
+                                              _file,
+                                              fileName: uniqueId + "0",
+                                            );
+                                          if (_moreImages[0] != null) {
+                                            var tempImage =
+                                                await Services.uploadImage(
+                                              _moreImages[0],
+                                              fileName: uniqueId + "1",
+                                            );
+                                            moreImages[0] = (tempImage);
+                                          }
+                                          if (_moreImages[1] != null) {
+                                            var tempImage =
+                                                await Services.uploadImage(
+                                              _moreImages[1],
+                                              fileName: uniqueId + "2",
+                                            );
+                                            moreImages[1] = (tempImage);
+                                          }
+                                          if (_moreImages[2] != null) {
+                                            var tempImage =
+                                                await Services.uploadImage(
+                                              _moreImages[2],
+                                              fileName: uniqueId + "3",
+                                            );
+                                            moreImages[2] = (tempImage);
+                                          }
+                                          Services.postUserDonation(
+                                            new Donation(
+                                              city: Data.user.city,
+                                              recepient: "Edhi Care Center",
+                                              imgUrl: _imgUrl,
+                                              date: DateFormat()
+                                                  .add_yMd()
+                                                  .format(DateTime.now()),
+                                              pickupAddress: _pickUpAddress,
+                                              serving: int.parse(
+                                                  args["servings"]
+                                                      .round()
+                                                      .toString()),
+                                              status: "waiting",
+                                              donorId: Data.userPhone,
+                                              longlat: longlat,
+                                            ),
+                                            moreImages: moreImages,
+                                            name: _name,
+                                            waitingTime: _waitingTime,
+                                          );
+                                          setState(() {
+                                            _loading = false;
+                                          });
+                                          await Services
+                                              .fetchUserPastDonation();
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                                  Home.routeName);
+                                        },
+                                        child: Text('ACCEPT'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            : () {
+                                return showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    content: Text(
+                                      "Please Agree to Fresh Food Agreement",
+                                    ),
+                                  ),
+                                );
+                              },
                       ),
                     ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      InkWell(
+                        child: Container(
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                          ),
+                          child: Center(
+                            child: freshFoodAgreement
+                                ? Icon(
+                                    Icons.check,
+                                    size: 15,
+                                  )
+                                : null,
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            freshFoodAgreement = !freshFoodAgreement;
+                          });
+                        },
+                      ),
+                      Text("I agree that the food is fresh, and not stale."),
+                    ],
+                  )
                 ],
               ),
       ),

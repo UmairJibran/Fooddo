@@ -70,182 +70,189 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
           vertical: 20,
           horizontal: 30,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            if (_loading) LinearProgressIndicator(),
-            Text(
-              "Review Donation",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: _name,
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _name = value;
-                    });
-                  },
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: _pickUpAddress,
-                    helperText: "Pickup Location",
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _pickUpAddress = value;
-                    });
-                  },
-                ),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    hintText: _waitingTime.toString(),
-                    suffixText: "Minutes",
-                    helperText:
-                        "We will notify the recepients to come in the provided time",
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _waitingTime = int.parse(value);
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(_file != null ? Icons.check : Icons.camera),
-                      onPressed: () async {
-                        await imageProcessing(
-                            context, MediaQuery.of(context).size.height);
-                      },
+        child: (_loading)
+            ? Center(child: CircularProgressIndicator())
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "Review Donation",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _numberOfImages > 3 ? 3 : _numberOfImages,
-                        itemBuilder: (_, index) {
-                          return IconButton(
+                  ),
+                  Column(
+                    children: [
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: _name,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _name = value;
+                          });
+                        },
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: _pickUpAddress,
+                          helperText: "Pickup Location",
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _pickUpAddress = value;
+                          });
+                        },
+                      ),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: _waitingTime.toString(),
+                          suffixText: "Minutes",
+                          helperText:
+                              "We will notify the recepients to come in the provided time",
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _waitingTime = int.parse(value);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
                             icon: Icon(
-                              _moreImages[index] == null
-                                  ? Icons.add
-                                  : Icons.check,
-                              color: Colors.black,
-                            ),
+                                _file != null ? Icons.check : Icons.camera),
                             onPressed: () async {
-                              setState(() {
-                                _selectedImage = (index + 1);
-                              });
                               await imageProcessing(
                                   context, MediaQuery.of(context).size.height);
                             },
+                          ),
+                          Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                                  _numberOfImages > 3 ? 3 : _numberOfImages,
+                              itemBuilder: (_, index) {
+                                return IconButton(
+                                  icon: Icon(
+                                    _moreImages[index] == null
+                                        ? Icons.add
+                                        : Icons.check,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () async {
+                                    setState(() {
+                                      _selectedImage = (index + 1);
+                                    });
+                                    await imageProcessing(context,
+                                        MediaQuery.of(context).size.height);
+                                  },
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                      ContinuationButton(
+                        buttonText: "Donate",
+                        onTap: () {
+                          return showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              content: Text('Confirm Donation?'),
+                              actions: [
+                                FlatButton(
+                                  textColor: Colors.black,
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text('CANCEL'),
+                                ),
+                                FlatButton(
+                                  textColor: Colors.black,
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      _loading = true;
+                                    });
+                                    Map<String, double> longlat =
+                                        await getCurrentLocation();
+                                    var moreImages = List<String>.filled(3, "",
+                                        growable: false);
+                                    if (_file != null)
+                                      _imgUrl = await Services.uploadImage(
+                                        _file,
+                                        fileName: uniqueId + "0",
+                                      );
+                                    if (_moreImages[0] != null) {
+                                      var tempImage =
+                                          await Services.uploadImage(
+                                        _moreImages[0],
+                                        fileName: uniqueId + "1",
+                                      );
+                                      moreImages[0] = (tempImage);
+                                    }
+                                    if (_moreImages[1] != null) {
+                                      var tempImage =
+                                          await Services.uploadImage(
+                                        _moreImages[1],
+                                        fileName: uniqueId + "2",
+                                      );
+                                      moreImages[1] = (tempImage);
+                                    }
+                                    if (_moreImages[2] != null) {
+                                      var tempImage =
+                                          await Services.uploadImage(
+                                        _moreImages[2],
+                                        fileName: uniqueId + "3",
+                                      );
+                                      moreImages[2] = (tempImage);
+                                    }
+                                    Services.postUserDonation(
+                                      new Donation(
+                                        city: Data.user.city,
+                                        recepient: "Edhi Care Center",
+                                        imgUrl: _imgUrl,
+                                        date: DateFormat()
+                                            .add_yMd()
+                                            .format(DateTime.now()),
+                                        pickupAddress: _pickUpAddress,
+                                        serving: int.parse(args["servings"]
+                                            .round()
+                                            .toString()),
+                                        status: "waiting",
+                                        donorId: Data.userPhone,
+                                        longlat: longlat,
+                                      ),
+                                      moreImages: moreImages,
+                                      name: _name,
+                                      waitingTime: _waitingTime,
+                                    );
+                                    setState(() {
+                                      _loading = false;
+                                    });
+                                    await Services.fetchUserPastDonation();
+                                    Navigator.of(context)
+                                        .pushReplacementNamed(Home.routeName);
+                                  },
+                                  child: Text('ACCEPT'),
+                                ),
+                              ],
+                            ),
                           );
                         },
                       ),
-                    )
-                  ],
-                ),
-                ContinuationButton(
-                  buttonText: "Donate",
-                  onTap: () {
-                    return showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        content: Text('Confirm Donation?'),
-                        actions: [
-                          FlatButton(
-                            textColor: Colors.black,
-                            onPressed: () => Navigator.pop(context),
-                            child: Text('CANCEL'),
-                          ),
-                          FlatButton(
-                            textColor: Colors.black,
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              setState(() {
-                                _loading = true;
-                              });
-                              Map<String, double> longlat =
-                                  await getCurrentLocation();
-                              var moreImages =
-                                  List<String>.filled(3, "", growable: false);
-                              if (_file != null)
-                                _imgUrl = await Services.uploadImage(
-                                  _file,
-                                  fileName: uniqueId + "0",
-                                );
-                              if (_moreImages[0] != null) {
-                                var tempImage = await Services.uploadImage(
-                                  _moreImages[0],
-                                  fileName: uniqueId + "1",
-                                );
-                                moreImages[0] = (tempImage);
-                              }
-                              if (_moreImages[1] != null) {
-                                var tempImage = await Services.uploadImage(
-                                  _moreImages[1],
-                                  fileName: uniqueId + "2",
-                                );
-                                moreImages[1] = (tempImage);
-                              }
-                              if (_moreImages[2] != null) {
-                                var tempImage = await Services.uploadImage(
-                                  _moreImages[2],
-                                  fileName: uniqueId + "3",
-                                );
-                                moreImages[2] = (tempImage);
-                              }
-                              Services.postUserDonation(
-                                new Donation(
-                                  city: Data.user.city,
-                                  recepient: "Edhi Care Center",
-                                  imgUrl: _imgUrl,
-                                  date: DateFormat()
-                                      .add_yMd()
-                                      .format(DateTime.now()),
-                                  pickupAddress: _pickUpAddress,
-                                  serving: int.parse(
-                                      args["servings"].round().toString()),
-                                  status: "waiting",
-                                  donorId: Data.userPhone,
-                                  longlat: longlat,
-                                ),
-                                moreImages: moreImages,
-                                name: _name,
-                                waitingTime: _waitingTime,
-                              );
-                              setState(() {
-                                _loading = false;
-                              });
-                              await Services.fetchUserPastDonation();
-                              Navigator.of(context)
-                                  .pushReplacementNamed(Home.routeName);
-                            },
-                            child: Text('ACCEPT'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
+                    ],
+                  ),
+                ],
+              ),
       ),
     );
   }

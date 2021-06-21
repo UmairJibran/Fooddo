@@ -53,10 +53,13 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ContinuationButton(
-                    onTap: () {
+                    onTap: () async {
                       if (_phoneNumber.isNotEmpty &&
                           _phoneNumber.length == 10) {
-                        Services.verifyPhone("+92" + _phoneNumber, context);
+                        await Services.verifyPhone(
+                          "+92" + _phoneNumber,
+                          context,
+                        );
                       }
                     },
                     buttonText: "Continue",

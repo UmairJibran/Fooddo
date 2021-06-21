@@ -531,6 +531,7 @@ class Services {
         "servings": donation.serving,
         "date": donation.date,
         "address": donation.longlat,
+        "seen": false,
       },
     );
     await firebaseFirestore

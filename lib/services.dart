@@ -34,7 +34,7 @@ class Services {
     Query pastDonations = FirebaseFirestore.instance
         .collection("donations")
         .where("donorId", isEqualTo: Data.user.id)
-        .orderBy("timeStamp");
+        .orderBy("timeStamp", descending: true);
     await pastDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {

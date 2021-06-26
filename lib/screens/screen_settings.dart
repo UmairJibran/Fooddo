@@ -72,126 +72,125 @@ class _SettingsState extends State<Settings> {
               : SizedBox(),
         ],
       ),
-      body: Column(
-        children: [
-          updating
-              ? LinearProgressIndicator(
-                  backgroundColor: Colors.green,
-                )
-              : SizedBox(),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
-            child: Form(
-              key: _key,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Update Profile",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
+      body: updating
+          ? CircularProgressIndicator(
+              backgroundColor: Colors.green,
+            )
+          : Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                  child: Form(
+                    key: _key,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Update Profile",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
+                        TextFormField(
+                          initialValue: _userName,
+                          decoration: InputDecoration(
+                            hintText: "Enter your name",
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return "Name Can not be empty";
+                            else
+                              return null;
+                          },
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                changesMade = true;
+                                _userName = value;
+                              },
+                            );
+                          },
+                        ),
+                        TextFormField(
+                          initialValue: _userAddress,
+                          decoration: InputDecoration(
+                            hintText: "Enter your address",
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return "Address Can not be empty";
+                            else
+                              return null;
+                          },
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                changesMade = true;
+                                _userAddress = value;
+                              },
+                            );
+                          },
+                        ),
+                        TextFormField(
+                          initialValue: _userEmail,
+                          decoration: InputDecoration(
+                            hintText: "Enter your email",
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return "Email Can not be empty";
+                            else
+                              return null;
+                          },
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                changesMade = true;
+                                _userEmail = value;
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ContinuationButton(
+                              buttonText: "Update",
+                              onTap: () async {
+                                if (_userName != Data.user.name ||
+                                    _userAddress != Data.user.address ||
+                                    _userEmail != Data.user.email) {
+                                  if (_key.currentState.validate()) {
+                                    setState(() {
+                                      updating = true;
+                                    });
+                                    _key.currentState.save();
+                                    await Services.updateUser(
+                                      name: _userName,
+                                      address: _userAddress,
+                                      email: _userEmail,
+                                    );
+                                    setState(() {
+                                      updating = false;
+                                      changesMade = false;
+                                    });
+                                  }
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  TextFormField(
-                    initialValue: _userName,
-                    decoration: InputDecoration(
-                      hintText: "Enter your name",
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return "Name Can not be empty";
-                      else
-                        return null;
-                    },
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          changesMade = true;
-                          _userName = value;
-                        },
-                      );
-                    },
-                  ),
-                  TextFormField(
-                    initialValue: _userAddress,
-                    decoration: InputDecoration(
-                      hintText: "Enter your address",
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return "Address Can not be empty";
-                      else
-                        return null;
-                    },
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          changesMade = true;
-                          _userAddress = value;
-                        },
-                      );
-                    },
-                  ),
-                  TextFormField(
-                    initialValue: _userEmail,
-                    decoration: InputDecoration(
-                      hintText: "Enter your email",
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return "Email Can not be empty";
-                      else
-                        return null;
-                    },
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          changesMade = true;
-                          _userEmail = value;
-                        },
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ContinuationButton(
-                        buttonText: "Update",
-                        onTap: () async {
-                          if (_userName != Data.user.name ||
-                              _userAddress != Data.user.address ||
-                              _userEmail != Data.user.email) {
-                            if (_key.currentState.validate()) {
-                              setState(() {
-                                updating = true;
-                              });
-                              _key.currentState.save();
-                              await Services.updateUser(
-                                name: _userName,
-                                address: _userAddress,
-                                email: _userEmail,
-                              );
-                              setState(() {
-                                updating = false;
-                                changesMade = false;
-                              });
-                            }
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

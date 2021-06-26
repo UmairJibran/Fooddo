@@ -81,7 +81,7 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
                         ),
                       ),
                       subtitle: Text(
-                        "+" + Data.deliveryPersons[index].contact,
+                        Data.deliveryPersons[index].contact,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

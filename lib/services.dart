@@ -597,4 +597,19 @@ class Services {
     String imageURL = await storagesnap.ref.getDownloadURL();
     return imageURL;
   }
+
+  static void logout() async {
+    await FAuth.FirebaseAuth.instance.signOut();
+
+    Data.pastDonations = [];
+    Data.user = null;
+    Data.userPhone = null;
+    Data.unclaimedDonations = [];
+    Data.rejectedDonations = [];
+    Data.acceptedDonations = [];
+    Data.completedDonations = [];
+    Data.enRouteDonations = [];
+    Data.notifications = [];
+    Data.deliveryPersons = [];
+  }
 }

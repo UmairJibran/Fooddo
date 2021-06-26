@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooddo/components/screens/home/home.dart';
 import 'package:fooddo/components/screens/home/notifications.dart';
+import 'package:fooddo/screens/screen_login.dart';
 
 import '../services.dart';
 import 'screen_settings.dart';
@@ -53,6 +54,13 @@ class _HomeState extends State<Home> {
               Navigator.of(context).pushNamed(Settings.routeName);
             },
           ),
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await Services.logout();
+              await Navigator.of(context).pushReplacementNamed(Login.routeName);
+            },
+          )
         ],
       ),
       body: Container(

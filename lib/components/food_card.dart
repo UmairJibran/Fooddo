@@ -116,8 +116,8 @@ class FoodCardTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   imgUrl,
-                  height: height * 0.7,
-                  width: height * 0.7,
+                  height: height * 0.8,
+                  width: height * 0.8,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -125,7 +125,7 @@ class FoodCardTile extends StatelessWidget {
             SizedBox(width: 10),
             Container(
               height: height * 0.7,
-              width: MediaQuery.of(context).size.width * 0.38,
+              width: MediaQuery.of(context).size.width * 0.45,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -133,7 +133,7 @@ class FoodCardTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Served",
+                        "Serves",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

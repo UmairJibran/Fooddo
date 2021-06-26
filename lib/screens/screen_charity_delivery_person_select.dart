@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooddo/classes/donation.dart';
-import 'package:fooddo/screens/screen_charity_home.dart';
+import 'screen_charity_update_loading.dart';
 
 import '../services.dart';
 
@@ -19,6 +18,42 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
     // TODO: implement initState
     super.initState();
     _loading = false;
+  }
+
+  assignPerson(context, donation, deliveryPerson) async {
+    setState(() {
+      _loading = true;
+    });
+    await showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            content: Text("Select ${deliveryPerson.name}"),
+            actions: [
+              FlatButton(
+                child: Text("Select"),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  await Services.assignDeliveryPerson(
+                    donation: donation,
+                    deliveryPersons: deliveryPerson,
+                  );
+                  await Navigator.of(context)
+                      .pushReplacementNamed(CharityUpdateLoading.routeName);
+                },
+              ),
+              FlatButton(
+                child: Text("Dismiss"),
+                onPressed: () {
+                  setState(() {
+                    _loading = false;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -98,20 +133,11 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
                       ),
                       onTap: _loading
                           ? () {}
-                          : () async {
-                              setState(() {
-                                _loading = true;
-                              });
-                              await Services.assignDeliveryPerson(
-                                donation: args["donation"],
-                                deliveryPersons: Data.deliveryPersons[index],
-                              );
-                              setState(() {
-                                _loading = false;
-                              });
-                              Navigator.of(context).pushReplacementNamed(
-                                  CharityDashboard.routeName);
-                            },
+                          : () => assignPerson(
+                                context,
+                                args["donation"],
+                                Data.deliveryPersons[index],
+                              ),
                     );
                   },
                 ),

@@ -39,6 +39,7 @@ dependencies:
   path_provider:
   uuid:
   firebase_storage:
+  flutter_phone_direct_caller:
 
 dev_dependencies:
   flutter_test:

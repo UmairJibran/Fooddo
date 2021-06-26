@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fooddo/classes/donation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../services.dart';
 import 'screen_charity_delivery_person_select.dart';
@@ -14,11 +16,32 @@ class DonationDetails extends StatefulWidget {
 
 class _DonationDetailsState extends State<DonationDetails> {
   bool updating;
+  Future<void> _launched;
 
   @override
   void initState() {
     super.initState();
     updating = false;
+  }
+
+  Widget _launchStatus(BuildContext context, AsyncSnapshot<void> snapshot) {
+    if (snapshot.hasError) {
+      return Text('Error: ${snapshot.error}');
+    } else {
+      return const Text('');
+    }
+  }
+
+  Future<void> _makePhoneCall(String url) async {
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -290,6 +313,18 @@ class _DonationDetailsState extends State<DonationDetails> {
               ],
             ),
           ),
+          FlatButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text("Call Donor"), Icon(Icons.call)],
+              ),
+              onPressed: () async {
+                // _launched = _makePhoneCall("tel:+${donation.donorId}");
+                bool res =
+                    await FlutterPhoneDirectCaller.callNumber("03120919647");
+              }),
+          // ),
+          // FutureBuilder<void>(future: _launched, builder: _launchStatus),
         ],
       ),
     );

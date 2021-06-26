@@ -28,6 +28,8 @@ class _DonationDetailsState extends State<DonationDetails> {
     double width = MediaQuery.of(context).size.width;
     final Map args = ModalRoute.of(context).settings.arguments as Map;
     final Donation donation = args["donation"];
+    final date = new DateTime.fromMicrosecondsSinceEpoch(
+        donation.timeStamp.microsecondsSinceEpoch);
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -116,7 +118,7 @@ class _DonationDetailsState extends State<DonationDetails> {
           ),
           Container(
             width: width * 0.9,
-            height: height * 0.4,
+            height: height * 0.35,
             margin: EdgeInsets.only(
               top: 10,
             ),
@@ -203,7 +205,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
-                        "Donation Date: ${donation.date}",
+                        "Donation Time: $date",
                         style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,

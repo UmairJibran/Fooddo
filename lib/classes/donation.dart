@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class Donation {
@@ -13,6 +14,7 @@ class Donation {
   final String city;
   final Map<String, dynamic> longlat;
   final List<dynamic> moreImages;
+  final Timestamp timeStamp;
 
   Donation({
     @required this.id,
@@ -26,6 +28,7 @@ class Donation {
     @required this.waitingTime,
     @required this.city,
     @required this.longlat,
+    this.timeStamp,
     this.moreImages,
   });
 }

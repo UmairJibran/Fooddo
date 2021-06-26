@@ -62,8 +62,8 @@ class _HomeState extends State<Home> {
             if (_loading) LinearProgressIndicator(),
             Container(
               height: _loading
-                  ? MediaQuery.of(context).size.height * 0.781
-                  : MediaQuery.of(context).size.height * 0.782,
+                  ? MediaQuery.of(context).size.height * 0.8
+                  : MediaQuery.of(context).size.height * 0.81,
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
                 child: screens[selectedScreen],

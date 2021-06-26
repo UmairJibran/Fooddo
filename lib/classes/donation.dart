@@ -4,7 +4,7 @@ class Donation {
   final String id;
   final String imgUrl;
   final int serving;
-  final String status;
+  String status;
   final String recepient;
   final String date;
   final String pickupAddress;

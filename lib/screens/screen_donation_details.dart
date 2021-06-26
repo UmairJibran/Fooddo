@@ -61,8 +61,9 @@ class _DonationDetailsState extends State<DonationDetails> {
             height: height * 0.365,
             width: width,
             child: ListView.builder(
-              itemCount:
-                  donation.moreImages == null ? 1 : donation.moreImages.length,
+              itemCount: donation.moreImages.length == 0
+                  ? 1
+                  : donation.moreImages.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
                 return Image.network(
@@ -139,7 +140,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Pick Up Address",
+                          "Details:",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
@@ -179,7 +180,29 @@ class _DonationDetailsState extends State<DonationDetails> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
-                        donation.pickupAddress,
+                        "Donor Contact: ${donation.donorId}",
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        "PickUp Location: ${donation.pickupAddress}",
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        "Donation Date: ${donation.date}",
                         style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
@@ -206,10 +229,10 @@ class _DonationDetailsState extends State<DonationDetails> {
                             updating = true;
                           });
                           await Services.acceptDonation(donation.id);
-
-                          setState(() {
-                            donation.status == "accepted";
-                          });
+                          donation.status = "accepted";
+                          await Navigator.of(context).pushReplacementNamed(
+                              DonationDetails.routeName,
+                              arguments: {"donation": donation});
                         },
                       ),
                       FlatButton(

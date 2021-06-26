@@ -183,6 +183,17 @@ class _DonationDetailsState extends State<DonationDetails> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
+                        "Donor: ${donation.donorName}",
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(
                         "Donor Contact: ${donation.donorId}",
                         style: TextStyle(
                           color: Colors.black54,

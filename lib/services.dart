@@ -297,6 +297,7 @@ class Services {
           longlat: data["address"],
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
+          donorName: data["name"],
         );
         Data.unclaimedDonations.add(donation);
       });
@@ -326,6 +327,7 @@ class Services {
           longlat: data["address"],
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
+          donorName: data["name"],
         );
         Data.acceptedDonations.add(donation);
       });
@@ -355,6 +357,7 @@ class Services {
           longlat: data["address"],
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
+          donorName: data["name"],
         );
         Data.rejectedDonations.add(donation);
       });
@@ -384,6 +387,7 @@ class Services {
           longlat: data["address"],
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
+          donorName: data["name"],
         );
         Data.completedDonations.add(donation);
       });
@@ -414,6 +418,7 @@ class Services {
           longlat: data["address"],
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
+          donorName: data["name"],
         );
         Data.enRouteDonations.add(donation);
       });

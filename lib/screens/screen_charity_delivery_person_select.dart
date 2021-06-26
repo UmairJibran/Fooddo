@@ -53,7 +53,7 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            if (_loading) LinearProgressIndicator(),
+            if (_loading) CircularProgressIndicator(),
             if (Data.deliveryPersons.length == 0)
               Center(
                 child: Text("No Delivery Person found for specified area"),

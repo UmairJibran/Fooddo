@@ -59,16 +59,22 @@ class _HomeState extends State<Home> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
-            if (_loading) LinearProgressIndicator(),
-            Container(
-              height: _loading
-                  ? MediaQuery.of(context).size.height * 0.8
-                  : MediaQuery.of(context).size.height * 0.81,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                child: screens[selectedScreen],
-              ),
-            ),
+            _loading
+                ? Container(
+                    height: _loading
+                        ? MediaQuery.of(context).size.height * 0.8
+                        : MediaQuery.of(context).size.height * 0.81,
+                    width: MediaQuery.of(context).size.width,
+                    child: Center(child: CircularProgressIndicator()))
+                : Container(
+                    height: _loading
+                        ? MediaQuery.of(context).size.height * 0.8
+                        : MediaQuery.of(context).size.height * 0.81,
+                    width: MediaQuery.of(context).size.width,
+                    child: SingleChildScrollView(
+                      child: screens[selectedScreen],
+                    ),
+                  ),
             Container(
               height: _loading
                   ? MediaQuery.of(context).size.height * 0.095

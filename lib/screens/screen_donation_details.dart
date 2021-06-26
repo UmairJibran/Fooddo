@@ -54,7 +54,7 @@ class _DonationDetailsState extends State<DonationDetails> {
       body: Column(
         children: <Widget>[
           if (updating)
-            LinearProgressIndicator(
+            CircularProgressIndicator(
               backgroundColor: Colors.green,
             ),
           Container(
@@ -206,8 +206,10 @@ class _DonationDetailsState extends State<DonationDetails> {
                             updating = true;
                           });
                           await Services.acceptDonation(donation.id);
-                          await Navigator.of(context)
-                              .pushNamed(CharityUpdateLoading.routeName);
+
+                          setState(() {
+                            donation.status == "accepted";
+                          });
                         },
                       ),
                       FlatButton(

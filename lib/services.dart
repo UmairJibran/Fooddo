@@ -541,6 +541,9 @@ class Services {
         "servings": donation.serving,
         "date": donation.date,
         "address": donation.longlat,
+        "recipient": donation.recepient,
+        "time": donation.timeStamp,
+        "donorName": donation.donorName,
         "seen": false,
       },
     );

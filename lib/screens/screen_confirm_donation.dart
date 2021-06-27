@@ -25,7 +25,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   int _selectedImage = 0;
   String _name = Data.user.name;
   String _pickUpAddress = Data.user.address;
-  bool freshFoodAgreement = true;
+  bool freshFoodAgreement = false;
   int _waitingTime = 60;
   Map<String, String> tempMap;
   String uniqueId;

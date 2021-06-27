@@ -39,12 +39,26 @@ class _CharityDashboardState extends State<CharityDashboard> {
               height: MediaQuery.of(context).size.height * 0.3,
               color: Theme.of(context).primaryColor,
               child: Center(
-                child: Text(
-                  "Fooddo!",
-                  style: TextStyle(
-                    fontFamily: "Billabong",
-                    fontSize: 70,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Fooddo!",
+                      style: TextStyle(
+                        fontFamily: "Billabong",
+                        fontSize: 70,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      "Charity",
+                      style: TextStyle(
+                        fontFamily: "Billabong",
+                        fontSize: 25,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

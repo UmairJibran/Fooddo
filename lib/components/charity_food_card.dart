@@ -7,9 +7,11 @@ import '../services.dart';
 class CharityFoodCard extends StatefulWidget {
   final Donation donation;
   final double height;
+  final String donationType;
   CharityFoodCard({
     this.donation,
     this.height,
+    this.donationType,
   });
 
   @override
@@ -52,6 +54,7 @@ class _CharityFoodCardState extends State<CharityFoodCard> {
             DonationDetails.routeName,
             arguments: {
               "donation": widget.donation,
+              "donationType": widget.donationType,
             },
           );
         },

@@ -39,6 +39,7 @@ class CharityEnRoute extends StatelessWidget {
           return CharityFoodCard(
             donation: Data.enRouteDonations[index],
             height: height * 0.25,
+            donationType: "EnRoute",
           );
         },
         itemCount: Data.enRouteDonations.length,

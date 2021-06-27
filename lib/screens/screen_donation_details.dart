@@ -28,6 +28,7 @@ class _DonationDetailsState extends State<DonationDetails> {
     double width = MediaQuery.of(context).size.width;
     final Map args = ModalRoute.of(context).settings.arguments as Map;
     final Donation donation = args["donation"];
+    final String donationType = args["donationType"];
     final date = new DateTime.fromMicrosecondsSinceEpoch(
         donation.timeStamp.microsecondsSinceEpoch);
     return Scaffold(
@@ -35,19 +36,10 @@ class _DonationDetailsState extends State<DonationDetails> {
         title: Row(
           children: [
             Text(
-              "Fooddo",
+              "$donationType Donation",
               style: TextStyle(
                 fontFamily: "Billabong",
                 fontSize: 45,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(width: 10),
-            Text(
-              "Charity",
-              style: TextStyle(
-                fontFamily: "Billabong",
-                fontSize: 25,
                 color: Colors.black,
               ),
             ),

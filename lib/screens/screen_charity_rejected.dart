@@ -39,6 +39,7 @@ class CharityRejected extends StatelessWidget {
           return CharityFoodCard(
             donation: Data.rejectedDonations[index],
             height: height * 0.25,
+            donationType: "Rejected",
           );
         },
         itemCount: Data.rejectedDonations.length,

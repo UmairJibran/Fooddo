@@ -199,6 +199,7 @@ class _CharityDashboardState extends State<CharityDashboard> {
                 : CharityFoodCard(
                     donation: Data.unclaimedDonations[index - 1],
                     height: height * 0.25,
+                    donationType: "New",
                   );
           },
           itemCount: Data.unclaimedDonations.length + 1,

@@ -39,6 +39,7 @@ class CharityCompleted extends StatelessWidget {
           return CharityFoodCard(
             donation: Data.completedDonations[index],
             height: height * 0.25,
+            donationType: "Completed",
           );
         },
         itemCount: Data.completedDonations.length,

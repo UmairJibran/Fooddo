@@ -163,109 +163,6 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                           )
                         ],
                       ),
-                      ContinuationButton(
-                        buttonText: "Donate",
-                        onTap: freshFoodAgreement
-                            ? () {
-                                return showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    content: Text('Confirm Donation?'),
-                                    actions: [
-                                      FlatButton(
-                                        textColor: Colors.black,
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('CANCEL'),
-                                      ),
-                                      FlatButton(
-                                        textColor: Colors.black,
-                                        onPressed: () async {
-                                          Navigator.pop(context);
-                                          setState(() {
-                                            _loading = true;
-                                          });
-                                          Map<String, double> longlat =
-                                              await getCurrentLocation();
-                                          var moreImages = List<String>.filled(
-                                              3, "",
-                                              growable: false);
-                                          if (_file != null)
-                                            _imgUrl =
-                                                await Services.uploadImage(
-                                              _file,
-                                              fileName: uniqueId + "0",
-                                            );
-                                          if (_moreImages[0] != null) {
-                                            var tempImage =
-                                                await Services.uploadImage(
-                                              _moreImages[0],
-                                              fileName: uniqueId + "1",
-                                            );
-                                            moreImages[0] = (tempImage);
-                                          }
-                                          if (_moreImages[1] != null) {
-                                            var tempImage =
-                                                await Services.uploadImage(
-                                              _moreImages[1],
-                                              fileName: uniqueId + "2",
-                                            );
-                                            moreImages[1] = (tempImage);
-                                          }
-                                          if (_moreImages[2] != null) {
-                                            var tempImage =
-                                                await Services.uploadImage(
-                                              _moreImages[2],
-                                              fileName: uniqueId + "3",
-                                            );
-                                            moreImages[2] = (tempImage);
-                                          }
-                                          Services.postUserDonation(
-                                            new Donation(
-                                              city: Data.user.city,
-                                              recepient: "Edhi Care Center",
-                                              imgUrl: _imgUrl,
-                                              date: DateFormat()
-                                                  .add_yMd()
-                                                  .format(DateTime.now()),
-                                              pickupAddress: _pickUpAddress,
-                                              serving: int.parse(
-                                                  args["servings"]
-                                                      .round()
-                                                      .toString()),
-                                              status: "waiting",
-                                              donorId: Data.userPhone,
-                                              longlat: longlat,
-                                            ),
-                                            moreImages: moreImages,
-                                            name: _name,
-                                            waitingTime: _waitingTime,
-                                          );
-                                          setState(() {
-                                            _loading = false;
-                                          });
-                                          await Services
-                                              .fetchUserPastDonation();
-                                          Navigator.of(context)
-                                              .pushReplacementNamed(
-                                                  Home.routeName);
-                                        },
-                                        child: Text('ACCEPT'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            : () {
-                                return showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    content: Text(
-                                      "Please Agree to Fresh Food Agreement",
-                                    ),
-                                  ),
-                                );
-                              },
-                      ),
                     ],
                   ),
                   Row(
@@ -297,7 +194,106 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       ),
                       Text("I agree that the food is fresh, and not stale."),
                     ],
-                  )
+                  ),
+                  ContinuationButton(
+                    buttonText: "Donate",
+                    onTap: freshFoodAgreement
+                        ? () {
+                            return showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                content: Text('Confirm Donation?'),
+                                actions: [
+                                  FlatButton(
+                                    textColor: Colors.black,
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('CANCEL'),
+                                  ),
+                                  FlatButton(
+                                    textColor: Colors.black,
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        _loading = true;
+                                      });
+                                      Map<String, double> longlat =
+                                          await getCurrentLocation();
+                                      var moreImages = List<String>.filled(
+                                          3, "",
+                                          growable: false);
+                                      if (_file != null)
+                                        _imgUrl = await Services.uploadImage(
+                                          _file,
+                                          fileName: uniqueId + "0",
+                                        );
+                                      if (_moreImages[0] != null) {
+                                        var tempImage =
+                                            await Services.uploadImage(
+                                          _moreImages[0],
+                                          fileName: uniqueId + "1",
+                                        );
+                                        moreImages[0] = (tempImage);
+                                      }
+                                      if (_moreImages[1] != null) {
+                                        var tempImage =
+                                            await Services.uploadImage(
+                                          _moreImages[1],
+                                          fileName: uniqueId + "2",
+                                        );
+                                        moreImages[1] = (tempImage);
+                                      }
+                                      if (_moreImages[2] != null) {
+                                        var tempImage =
+                                            await Services.uploadImage(
+                                          _moreImages[2],
+                                          fileName: uniqueId + "3",
+                                        );
+                                        moreImages[2] = (tempImage);
+                                      }
+                                      Services.postUserDonation(
+                                        new Donation(
+                                          city: Data.user.city,
+                                          recepient: "Edhi Care Center",
+                                          imgUrl: _imgUrl,
+                                          date: DateFormat()
+                                              .add_yMd()
+                                              .format(DateTime.now()),
+                                          pickupAddress: _pickUpAddress,
+                                          serving: int.parse(args["servings"]
+                                              .round()
+                                              .toString()),
+                                          status: "waiting",
+                                          donorId: Data.userPhone,
+                                          longlat: longlat,
+                                        ),
+                                        moreImages: moreImages,
+                                        name: _name,
+                                        waitingTime: _waitingTime,
+                                      );
+                                      setState(() {
+                                        _loading = false;
+                                      });
+                                      await Services.fetchUserPastDonation();
+                                      Navigator.of(context)
+                                          .pushReplacementNamed(Home.routeName);
+                                    },
+                                    child: Text('ACCEPT'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        : () {
+                            return showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                content: Text(
+                                  "Please Agree to Fresh Food Agreement",
+                                ),
+                              ),
+                            );
+                          },
+                  ),
                 ],
               ),
       ),

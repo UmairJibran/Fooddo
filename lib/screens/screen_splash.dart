@@ -30,7 +30,8 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Splash.SplashScreen(
         navigateAfterFuture: checkIfLoggedIn(context),
-        useLoader: false,
+        useLoader: true,
+        loaderColor: Theme.of(context).primaryColor,
         backgroundColor: Colors.white,
         photoSize: 150.0,
         image: Image.asset("./lib/assets/fooddo_logo.png"),

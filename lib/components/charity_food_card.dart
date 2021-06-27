@@ -131,7 +131,7 @@ class _CharityFoodCardState extends State<CharityFoodCard> {
                     ),
                   ),
                   Text(
-                    "on ${widget.donation.date}",
+                    "on ${DateTime.fromMicrosecondsSinceEpoch(widget.donation.timeStamp.microsecondsSinceEpoch)}",
                     style: TextStyle(
                       fontSize: 14,
                     ),

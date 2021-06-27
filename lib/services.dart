@@ -278,7 +278,8 @@ class Services {
     Data.unclaimedDonations.clear();
     Query unclaimedDonations = FirebaseFirestore.instance
         .collection("donations")
-        .where("status", isEqualTo: "waiting");
+        .where("status", isEqualTo: "waiting")
+        .orderBy("timeStamp", descending: true);
     await unclaimedDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {
@@ -308,7 +309,8 @@ class Services {
     Data.acceptedDonations.clear();
     Query acceptedDonations = FirebaseFirestore.instance
         .collection("donations")
-        .where("status", isEqualTo: "accepted");
+        .where("status", isEqualTo: "accepted")
+        .orderBy("timeStamp", descending: true);
     await acceptedDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {
@@ -338,7 +340,8 @@ class Services {
     Data.rejectedDonations.clear();
     Query rejectedDonations = FirebaseFirestore.instance
         .collection("donations")
-        .where("status", isEqualTo: "rejected");
+        .where("status", isEqualTo: "rejected")
+        .orderBy("timeStamp", descending: true);
     await rejectedDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {
@@ -368,7 +371,8 @@ class Services {
     Data.completedDonations.clear();
     Query completedDonations = FirebaseFirestore.instance
         .collection("donations")
-        .where("status", isEqualTo: "completed");
+        .where("status", isEqualTo: "completed")
+        .orderBy("timeStamp", descending: true);
     await completedDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {
@@ -398,7 +402,8 @@ class Services {
     Data.enRouteDonations.clear();
     Query enRouteDonations = FirebaseFirestore.instance
         .collection("donations")
-        .where("status", isEqualTo: "collecting");
+        .where("status", isEqualTo: "collecting")
+        .orderBy("timeStamp", descending: true);
     await enRouteDonations.get().then((QuerySnapshot querySnapshot) {
       var docs = querySnapshot.docs;
       docs.forEach((doc) {

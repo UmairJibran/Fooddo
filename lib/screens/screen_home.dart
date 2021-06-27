@@ -82,20 +82,36 @@ class _HomeState extends State<Home> {
               }
             },
           ),
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(Settings.routeName);
+          PopupMenuButton<Choice>(
+            onSelected: (Choice choice) async {
+              switch (choice.action) {
+                case "logout":
+                  {
+                    await Services.logout();
+                    await Navigator.of(context)
+                        .pushReplacementNamed(Login.routeName);
+                    break;
+                  }
+                case "update":
+                  {
+                    Navigator.of(context).pushNamed(Settings.routeName);
+                    break;
+                  }
+              }
             },
-          ),
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await Services.logout();
-              await Navigator.of(context).pushReplacementNamed(Login.routeName);
+            itemBuilder: (BuildContext context) {
+              return choices.map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: Row(
+                    children: [
+                      Icon(choice.icon),
+                      SizedBox(width: 10),
+                      Text(choice.title),
+                    ],
+                  ),
+                );
+              }).toList();
             },
           ),
         ],
@@ -182,3 +198,16 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+class Choice {
+  const Choice({this.title, this.icon, this.action});
+
+  final String title;
+  final IconData icon;
+  final String action;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Update Profile', icon: Icons.settings, action: "update"),
+  const Choice(title: 'LogOut', icon: Icons.logout, action: "logout")
+];

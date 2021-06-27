@@ -268,13 +268,38 @@ class _DonationDetailsState extends State<DonationDetails> {
                           ),
                         ),
                         color: Colors.red,
-                        onPressed: () async {
-                          setState(() {
-                            updating = true;
-                          });
-                          await Services.rejectDonation(donation.id);
-                          await Navigator.of(context)
-                              .pushNamed(CharityUpdateLoading.routeName);
+                        onPressed: () {
+                          return showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              content: Text(
+                                "Are you sure you want to reject?",
+                              ),
+                              actions: [
+                                FlatButton(
+                                  child: Text("Yes"),
+                                  onPressed: () async {
+                                    setState(() {
+                                      updating = true;
+                                    });
+                                    Navigator.pop(context);
+                                    await Services.rejectDonation(donation.id);
+                                    await Navigator.of(context).pushNamed(
+                                        CharityUpdateLoading.routeName);
+                                    setState(() {
+                                      updating = false;
+                                    });
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text("No"),
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
                         },
                       ),
                     ],

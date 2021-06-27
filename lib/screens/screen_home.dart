@@ -45,6 +45,42 @@ class _HomeState extends State<Home> {
         ),
         centerTitle: true,
         actions: [
+          InkWell(
+            child: Stack(
+              children: [
+                Center(
+                  child: Icon(Icons.notifications, color: Colors.black),
+                ),
+                if (Data.user.unreadNotifications)
+                  Positioned(
+                    top: 10,
+                    right: 00,
+                    child: Container(
+                      height: 10,
+                      width: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            onTap: () async {
+              if (selectedScreen != 1) {
+                setState(() {
+                  _loading = true;
+                });
+                if (Data.user.unreadNotifications)
+                  await Services.notificationRead();
+                await Services.fetchNotifications(Data.userPhone);
+                setState(() {
+                  selectedScreen = 1;
+                  _loading = false;
+                });
+              }
+            },
+          ),
           IconButton(
             icon: Icon(
               Icons.settings,
@@ -60,7 +96,7 @@ class _HomeState extends State<Home> {
               await Services.logout();
               await Navigator.of(context).pushReplacementNamed(Login.routeName);
             },
-          )
+          ),
         ],
       ),
       body: Container(
@@ -113,62 +149,6 @@ class _HomeState extends State<Home> {
                         await Services.fetchUserPastDonation();
                         setState(() {
                           selectedScreen = 0;
-                          _loading = false;
-                        });
-                      }
-                    },
-                  ),
-                  InkWell(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: Text(
-                              "Notifications",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          if (Data.user.unreadNotifications)
-                            Positioned(
-                              top: 10,
-                              right: 20,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                height: 25,
-                                width: 50,
-                                child: Center(
-                                  child: Text(
-                                    "New",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    onTap: () async {
-                      if (selectedScreen != 1) {
-                        setState(() {
-                          _loading = true;
-                        });
-                        if (Data.user.unreadNotifications)
-                          await Services.notificationRead();
-                        await Services.fetchNotifications(Data.userPhone);
-                        setState(() {
-                          selectedScreen = 1;
                           _loading = false;
                         });
                       }

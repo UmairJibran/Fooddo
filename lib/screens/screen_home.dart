@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fooddo/components/screens/home/home.dart';
 import 'package:fooddo/components/screens/home/notifications.dart';
 import 'package:fooddo/screens/screen_login.dart';
@@ -152,6 +153,24 @@ class _HomeState extends State<Home> {
                           _loading = false;
                         });
                       }
+                    },
+                  ),
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Center(
+                        child: Text(
+                          "Call",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: () async {
+                      await FlutterPhoneDirectCaller.callNumber("03138185443");
                     },
                   ),
                 ],

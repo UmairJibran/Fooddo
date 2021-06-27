@@ -123,7 +123,7 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
                         ),
                       ),
                       trailing: Text(
-                        "Capacity: " +
+                        "Capacity (per meal): " +
                             Data.deliveryPersons[index].vehicleCapacity
                                 .toString(),
                         style: TextStyle(

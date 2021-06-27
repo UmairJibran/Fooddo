@@ -16,6 +16,7 @@ class Donation {
   final List<dynamic> moreImages;
   final Timestamp timeStamp;
   final String donorName;
+  bool seen;
 
   Donation({
     @required this.id,
@@ -32,5 +33,6 @@ class Donation {
     @required this.donorName,
     this.timeStamp,
     this.moreImages,
+    this.seen,
   });
 }

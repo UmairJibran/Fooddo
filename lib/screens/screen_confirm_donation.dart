@@ -196,7 +196,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                     ],
                   ),
                   ContinuationButton(
-                    buttonText: "Donate",
+                    buttonText: "Submit",
                     onTap: freshFoodAgreement
                         ? () {
                             return showDialog(

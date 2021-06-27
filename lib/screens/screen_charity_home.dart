@@ -36,6 +36,7 @@ class _CharityDashboardState extends State<CharityDashboard> {
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.3,
+              color: Theme.of(context).primaryColor,
               child: Center(
                 child: Text(
                   "Fooddo!",
@@ -47,7 +48,14 @@ class _CharityDashboardState extends State<CharityDashboard> {
               ),
             ),
             FlatButton(
-              child: Text("Accepted Donation"),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Accepted Donation"),
+                  SizedBox(width: 10),
+                  Icon(Icons.check),
+                ],
+              ),
               onPressed: () async {
                 setState(() {
                   loading = true;
@@ -61,7 +69,14 @@ class _CharityDashboardState extends State<CharityDashboard> {
             ),
             Divider(),
             FlatButton(
-              child: Text("Rejected Donation"),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Rejected Donation"),
+                  SizedBox(width: 10),
+                  Icon(Icons.close),
+                ],
+              ),
               onPressed: () async {
                 setState(() {
                   loading = true;
@@ -75,7 +90,14 @@ class _CharityDashboardState extends State<CharityDashboard> {
             ),
             Divider(),
             FlatButton(
-              child: Text("Completed Donation"),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Completed Donation"),
+                  SizedBox(width: 10),
+                  Icon(Icons.done_all_outlined),
+                ],
+              ),
               onPressed: () async {
                 setState(() {
                   loading = true;
@@ -89,7 +111,14 @@ class _CharityDashboardState extends State<CharityDashboard> {
             ),
             Divider(),
             FlatButton(
-              child: Text("EnRoute Donation"),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("EnRoute Donation"),
+                  SizedBox(width: 10),
+                  Icon(Icons.delivery_dining),
+                ],
+              ),
               onPressed: () async {
                 setState(() {
                   loading = true;

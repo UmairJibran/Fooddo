@@ -117,6 +117,7 @@ class Services {
       "city": Data.user.city,
       "timeStamp": DateTime.now(),
       "moreImages": moreImages,
+      "seen": false,
     }).then((documentReference) async {
       await Services.fetchUserPastDonation();
       posted = true;
@@ -299,6 +300,7 @@ class Services {
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
           donorName: data["name"],
+          seen: data["seen"],
         );
         Data.unclaimedDonations.add(donation);
       });
@@ -478,6 +480,19 @@ class Services {
           .collection("donations")
           .doc(donationId)
           .update(donationDocument);
+    }
+    await Services.generateNotification(doc["donorId"]);
+  }
+
+  static donationSeen(String donationId) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    DocumentSnapshot doc =
+        await firebaseFirestore.collection("donations").doc(donationId).get();
+    if (doc.exists) {
+      firebaseFirestore
+          .collection("donations")
+          .doc(donationId)
+          .update({"seen": true});
     }
     await Services.generateNotification(doc["donorId"]);
   }

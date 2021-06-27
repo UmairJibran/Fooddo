@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class FoodCardTile extends StatelessWidget {
   final String date;
@@ -9,6 +11,8 @@ class FoodCardTile extends StatelessWidget {
   final String recepient;
   final String donationId;
   final String pickupAddress;
+  final String charityCall;
+  final Timestamp timeStamp;
   FoodCardTile({
     this.pickupAddress,
     this.date,
@@ -18,6 +22,8 @@ class FoodCardTile extends StatelessWidget {
     this.status,
     this.height,
     this.recepient,
+    this.charityCall,
+    this.timeStamp,
   });
   @override
   Widget build(BuildContext context) {
@@ -101,6 +107,17 @@ class FoodCardTile extends StatelessWidget {
                     Text(
                       "$pickupAddress",
                       style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(height: 20),
+                    RaisedButton(
+                      child: Text(
+                        "Call $recepient",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      onPressed: () async {
+                        await FlutterPhoneDirectCaller.callNumber(
+                            "03138185443");
+                      },
                     ),
                   ],
                 ),

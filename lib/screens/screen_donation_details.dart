@@ -332,10 +332,20 @@ class _DonationDetailsState extends State<DonationDetails> {
               ],
             ),
           ),
-          FlatButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("Call Donor"), Icon(Icons.call)],
+          RaisedButton(
+              color: Colors.blue,
+              child: Container(
+                width: 150,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Call Donor",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Icon(Icons.call, color: Colors.white)
+                  ],
+                ),
               ),
               onPressed: () async {
                 bool res =

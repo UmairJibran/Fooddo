@@ -27,6 +27,8 @@ class FoodCardTile extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    var _timeStamp =
+        DateTime.fromMicrosecondsSinceEpoch(timeStamp.microsecondsSinceEpoch);
     return Container(
       height: height,
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -197,7 +199,7 @@ class FoodCardTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "on $date",
+                    "on ${_timeStamp.day}/${_timeStamp.month}/${_timeStamp.year} around ${_timeStamp.hour}:${_timeStamp.minute}",
                     style: TextStyle(
                       fontSize: 14,
                     ),

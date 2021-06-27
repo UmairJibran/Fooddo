@@ -48,6 +48,7 @@ class Services {
           status: data["status"],
           imgUrl: data["imgUrl"],
           donorId: data["donorId"],
+          timeStamp: data["timeStamp"],
         );
         Data.pastDonations.add(donation);
       });

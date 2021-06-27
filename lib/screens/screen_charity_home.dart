@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/donation.dart';
 import 'package:fooddo/components/charity_food_card.dart';
 
+import 'screen_login.dart';
 import '../services.dart';
 import 'screen_charity_accepted.dart';
 import 'screen_charity_rejected.dart';
@@ -163,13 +164,36 @@ class _CharityDashboardState extends State<CharityDashboard> {
           ],
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(Settings.routeName);
+          PopupMenuButton<Choice>(
+            onSelected: (Choice choice) async {
+              switch (choice.action) {
+                case "logout":
+                  {
+                    await Services.logout();
+                    await Navigator.of(context)
+                        .pushReplacementNamed(Login.routeName);
+                    break;
+                  }
+                case "update":
+                  {
+                    Navigator.of(context).pushNamed(Settings.routeName);
+                    break;
+                  }
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return choices.map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: Row(
+                    children: [
+                      Icon(choice.icon),
+                      SizedBox(width: 10),
+                      Text(choice.title),
+                    ],
+                  ),
+                );
+              }).toList();
             },
           ),
         ],
@@ -208,3 +232,16 @@ class _CharityDashboardState extends State<CharityDashboard> {
     );
   }
 }
+
+class Choice {
+  const Choice({this.title, this.icon, this.action});
+
+  final String title;
+  final IconData icon;
+  final String action;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Update Profile', icon: Icons.settings, action: "update"),
+  const Choice(title: 'LogOut', icon: Icons.logout, action: "logout")
+];

@@ -92,10 +92,21 @@ class _SettingsState extends State<Settings> {
                             fontSize: 30,
                           ),
                         ),
+                        SizedBox(height: 10),
                         TextFormField(
                           initialValue: _userName,
                           decoration: InputDecoration(
-                            hintText: "Enter your name",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
+                            labelText: "Enter your name",
                           ),
                           validator: (value) {
                             if (value.isEmpty)
@@ -112,10 +123,21 @@ class _SettingsState extends State<Settings> {
                             );
                           },
                         ),
+                        SizedBox(height: 10),
                         TextFormField(
                           initialValue: _userAddress,
                           decoration: InputDecoration(
-                            hintText: "Enter your address",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
+                            labelText: "Enter your address",
                           ),
                           validator: (value) {
                             if (value.isEmpty)
@@ -132,10 +154,21 @@ class _SettingsState extends State<Settings> {
                             );
                           },
                         ),
+                        SizedBox(height: 10),
                         TextFormField(
                           initialValue: _userEmail,
                           decoration: InputDecoration(
-                            hintText: "Enter your email",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
+                            labelText: "Enter your email",
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {

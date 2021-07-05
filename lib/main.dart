@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color.fromRGBO(242, 166, 66, 1),
         fontFamily: "Raleway",
+        scaffoldBackgroundColor: Color.fromRGBO(253, 229, 197, 1),
       ),
       routes: {
         "/": (ctx) => SplashScreen(),

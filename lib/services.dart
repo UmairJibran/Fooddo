@@ -171,6 +171,8 @@ class Services {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
+              backgroundColor: Color.fromRGBO(204, 153, 255, 1),
+              clipBehavior: Clip.hardEdge,
               title: Text("Please Enter your verification code"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,

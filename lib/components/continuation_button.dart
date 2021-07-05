@@ -19,14 +19,15 @@ class ContinuationButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Colors.green[400],
+            color: Colors.blue[300],
             border: Border.all(
-              color: Colors.black,
-              width: 1.0,
+              color: Colors.black12,
+              width: 0.8,
             ),
           ),
           child: Text(
             buttonText.isNotEmpty ? buttonText : "Continue",
+            style: TextStyle(fontWeight: FontWeight.w800),
           ),
         ),
       ),

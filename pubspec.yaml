@@ -40,6 +40,7 @@ dependencies:
   uuid:
   firebase_storage:
   flutter_phone_direct_caller:
+  loading_animations:
 
 dev_dependencies:
   flutter_test:

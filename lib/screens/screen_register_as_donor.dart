@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fooddo/classes/city.dart';
 import 'package:fooddo/classes/user.dart';
 import 'package:fooddo/components/continuation_button.dart';
+import 'package:loading_animations/loading_animations.dart';
 import '../services.dart';
 
 class RegisterAsDonor extends StatefulWidget {
@@ -13,6 +14,7 @@ class RegisterAsDonor extends StatefulWidget {
 
 class _RegisterAsDonorState extends State<RegisterAsDonor> {
   var _formKey;
+  bool _loading;
   List<City> cities = <City>[
     const City("Peshawar"),
     const City("Lahore"),
@@ -32,6 +34,7 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
     super.initState();
     _formKey = GlobalKey<FormState>();
     donorSelectedCity = cities[0];
+    _loading = false;
   }
 
   @override
@@ -50,6 +53,14 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              if (_loading)
+                LoadingFlipping.circle(
+                  borderColor: Colors.cyan,
+                  borderSize: 3.0,
+                  size: 30.0,
+                  backgroundColor: Colors.cyanAccent,
+                  duration: Duration(milliseconds: 500),
+                ),
               Text(
                 "Tell us about yourself",
                 textAlign: TextAlign.center,
@@ -279,6 +290,9 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                     onTap: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
+                        setState(() {
+                          _loading = true;
+                        });
                         Services.registerDonor(
                           User(
                             unreadNotifications: false,

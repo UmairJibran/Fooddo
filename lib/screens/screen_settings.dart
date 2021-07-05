@@ -72,11 +72,19 @@ class _SettingsState extends State<Settings> {
               : SizedBox(),
         ],
       ),
-      body: updating
-          ? CircularProgressIndicator(
-              backgroundColor: Colors.green,
-            )
-          : Column(
+      body: Container(
+        child: Stack(
+          children: [
+            if (updating)
+              Container(
+                color: Colors.black26,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.green,
+                  ),
+                ),
+              ),
+            Column(
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
@@ -224,6 +232,9 @@ class _SettingsState extends State<Settings> {
                 ),
               ],
             ),
+          ],
+        ),
+      ),
     );
   }
 }

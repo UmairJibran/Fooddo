@@ -14,6 +14,7 @@ class _SettingsState extends State<Settings> {
   bool updating;
   var _key;
   String _userName, _userEmail, _userAddress;
+  var _error;
 
   @override
   void initState() {
@@ -25,6 +26,7 @@ class _SettingsState extends State<Settings> {
     _userAddress = Data.user.address;
     changesMade = false;
     updating = false;
+    _error = "";
   }
 
   @override
@@ -198,8 +200,9 @@ class _SettingsState extends State<Settings> {
                           height: 20,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Text(_error, style: TextStyle(color: Colors.red)),
                             ContinuationButton(
                               buttonText: "Update",
                               onTap: () async {
@@ -209,6 +212,7 @@ class _SettingsState extends State<Settings> {
                                   if (_key.currentState.validate()) {
                                     setState(() {
                                       updating = true;
+                                      _error = "";
                                     });
                                     _key.currentState.save();
                                     await Services.updateUser(
@@ -221,6 +225,10 @@ class _SettingsState extends State<Settings> {
                                       changesMade = false;
                                     });
                                   }
+                                } else {
+                                  setState(() {
+                                    _error = "Nothing to Update";
+                                  });
                                 }
                               },
                             ),

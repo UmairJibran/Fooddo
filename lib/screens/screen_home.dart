@@ -137,18 +137,46 @@ class _HomeState extends State<Home> {
                     ),
                   ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: _loading
+                  ? MediaQuery.of(context).size.height * 0.095
+                  : MediaQuery.of(context).size.height * 0.1,
               width: MediaQuery.of(context).size.width,
               color: Theme.of(context).primaryColor,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       child: Center(
                         child: Text(
-                          "Call Edhi Charity Foundation",
+                          "Home",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: () async {
+                      if (selectedScreen != 0) {
+                        setState(() {
+                          _loading = true;
+                        });
+                        await Services.fetchUserPastDonation();
+                        setState(() {
+                          selectedScreen = 0;
+                          _loading = false;
+                        });
+                      }
+                    },
+                  ),
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Center(
+                        child: Text(
+                          "Call",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,

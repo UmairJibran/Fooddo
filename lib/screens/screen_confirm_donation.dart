@@ -122,18 +122,27 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       ),
                     ],
                   ),
+                  Align(
+                    child: Text("Photos"),
+                    alignment: Alignment.centerLeft,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          IconButton(
-                            icon: Icon(
-                                _file != null ? Icons.check : Icons.camera),
-                            onPressed: () async {
-                              await imageProcessing(
-                                  context, MediaQuery.of(context).size.height);
-                            },
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: IconButton(
+                              icon:
+                                  Icon(_file != null ? Icons.check : Icons.add),
+                              onPressed: () async {
+                                await imageProcessing(context,
+                                    MediaQuery.of(context).size.height);
+                              },
+                            ),
                           ),
                           Container(
                             height: 50,
@@ -143,20 +152,25 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                               itemCount:
                                   _numberOfImages > 3 ? 3 : _numberOfImages,
                               itemBuilder: (_, index) {
-                                return IconButton(
-                                  icon: Icon(
-                                    _moreImages[index] == null
-                                        ? Icons.add
-                                        : Icons.check,
-                                    color: Colors.black,
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
                                   ),
-                                  onPressed: () async {
-                                    setState(() {
-                                      _selectedImage = (index + 1);
-                                    });
-                                    await imageProcessing(context,
-                                        MediaQuery.of(context).size.height);
-                                  },
+                                  child: IconButton(
+                                    icon: Icon(
+                                      _moreImages[index] == null
+                                          ? Icons.add
+                                          : Icons.check,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: () async {
+                                      setState(() {
+                                        _selectedImage = (index + 1);
+                                      });
+                                      await imageProcessing(context,
+                                          MediaQuery.of(context).size.height);
+                                    },
+                                  ),
                                 );
                               },
                             ),

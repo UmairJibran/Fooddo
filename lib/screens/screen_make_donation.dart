@@ -11,7 +11,13 @@ class MakeDonation extends StatefulWidget {
 }
 
 class _MakeDonationState extends State<MakeDonation> {
-  double _servings = 20;
+  TextEditingController _servings = new TextEditingController();
+
+  @override
+  void initState() {
+    _servings.text = "20";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +44,7 @@ class _MakeDonationState extends State<MakeDonation> {
                       "./lib/assets/plate_assets/empty_plate.svg",
                       height: 400,
                     ),
-                    _servings.round() > 0
+                    double.parse(_servings.text).round() > 0
                         ? Positioned(
                             top: 50,
                             right: 30,
@@ -48,7 +54,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 10
+                    double.parse(_servings.text).round() > 10
                         ? Positioned(
                             top: 80,
                             left: 10,
@@ -58,7 +64,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 20
+                    double.parse(_servings.text).round() > 20
                         ? Positioned(
                             top: 50,
                             right: 00,
@@ -68,7 +74,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 30
+                    double.parse(_servings.text).round() > 30
                         ? Positioned(
                             bottom: 100,
                             left: 20,
@@ -78,7 +84,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 40
+                    double.parse(_servings.text).round() > 40
                         ? Positioned(
                             top: 50,
                             left: 80,
@@ -88,7 +94,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 50
+                    double.parse(_servings.text).round() > 50
                         ? Positioned(
                             bottom: 10,
                             right: 100,
@@ -98,7 +104,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 60
+                    double.parse(_servings.text).round() > 60
                         ? Positioned(
                             top: 10,
                             right: 80,
@@ -108,7 +114,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 70
+                    double.parse(_servings.text).round() > 70
                         ? Positioned(
                             top: 50,
                             right: 30,
@@ -118,7 +124,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 80
+                    double.parse(_servings.text).round() > 80
                         ? Positioned(
                             top: 30,
                             left: 30,
@@ -128,7 +134,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() > 90
+                    double.parse(_servings.text).round() > 90
                         ? Positioned(
                             bottom: 30,
                             right: 30,
@@ -138,7 +144,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             ),
                           )
                         : SizedBox(),
-                    _servings.round() >= 100
+                    double.parse(_servings.text).round() >= 100
                         ? Positioned(
                             bottom: 80,
                             right: 50,
@@ -156,7 +162,6 @@ class _MakeDonationState extends State<MakeDonation> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
                           "Food Donation for:",
@@ -164,37 +169,42 @@ class _MakeDonationState extends State<MakeDonation> {
                             fontSize: 20,
                           ),
                         ),
+                        SizedBox(width: 10),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.1,
                           child: TextField(
+                            controller: _servings,
                             enabled: true,
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.left,
-                            onChanged: (value) {
-                              setState(() {
-                                if (double.parse(value) > 1000)
-                                  _servings = 1000;
-                                else
-                                  _servings = double.parse(value);
-                              });
-                            },
                             decoration: InputDecoration(
-                              hintText: _servings.round().toString(),
+                              hintText: double.parse(_servings.text)
+                                  .round()
+                                  .toString(),
                             ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "People",
+                          style: TextStyle(
+                            fontSize: 20,
                           ),
                         ),
                       ],
                     ),
                   ),
                   Slider(
-                    value: _servings > 100 ? 100 : _servings,
+                    value: double.parse(_servings.text) > 100
+                        ? 100
+                        : double.parse(_servings.text),
                     min: 0,
                     max: 100,
                     divisions: 100,
-                    label: _servings.round().toString(),
+                    label: double.parse(_servings.text).round().toString(),
                     onChanged: (value) {
                       setState(() {
-                        _servings = value;
+                        _servings.text = value.round().toString();
                       });
                     },
                   ),
@@ -204,7 +214,7 @@ class _MakeDonationState extends State<MakeDonation> {
                       ContinuationButton(
                         buttonText: "Continue",
                         onTap: () {
-                          if (_servings.round() > 1)
+                          if (double.parse(_servings.text).round() > 1)
                             Navigator.of(context).pushNamed(
                                 ConfirmDonation.routeName,
                                 arguments: {"servings": _servings});

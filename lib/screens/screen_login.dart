@@ -21,60 +21,79 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _loading
-            ? CircularProgressIndicator()
-            : Container(
-                padding: EdgeInsets.symmetric(vertical: 50, horizontal: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      "./lib/assets/fooddo_logo.png",
-                      height: 150,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: TextField(
-                        autofocus: true,
-                        enabled: true,
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontFamily: "Roboto"),
-                        onChanged: (value) {
-                          setState(() {
-                            _phoneNumber = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          prefixText: "+92 - ",
-                          hintText: "3123456789",
-                          helperText: "Please Enter Your Mobile Number",
+        child: Stack(
+          children: [
+            if (_loading)
+              Container(
+                color: Colors.black26,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 50, horizontal: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Image.asset(
+                    "./lib/assets/fooddo_logo.png",
+                    height: 150,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      autofocus: true,
+                      enabled: true,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontFamily: "Roboto"),
+                      onChanged: (value) {
+                        setState(() {
+                          _phoneNumber = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                        ),
+                        prefixText: "+92 - ",
+                        hintText: "3123456789",
+                        labelText: "Please Enter Your Mobile Number",
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).accentColor,
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ContinuationButton(
-                          onTap: () async {
-                            if (_phoneNumber.isNotEmpty &&
-                                _phoneNumber.length == 10) {
-                              setState(() {
-                                _loading = true;
-                              });
-                              await Services.verifyPhone(
-                                "+92" + _phoneNumber,
-                                context,
-                              );
-                            }
-                          },
-                          buttonText: "Continue",
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ContinuationButton(
+                        onTap: () async {
+                          if (_phoneNumber.isNotEmpty &&
+                              _phoneNumber.length == 10) {
+                            setState(() {
+                              _loading = true;
+                            });
+                            await Services.verifyPhone(
+                              "+92" + _phoneNumber,
+                              context,
+                            );
+                          }
+                        },
+                        buttonText: "Continue",
+                      ),
+                    ],
+                  ),
+                ],
               ),
+            ),
+          ],
+        ),
       ),
     );
   }

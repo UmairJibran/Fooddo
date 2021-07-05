@@ -155,9 +155,19 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                       children: [
                         TextFormField(
                           decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
                             hintText: "mail@example.com",
-                            helperText:
+                            labelText:
                                 "Please provide email for mportant communication",
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
                           ),
                           onChanged: (value) {
                             setState(() {
@@ -178,10 +188,21 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                           enableSuggestions: false,
                           keyboardType: TextInputType.emailAddress,
                         ),
+                        SizedBox(height: 20),
                         TextFormField(
                           decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
                             hintText: "Street#1, Building#4, xyz road",
-                            helperText: "Please provide address for pickup",
+                            labelText: "Please provide address for pickup",
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
                           ),
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) {
@@ -194,14 +215,25 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                             return null;
                           },
                         ),
+                        SizedBox(height: 20),
                         TextFormField(
                           decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
                             hintText: donorType == "Individual"
                                 ? "John Doe"
                                 : "xyz Marquee",
-                            helperText: donorType == "Individual"
+                            labelText: donorType == "Individual"
                                 ? "Your good name for human identification"
                                 : "Representative of the Establishment",
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {

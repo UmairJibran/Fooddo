@@ -49,14 +49,15 @@ class FoodCardTile extends StatelessWidget {
             context: context,
             builder: (context) {
               return AlertDialog(
+                backgroundColor: Colors.teal[100],
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Details",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 30,
                       ),
                     ),
                     if (status == "completed")

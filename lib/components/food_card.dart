@@ -102,7 +102,7 @@ class FoodCardTile extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "Meal for $serving was donated to $recepient on $date",
+                      "Meal for $serving people was donated to $recepient on $date",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: 20),
@@ -112,6 +112,7 @@ class FoodCardTile extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     RaisedButton(
+                      color: Theme.of(context).primaryColor,
                       child: Text(
                         "Call $recepient",
                         style: TextStyle(fontWeight: FontWeight.w600),

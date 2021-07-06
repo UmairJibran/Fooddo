@@ -216,7 +216,7 @@ class _MakeDonationState extends State<MakeDonation> {
                         onTap: () {
                           if (double.parse(_servings.text).round() > 1)
                             Navigator.of(context).pushNamed(
-                                ConfirmDonation.routeName,
+                              ConfirmDonation.routeName,
                               arguments: {
                                 "servings": double.parse(_servings.text)
                               },

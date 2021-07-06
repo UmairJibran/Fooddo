@@ -13,6 +13,8 @@ class FoodCardTile extends StatelessWidget {
   final String pickupAddress;
   final String charityCall;
   final Timestamp timeStamp;
+  final String foodName;
+  final String foodDetails;
   FoodCardTile({
     this.pickupAddress,
     this.date,
@@ -24,6 +26,8 @@ class FoodCardTile extends StatelessWidget {
     this.recepient,
     this.charityCall,
     this.timeStamp,
+    this.foodName,
+    this.foodDetails,
   });
   @override
   Widget build(BuildContext context) {
@@ -102,6 +106,22 @@ class FoodCardTile extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        foodName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(foodDetails),
+                    ),
+                    SizedBox(height: 10),
                     Text(
                       "Meal for $serving people was donated to $recepient on $date",
                       style: TextStyle(fontWeight: FontWeight.w600),
@@ -154,7 +174,7 @@ class FoodCardTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Serves",
+                        foodName,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -186,6 +206,10 @@ class FoodCardTile extends StatelessWidget {
                           color: Colors.cyan,
                         )
                     ],
+                  ),
+                  Text(
+                    foodDetails,
+                    style: TextStyle(fontSize: 16),
                   ),
                   Text(
                     "$serving People",

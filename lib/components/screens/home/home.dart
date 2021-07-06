@@ -29,6 +29,8 @@ class HomeComponent extends StatelessWidget {
                     height: height * 0.25,
                     timeStamp: Data.pastDonations[index - 1].timeStamp,
                     charityCall: "03138185443",
+                    foodName: Data.pastDonations[index - 1].foodName,
+                    foodDetails: Data.pastDonations[index - 1].foodDetails,
                   );
           },
           itemCount: Data.pastDonations.length + 1,

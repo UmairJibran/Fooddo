@@ -49,6 +49,8 @@ class Services {
           imgUrl: data["imgUrl"],
           donorId: data["donorId"],
           timeStamp: data["timeStamp"],
+          foodName: data["foodName"] ?? "",
+          foodDetails: data["foodDetails"] ?? "",
         );
         Data.pastDonations.add(donation);
       });
@@ -306,6 +308,8 @@ class Services {
           timeStamp: data["timeStamp"],
           donorName: data["name"],
           seen: data["seen"],
+          foodName: data["foodName"] ?? "",
+          foodDetails: data["foodDetails"] ?? "",
         );
         Data.unclaimedDonations.add(donation);
       });
@@ -337,6 +341,8 @@ class Services {
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
           donorName: data["name"],
+          foodName: data["foodName"] ?? "",
+          foodDetails: data["foodDetails"] ?? "",
         );
         Data.acceptedDonations.add(donation);
       });
@@ -368,6 +374,8 @@ class Services {
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
           donorName: data["name"],
+          foodName: data["foodName"] ?? "",
+          foodDetails: data["foodDetails"] ?? "",
         );
         Data.rejectedDonations.add(donation);
       });
@@ -399,6 +407,8 @@ class Services {
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
           donorName: data["name"],
+          foodName: data["foodName"] ?? "",
+          foodDetails: data["foodDetails"] ?? "",
         );
         Data.completedDonations.add(donation);
       });
@@ -431,6 +441,8 @@ class Services {
           moreImages: data["moreImages"],
           timeStamp: data["timeStamp"],
           donorName: data["name"],
+          foodName: data["foodName"] ?? "",
+          foodDetails: data["foodDetails"] ?? "",
         );
         Data.enRouteDonations.add(donation);
       });
@@ -569,6 +581,8 @@ class Services {
         "recipient": donation.recepient,
         "time": donation.timeStamp,
         "donorName": donation.donorName,
+        "foodName": donation.foodName,
+        "foodDetails": donation.foodDetails,
         "seen": false,
       },
     );

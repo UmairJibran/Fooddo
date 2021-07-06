@@ -217,7 +217,10 @@ class _MakeDonationState extends State<MakeDonation> {
                           if (double.parse(_servings.text).round() > 1)
                             Navigator.of(context).pushNamed(
                                 ConfirmDonation.routeName,
-                                arguments: {"servings": _servings});
+                              arguments: {
+                                "servings": double.parse(_servings.text)
+                              },
+                            );
                         },
                       ),
                     ],

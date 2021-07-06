@@ -16,9 +16,13 @@ class Donation {
   final List<dynamic> moreImages;
   final Timestamp timeStamp;
   final String donorName;
+  final String foodName;
+  final String foodDetails;
   bool seen;
 
   Donation({
+    @required this.foodName,
+    @required this.foodDetails,
     @required this.id,
     @required this.donorId,
     @required this.pickupAddress,

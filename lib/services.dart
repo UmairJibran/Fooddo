@@ -116,6 +116,8 @@ class Services {
       "address": donation.longlat,
       "waitingTime": waitingTime > 0 ? waitingTime : 30,
       "city": Data.user.city,
+      "foodName": donation.foodName,
+      "foodDetails": donation.foodDetails,
       "timeStamp": DateTime.now(),
       "moreImages": moreImages,
       "seen": false,

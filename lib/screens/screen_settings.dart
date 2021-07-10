@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/services.dart';
+import 'package:image/image.dart' as im;
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Settings extends StatefulWidget {
   static final routeName = "/settings";
@@ -12,8 +18,10 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   bool changesMade;
   bool updating;
+  bool _imageUploading;
   var _key;
-  String _userName, _userEmail, _userAddress;
+  String _userName, _userEmail, _userAddress, _userId, _imageUrl;
+  File _file;
   var _error;
 
   @override
@@ -24,6 +32,9 @@ class _SettingsState extends State<Settings> {
     _userName = Data.user.name;
     _userEmail = Data.user.email;
     _userAddress = Data.user.address;
+    _userId = Data.user.id;
+    _imageUrl = Data.user.imageUrl ?? "";
+    _imageUploading = false;
     changesMade = false;
     updating = false;
     _error = "";
@@ -31,6 +42,8 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -101,6 +114,28 @@ class _SettingsState extends State<Settings> {
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: height * 0.3,
+                          width: width,
+                          child: _imageUploading
+                              ? Center(child: CircularProgressIndicator())
+                              : Image.network(_imageUrl),
+                        ),
+                        Row(
+                          children: [
+                            Spacer(),
+                            TextButton(
+                              child: Text("Update Image"),
+                              onPressed: () async {
+                                setState(() {
+                                  _imageUploading = true;
+                                });
+                                imageProcessing(context, height);
+                              },
+                            ),
+                          ],
                         ),
                         SizedBox(height: 10),
                         TextFormField(
@@ -237,6 +272,115 @@ class _SettingsState extends State<Settings> {
                       ],
                     ),
                   ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Image Utilities
+  Future<String> uploadImage(File _file) async {
+    UploadTask uploadTask = FirebaseStorage.instance
+        .ref()
+        .child("users/$_userId.jpg")
+        .putFile(_file);
+    TaskSnapshot storagesnap = await uploadTask;
+    String imageURL = await storagesnap.ref.getDownloadURL();
+    String updatedImageUrl =
+        await Services.updateUserProfileImageUrl(imageURL, _userId);
+    setState(() {
+      _imageUrl = updatedImageUrl;
+      _imageUploading = false;
+    });
+    Data.user.imageUrl = updatedImageUrl;
+    return imageURL;
+  }
+
+  compressImage() async {
+    final _tempDir = await getTemporaryDirectory();
+    final _path = _tempDir.path;
+    im.Image imageFile = im.decodeImage(_file.readAsBytesSync());
+    final compressedImageFile = File('$_path/img_user.jpg')
+      ..writeAsBytesSync(im.encodeJpg(imageFile, quality: 80));
+    setState(() {
+      _file = compressedImageFile;
+    });
+    await uploadImage(_file);
+  }
+
+  Future getImageFromCamera() async {
+    Navigator.pop(context);
+    // ignore: deprecated_member_use
+    var image = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 50,
+    );
+    setState(() {
+      _file = image;
+    });
+    await compressImage();
+  }
+
+  Future getImageFromGallery() async {
+    Navigator.pop(context);
+    // ignore: deprecated_member_use
+    var image = await ImagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+    );
+    setState(() {
+      _file = image;
+    });
+    await compressImage();
+  }
+
+  imageProcessing(context, height) {
+    //only showing modal bottom sheet
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => Container(
+        padding: EdgeInsets.only(top: 30),
+        height: height * 0.3,
+        child: Column(
+          children: <Widget>[
+            Text('Select Source'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Container(
+                      height: 60,
+                      width: 60,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.camera_alt,
+                          size: 50,
+                        ),
+                        onPressed: getImageFromCamera,
+                      ),
+                    ),
+                    Text("Capture"),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    Container(
+                      height: 60,
+                      width: 60,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.photo,
+                          size: 50,
+                        ),
+                        onPressed: getImageFromGallery,
+                      ),
+                    ),
+                    Text('Gallery'),
+                  ],
                 ),
               ],
             ),

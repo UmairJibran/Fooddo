@@ -303,6 +303,8 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                             name: donorName,
                             type: donorType,
                             phone: args["phoneNumber"],
+                            imageUrl:
+                                "https://th.bing.com/th/id/R.773184e334cd743766a32dc04e2a16d0?rik=MiG911OrslrxKw&riu=http%3a%2f%2fgetdrawings.com%2fimg%2fuser-silhouette-icon-24.png&ehk=uDBCWJ%2bbjNhhHpYd%2fNh6WU7crzwVUieff7fGsFRf%2fy4%3d&risl=&pid=ImgRaw",
                           ),
                           context,
                         );

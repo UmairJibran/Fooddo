@@ -75,6 +75,7 @@ class Services {
             type: userData["type"],
             isDonor: userData["isDonor"],
             unreadNotifications: userData["unreadnotifs"],
+            imageUrl: userData["imageUrl"],
           );
       },
     );
@@ -234,6 +235,7 @@ class Services {
         type: userData["type"],
         isDonor: userData["isDonor"],
         unreadNotifications: userData["unreadnotifs"],
+        imageUrl: userData["imageUrl"],
       );
       await Services.fetchUserPastDonation();
       Navigator.of(context).pushReplacementNamed(
@@ -257,6 +259,7 @@ class Services {
         "phone": user.phone,
         "type": user.type,
         "donorId": user.phone,
+        "imageUrl": user.imageUrl,
         "isDonor": true,
         "unreadnotifs": false,
       },
@@ -650,5 +653,15 @@ class Services {
     Data.enRouteDonations = [];
     Data.notifications = [];
     Data.deliveryPersons = [];
+  }
+
+  static Future<String> updateUserProfileImageUrl(
+      String imageURL, String userPhone) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    await firebaseFirestore
+        .collection("users")
+        .doc(userPhone)
+        .update({"imageUrl": imageURL});
+    return imageURL;
   }
 }

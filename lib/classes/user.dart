@@ -8,6 +8,7 @@ class User {
   final String type;
   final String address;
   final String name;
+  String imageUrl;
   final bool isDonor;
   final bool unreadNotifications;
 
@@ -21,5 +22,6 @@ class User {
     @required this.name,
     @required this.isDonor,
     @required this.unreadNotifications,
+    @required this.imageUrl,
   });
 }

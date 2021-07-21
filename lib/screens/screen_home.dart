@@ -148,14 +148,7 @@ class _HomeState extends State<Home> {
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Center(
-                        child: Text(
-                          "Home",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: Icon(Icons.home, size: 30),
                       ),
                     ),
                     onTap: () async {
@@ -175,14 +168,7 @@ class _HomeState extends State<Home> {
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Center(
-                        child: Text(
-                          "Call",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: Icon(Icons.phone, size: 30),
                       ),
                     ),
                     onTap: () async {

@@ -156,6 +156,7 @@ class Services {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
+              backgroundColor: Theme.of(context).primaryColor,
               title: Text("${e.code}"),
               actions: [
                 ContinuationButton(
@@ -176,7 +177,7 @@ class Services {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              backgroundColor: Color.fromRGBO(204, 153, 255, 1),
+              backgroundColor: Theme.of(context).primaryColor,
               clipBehavior: Clip.hardEdge,
               title: Text("Please Enter your verification code"),
               content: Column(

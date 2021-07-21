@@ -269,6 +269,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                           return showDialog(
                             context: context,
                             builder: (ctx) => AlertDialog(
+                              backgroundColor: Theme.of(context).primaryColor,
                               content: Text(
                                 "Are you sure you want to reject?",
                               ),

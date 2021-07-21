@@ -28,6 +28,7 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
         context: context,
         builder: (ctx) {
           return AlertDialog(
+            backgroundColor: Theme.of(ctx).primaryColor,
             content: Text("Select ${deliveryPerson.name}"),
             actions: [
               FlatButton(

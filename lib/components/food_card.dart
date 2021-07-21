@@ -53,7 +53,7 @@ class FoodCardTile extends StatelessWidget {
             context: context,
             builder: (context) {
               return AlertDialog(
-                backgroundColor: Colors.teal[100],
+                backgroundColor: Theme.of(context).primaryColor,
                 title: Row(
                   children: [
                     Text(

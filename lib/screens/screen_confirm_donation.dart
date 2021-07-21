@@ -439,7 +439,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                 context: context,
                                 builder: (ctx) => AlertDialog(
                                   backgroundColor:
-                                      Color.fromRGBO(204, 153, 255, 1),
+                                      Theme.of(context).primaryColor,
                                   content: Text('Confirm Donation?'),
                                   actions: [
                                     FlatButton(
@@ -528,8 +528,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                             return showDialog(
                               context: context,
                               builder: (ctx) => AlertDialog(
-                                backgroundColor:
-                                    Color.fromRGBO(204, 153, 255, 1),
+                                backgroundColor: Theme.of(context).primaryColor,
                                 title: Text("ALERT!"),
                                 content: Text(
                                   "Please Agree to Fresh Food Agreement",

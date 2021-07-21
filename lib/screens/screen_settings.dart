@@ -116,12 +116,21 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Container(
-                          height: height * 0.3,
-                          width: width,
-                          child: _imageUploading
-                              ? Center(child: CircularProgressIndicator())
-                              : Image.network(_imageUrl),
+                        Row(
+                          children: [
+                            Spacer(),
+                            Container(
+                              height: height * 0.3,
+                              width: height * 0.3,
+                              alignment: Alignment.center,
+                              child: _imageUploading
+                                  ? Center(child: CircularProgressIndicator())
+                                  : ClipOval(
+                                      child: Image.network(_imageUrl),
+                                    ),
+                            ),
+                            Spacer(),
+                          ],
                         ),
                         Row(
                           children: [

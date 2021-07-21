@@ -64,31 +64,11 @@ class FoodCardTile extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    if (status == "completed")
-                      Icon(
-                        Icons.done_all_outlined,
-                        color: Colors.blue[700],
-                      )
-                    else if (status == "waiting")
-                      Icon(
-                        Icons.schedule_outlined,
-                        color: Colors.indigo,
-                      )
-                    else if (status == "accepted")
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      )
-                    else if (status == "rejected")
-                      Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      )
-                    else if (status == "collecting")
-                      Icon(
-                        Icons.local_shipping_outlined,
-                        color: Colors.cyan,
-                      )
+                    IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
                   ],
                 ),
                 content: Column(
@@ -106,15 +86,45 @@ class FoodCardTile extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        foodName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                    Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            foodName,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
                         ),
-                      ),
+                        Spacer(),
+                        if (status == "completed")
+                          Icon(
+                            Icons.done_all_outlined,
+                            color: Colors.blue[700],
+                          )
+                        else if (status == "waiting")
+                          Icon(
+                            Icons.schedule_outlined,
+                            color: Colors.indigo,
+                          )
+                        else if (status == "accepted")
+                          Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          )
+                        else if (status == "rejected")
+                          Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          )
+                        else if (status == "collecting")
+                          Icon(
+                            Icons.local_shipping_outlined,
+                            color: Colors.cyan,
+                          )
+                      ],
                     ),
                     SizedBox(height: 5),
                     Align(

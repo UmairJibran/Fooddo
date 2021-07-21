@@ -55,7 +55,6 @@ class FoodCardTile extends StatelessWidget {
               return AlertDialog(
                 backgroundColor: Colors.teal[100],
                 title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Details",
@@ -64,6 +63,7 @@ class FoodCardTile extends StatelessWidget {
                         fontSize: 30,
                       ),
                     ),
+                    Spacer(),
                     if (status == "completed")
                       Icon(
                         Icons.done_all_outlined,
@@ -166,12 +166,11 @@ class FoodCardTile extends StatelessWidget {
             SizedBox(width: 10),
             Container(
               height: height * 0.7,
-              width: MediaQuery.of(context).size.width * 0.45,
+              width: MediaQuery.of(context).size.width * 0.5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         foodName,
@@ -180,6 +179,7 @@ class FoodCardTile extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      Spacer(),
                       if (status == "completed")
                         Icon(
                           Icons.done_all_outlined,

@@ -17,7 +17,7 @@ class HomeComponent extends StatelessWidget {
         child: ListView.builder(
           itemBuilder: (BuildContext context, index) {
             return index == 0
-                ? AddDonation(height: height)
+                ? AddDonation(height: height * 0.5)
                 : FoodCardTile(
                     pickupAddress: Data.pastDonations[index - 1].pickupAddress,
                     donationId: Data.pastDonations[index - 1].id,
@@ -26,7 +26,7 @@ class HomeComponent extends StatelessWidget {
                     imgUrl: Data.pastDonations[index - 1].imgUrl,
                     status: Data.pastDonations[index - 1].status,
                     recepient: Data.pastDonations[index - 1].recepient,
-                    height: height * 0.25,
+                    height: height * 0.2,
                     timeStamp: Data.pastDonations[index - 1].timeStamp,
                     charityCall: "03138185443",
                     foodName: Data.pastDonations[index - 1].foodName,

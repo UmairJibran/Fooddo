@@ -27,7 +27,10 @@ class ContinuationButton extends StatelessWidget {
           ),
           child: Text(
             buttonText.isNotEmpty ? buttonText : "Continue",
-            style: TextStyle(fontWeight: FontWeight.w800),
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

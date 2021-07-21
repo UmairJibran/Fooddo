@@ -178,7 +178,26 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                                 "Please provide email for mportant communication",
                             labelStyle: TextStyle(
                               color: Theme.of(context).accentColor,
+                            ),enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
                             ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
                           ),
                           onChanged: (value) {
                             setState(() {
@@ -213,7 +232,26 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                             labelText: "Please provide address for pickup",
                             labelStyle: TextStyle(
                               color: Theme.of(context).accentColor,
+                            ),enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
                             ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
                           ),
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) {
@@ -244,7 +282,26 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                                 : "Representative of the Establishment",
                             labelStyle: TextStyle(
                               color: Theme.of(context).accentColor,
+                            ),enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
                             ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {

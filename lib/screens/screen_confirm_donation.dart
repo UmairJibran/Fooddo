@@ -34,7 +34,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   File _file;
   var _moreImages = List<File>.filled(3, null, growable: false);
   bool _loading = false;
-  bool nameOrDetailsMissing = false;
+  bool nameMissing = false;
   String _imgUrl =
       "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg";
   int _numberOfImages = 0;
@@ -90,7 +90,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                     children: [
                       TextField(
                         decoration: InputDecoration(
-                          labelText: "Food Name",
+                          labelText: "Food Name *",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(
@@ -180,6 +180,10 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                             ),
                           ),
                           hintText: _name,
+                          labelText: "Your Name",
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.blue,
@@ -212,11 +216,34 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         decoration: InputDecoration(
                           hintText: _pickUpAddress,
                           labelText: "Pickup Location",
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(
                               color: Colors.grey,
                               width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
                             ),
                           ),
                         ),
@@ -237,10 +264,12 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                               width: 1,
                             ),
                           ),
-                          hintText: _waitingTime.toString(),
+                          labelText: "Time:",
+                          labelStyle: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
                           suffixText: "Minutes",
-                          labelText:
-                              "We will notify the recepients to come in the provided time",
+                          hintText: _waitingTime.toString(),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.blue,
@@ -269,11 +298,11 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         },
                       ),
                       SizedBox(height: 10),
-                      if (nameOrDetailsMissing)
+                      if (nameMissing)
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Food Name and Details is a required field",
+                            "Food Name is a required field",
                             textAlign: TextAlign.start,
                             style: TextStyle(color: Colors.red),
                           ),
@@ -379,11 +408,9 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                     buttonText: "Submit",
                     onTap: freshFoodAgreement
                         ? () {
-                            if ((_foodName == null || _foodName.isEmpty) ||
-                                (_foodDetails == null ||
-                                    _foodDetails.isEmpty)) {
+                            if ((_foodName == null || _foodName.isEmpty)) {
                               setState(() {
-                                nameOrDetailsMissing = true;
+                                nameMissing = true;
                               });
                             } else
                               return showDialog(

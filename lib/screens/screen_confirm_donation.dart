@@ -35,6 +35,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   var _moreImages = List<File>.filled(3, null, growable: false);
   bool _loading = false;
   bool nameMissing = false;
+  bool _addingImage = false;
   String _imgUrl =
       "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg";
   int _numberOfImages = 0;
@@ -325,14 +326,26 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
                                 ),
-                                child: IconButton(
-                                  icon: Icon(
-                                      _file != null ? Icons.check : Icons.add),
-                                  onPressed: () async {
-                                    await imageProcessing(context,
-                                        MediaQuery.of(context).size.height);
-                                  },
-                                ),
+                                child: _addingImage
+                                    ? Center(child: CircularProgressIndicator())
+                                    : IconButton(
+                                        icon: Icon(_file != null
+                                            ? Icons.check
+                                            : Icons.add),
+                                        onPressed: () async {
+                                          setState(() {
+                                            _addingImage = true;
+                                          });
+                                          await imageProcessing(
+                                              context,
+                                              MediaQuery.of(context)
+                                                  .size
+                                                  .height);
+                                          setState(() {
+                                            _addingImage = false;
+                                          });
+                                        },
+                                      ),
                               ),
                               Container(
                                 height: 50,
@@ -343,27 +356,36 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                       _numberOfImages > 3 ? 3 : _numberOfImages,
                                   itemBuilder: (_, index) {
                                     return Container(
+                                      margin: EdgeInsets.only(left: 10),
                                       decoration: BoxDecoration(
                                         border: Border.all(color: Colors.black),
                                       ),
-                                      child: IconButton(
-                                        icon: Icon(
-                                          _moreImages[index] == null
-                                              ? Icons.add
-                                              : Icons.check,
-                                          color: Colors.black,
-                                        ),
-                                        onPressed: () async {
-                                          setState(() {
-                                            _selectedImage = (index + 1);
-                                          });
-                                          await imageProcessing(
-                                              context,
-                                              MediaQuery.of(context)
-                                                  .size
-                                                  .height);
-                                        },
-                                      ),
+                                      child: _addingImage
+                                          ? Center(
+                                              child:
+                                                  CircularProgressIndicator())
+                                          : IconButton(
+                                              icon: Icon(
+                                                _moreImages[index] == null
+                                                    ? Icons.add
+                                                    : Icons.check,
+                                                color: Colors.black,
+                                              ),
+                                              onPressed: () async {
+                                                setState(() {
+                                                  _selectedImage = (index + 1);
+                                                  _addingImage = true;
+                                                });
+                                                await imageProcessing(
+                                                    context,
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .height);
+                                                setState(() {
+                                                  _addingImage = false;
+                                                });
+                                              },
+                                            ),
                                     );
                                   },
                                 ),

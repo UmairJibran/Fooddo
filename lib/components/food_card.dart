@@ -123,7 +123,7 @@ class FoodCardTile extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "Meal for $serving people was donated to $recepient on $date",
+                      "Meal for $serving people was donated to $recepient at ${_timeStamp.hour}:${_timeStamp.minute} on $date",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: 20),
@@ -133,10 +133,13 @@ class FoodCardTile extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     RaisedButton(
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.blue,
                       child: Text(
                         "Call $recepient",
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
                       ),
                       onPressed: () async {
                         await FlutterPhoneDirectCaller.callNumber(

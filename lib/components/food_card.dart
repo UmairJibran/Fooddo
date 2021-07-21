@@ -35,7 +35,7 @@ class FoodCardTile extends StatelessWidget {
         DateTime.fromMicrosecondsSinceEpoch(timeStamp.microsecondsSinceEpoch);
     return Container(
       height: height,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -179,7 +179,7 @@ class FoodCardTile extends StatelessWidget {
             SizedBox(width: 10),
             Container(
               height: height * 0.7,
-              width: MediaQuery.of(context).size.width * 0.5,
+              width: MediaQuery.of(context).size.width * 0.45,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

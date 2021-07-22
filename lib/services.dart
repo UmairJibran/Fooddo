@@ -566,12 +566,13 @@ class Services {
     }
   }
 
-  static fetchDeliveryPersons(String city) async {
+  static fetchDeliveryPersons(String city, int capacity) async {
     Data.deliveryPersons.clear();
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var documents = await firebaseFirestore
         .collection("deliverypersons")
         .where("city", isEqualTo: city)
+        .where("vehicleCapacity", isGreaterThanOrEqualTo: capacity)
         .get();
     if (documents.docs.length > 0) {
       documents.docs.forEach(

@@ -87,62 +87,66 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Column(
+        child: Stack(
           children: [
-            if (_loading) CircularProgressIndicator(),
-            if (Data.deliveryPersons.length == 0)
-              Center(
-                child: Text("No Delivery Person found for specified area"),
-              )
-            else
-              Container(
-                height: _loading
-                    ? MediaQuery.of(context).size.height * 0.87
-                    : MediaQuery.of(context).size.height * 0.88,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  itemCount: Data.deliveryPersons.length,
-                  itemBuilder: (_, index) {
-                    return ListTile(
-                      leading: Icon(
-                        Icons.local_shipping_outlined,
-                        size: 40,
-                        color: Colors.black,
-                      ),
-                      title: Text(
-                        Data.deliveryPersons[index].name,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                        Data.deliveryPersons[index].contact,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Text(
-                        "Capacity (per meal): " +
-                            Data.deliveryPersons[index].vehicleCapacity
-                                .toString(),
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onTap: _loading
-                          ? () {}
-                          : () => assignPerson(
-                                context,
-                                args["donation"],
-                                Data.deliveryPersons[index],
-                              ),
-                    );
-                  },
-                ),
-              ),
+            Column(
+              children: [
+                if (Data.deliveryPersons.length == 0)
+                  Center(
+                    child: Text("No Delivery Person found for specified area"),
+                  )
+                else
+                  Container(
+                    height: _loading
+                        ? MediaQuery.of(context).size.height * 0.87
+                        : MediaQuery.of(context).size.height * 0.88,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView.builder(
+                      itemCount: Data.deliveryPersons.length,
+                      itemBuilder: (_, index) {
+                        return ListTile(
+                          leading: Icon(
+                            Icons.local_shipping_outlined,
+                            size: 40,
+                            color: Colors.black,
+                          ),
+                          title: Text(
+                            Data.deliveryPersons[index].name,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            Data.deliveryPersons[index].contact,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: Text(
+                            "Capacity (per meal): " +
+                                Data.deliveryPersons[index].vehicleCapacity
+                                    .toString(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onTap: _loading
+                              ? () {}
+                              : () => assignPerson(
+                                    context,
+                                    args["donation"],
+                                    Data.deliveryPersons[index],
+                                  ),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+            if (_loading) Center(child: CircularProgressIndicator()),
           ],
         ),
       ),

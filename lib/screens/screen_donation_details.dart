@@ -46,317 +46,381 @@ class _DonationDetailsState extends State<DonationDetails> {
           ],
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          if (updating)
-            CircularProgressIndicator(
-              backgroundColor: Colors.green,
-            ),
-          Container(
-            height: height * 0.365,
-            width: width,
-            child: ListView.builder(
-              itemCount: donation.moreImages.length == 0
-                  ? 1
-                  : donation.moreImages.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (_, index) {
-                return Image.network(
-                  index == 0 ? donation.imgUrl : donation.moreImages[index - 1],
-                  height: height * 0.365,
-                  width: width,
-                  fit: BoxFit.cover,
-                );
-              },
-            ),
-          ),
-          // Container(
-          //   color: Color(0xffEBF4FF),
-          //   height: height * 0.0,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: <Widget>[
-          //       Text(
-          //         "Waiting Time: ${donation.waitingTime} Minutes",
-          //         style: TextStyle(
-          //           fontWeight: FontWeight.bold,
-          //           fontSize: 20,
-          //           color: Colors.black,
-          //         ),
-          //       ),
-          //       SizedBox(width: 10),
-          //       Icon(Icons.timer, size: 20, color: Colors.black),
-          //     ],
-          //   ),
-          // ),
-          Container(
-            color: Color(0xffEBF4FF),
-            height: height * 0.065,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Serves ${donation.serving} People",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Icon(Icons.people_outline, size: 20, color: Colors.black),
-              ],
-            ),
-          ),
-          Container(
-            width: width * 0.9,
-            height: height * 0.35,
-            margin: EdgeInsets.only(
-              top: 10,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                const BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  height: height * 0.2,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Details:",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),
-                            ),
-                            if (donation.status == "completed")
-                              Icon(
-                                Icons.done_all_outlined,
-                                color: Colors.blue[700],
-                                size: 30,
-                              )
-                            else if (donation.status == "waiting")
-                              Icon(
-                                Icons.schedule_outlined,
-                                color: Colors.indigo,
-                                size: 30,
-                              )
-                            else if (donation.status == "accepted")
-                              Icon(
-                                Icons.check,
-                                color: Colors.green,
-                                size: 30,
-                              )
-                            else if (donation.status == "rejected")
-                              Icon(
-                                Icons.close,
-                                color: Colors.red,
-                                size: 30,
-                              )
-                            else if (donation.status == "collecting")
-                              Icon(
-                                Icons.local_shipping_outlined,
-                                color: Colors.cyan,
-                              )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Text(
-                            "Donor: ${donation.donorName}",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Text(
-                            "Donor Contact: ${donation.donorId}",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Text(
-                            "Recepient Charity: ${donation.recepient}",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Text(
-                            "PickUp Location: ${donation.pickupAddress}",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Text(
-                            "Donation Time: $date",
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (donation.status == "waiting")
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FlatButton(
-                        child: Text(
-                          "Accept",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        color: Colors.green,
-                        onPressed: () async {
-                          setState(() {
-                            updating = true;
-                          });
-                          await Services.acceptDonation(donation.id);
-                          donation.status = "accepted";
-                          await Navigator.of(context).pushReplacementNamed(
-                              DonationDetails.routeName,
-                              arguments: {"donation": donation});
-                        },
-                      ),
-                      FlatButton(
-                        child: Text(
-                          "Reject",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        color: Colors.red,
-                        onPressed: () {
-                          return showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              content: Text(
-                                "Are you sure you want to reject?",
-                              ),
-                              actions: [
-                                FlatButton(
-                                  child: Text("Yes"),
-                                  onPressed: () async {
-                                    setState(() {
-                                      updating = true;
-                                    });
-                                    Navigator.pop(context);
-                                    await Services.rejectDonation(donation.id);
-                                    await Navigator.of(context).pushNamed(
-                                        CharityUpdateLoading.routeName);
-                                    setState(() {
-                                      updating = false;
-                                    });
-                                  },
-                                ),
-                                FlatButton(
-                                  child: Text("No"),
-                                  onPressed: () async {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
+      body: Stack(
+        children: [
+          Column(
+            children: <Widget>[
+              Container(
+                height: height * 0.365,
+                width: width,
+                child: ListView.builder(
+                  itemCount: donation.moreImages.length == 0
+                      ? 1
+                      : donation.moreImages.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (_, index) {
+                    return donation.imgUrl == null
+                        ? Container(
+                            child: Icon(Icons.broken_image),
+                          )
+                        : Image.network(
+                            index == 0
+                                ? donation.imgUrl
+                                : donation.moreImages[index - 1],
+                            height: height * 0.365,
+                            width: width,
+                            fit: BoxFit.cover,
                           );
-                        },
-                      ),
-                    ],
-                  )
-                else if (donation.status == "accepted")
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FlatButton(
-                        onPressed: () async {
-                          setState(() {
-                            updating = true;
-                          });
-                          await Services.fetchDeliveryPersons(donation.city);
-                          setState(() {
-                            updating = false;
-                          });
-                          Navigator.of(context).pushNamed(
-                            DeliveryPersonsAssignment.routeName,
-                            arguments: {"donation": donation},
-                          );
-                        },
-                        child: Text(
-                          "Assign Deliveryperson",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      )
-                    ],
-                  )
-                else if (donation.status == "collecting")
-                  Text(
-                    "DeliveryPerson EnRoute",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-              ],
-            ),
-          ),
-          RaisedButton(
-              color: Colors.blue,
-              child: Container(
-                width: 150,
+                  },
+                ),
+              ),
+              // Container(
+              //   color: Color(0xffEBF4FF),
+              //   height: height * 0.0,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       Text(
+              //         "Waiting Time: ${donation.waitingTime} Minutes",
+              //         style: TextStyle(
+              //           fontWeight: FontWeight.bold,
+              //           fontSize: 20,
+              //           color: Colors.black,
+              //         ),
+              //       ),
+              //       SizedBox(width: 10),
+              //       Icon(Icons.timer, size: 20, color: Colors.black),
+              //     ],
+              //   ),
+              // ),
+              Container(
+                color: Color(0xffEBF4FF),
+                height: height * 0.065,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Text(
-                      "Call Donor",
-                      style: TextStyle(color: Colors.white),
+                      "Serves ${donation.serving} People",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
                     ),
-                    Icon(Icons.call, color: Colors.white)
+                    SizedBox(width: 10),
+                    Icon(Icons.people_outline, size: 20, color: Colors.black),
                   ],
                 ),
               ),
-              onPressed: () async {
-                bool res =
-                    await FlutterPhoneDirectCaller.callNumber(donation.donorId);
-              }),
+              Container(
+                width: width * 0.9,
+                height: height * 0.35,
+                margin: EdgeInsets.only(
+                  top: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    const BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      height: height * 0.2,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Details:",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                                Spacer(),
+                                if (donation.status == "completed")
+                                  Icon(
+                                    Icons.done_all_outlined,
+                                    color: Colors.blue[700],
+                                    size: 30,
+                                  )
+                                else if (donation.status == "waiting")
+                                  Icon(
+                                    Icons.schedule_outlined,
+                                    color: Colors.indigo,
+                                    size: 30,
+                                  )
+                                else if (donation.status == "accepted")
+                                  Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                    size: 30,
+                                  )
+                                else if (donation.status == "rejected")
+                                  Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                    size: 30,
+                                  )
+                                else if (donation.status == "collecting")
+                                  Icon(
+                                    Icons.local_shipping_outlined,
+                                    color: Colors.cyan,
+                                  )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Donor: ",
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: donation.donorName,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Donor Contact: ",
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: donation.donorId,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Recepient Charity: ",
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: donation.recepient,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "PickUp Location: ",
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: donation.pickupAddress,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Donation Time: ",
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: date.toString(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (donation.status == "waiting")
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          FlatButton(
+                            child: Text(
+                              "Accept",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            color: Colors.green,
+                            onPressed: () async {
+                              setState(() {
+                                updating = true;
+                              });
+                              await Services.acceptDonation(donation.id);
+                              donation.status = "accepted";
+                              await Navigator.of(context).pushReplacementNamed(
+                                  DonationDetails.routeName,
+                                  arguments: {"donation": donation});
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "Reject",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            color: Colors.red,
+                            onPressed: () {
+                              return showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  content: Text(
+                                    "Are you sure you want to reject?",
+                                  ),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text("Yes"),
+                                      onPressed: () async {
+                                        setState(() {
+                                          updating = true;
+                                        });
+                                        Navigator.pop(context);
+                                        await Services.rejectDonation(
+                                            donation.id);
+                                        await Navigator.of(context).pushNamed(
+                                            CharityUpdateLoading.routeName);
+                                        setState(() {
+                                          updating = false;
+                                        });
+                                      },
+                                    ),
+                                    FlatButton(
+                                      child: Text("No"),
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      )
+                    else if (donation.status == "accepted")
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              setState(() {
+                                updating = true;
+                              });
+                              await Services.fetchDeliveryPersons(
+                                donation.city,
+                                donation.serving,
+                              );
+                              setState(() {
+                                updating = false;
+                              });
+                              Navigator.of(context).pushNamed(
+                                DeliveryPersonsAssignment.routeName,
+                                arguments: {"donation": donation},
+                              );
+                            },
+                            child: Text("Assign Deliveryperson"),
+                          )
+                        ],
+                      )
+                    else if (donation.status == "collecting")
+                      Text(
+                        "DeliveryPerson EnRoute",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                  ],
+                ),
+              ),
+              RaisedButton(
+                  color: Colors.blue,
+                  child: Container(
+                    width: 150,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Call Donor",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Icon(Icons.call, color: Colors.white)
+                      ],
+                    ),
+                  ),
+                  onPressed: () async {
+                    bool res = await FlutterPhoneDirectCaller.callNumber(
+                        donation.donorId);
+                  }),
+            ],
+          ),
+          if (updating)
+            Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.green,
+              ),
+            ),
         ],
       ),
     );

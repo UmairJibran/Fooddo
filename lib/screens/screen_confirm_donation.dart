@@ -36,8 +36,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   bool _loading = false;
   bool nameMissing = false;
   bool _addingImage = false;
-  String _imgUrl =
-      "https://littlepapercrown.files.wordpress.com/2012/07/full-plate-of-junk.jpg";
+  String _imgUrl;
   int _numberOfImages = 0;
 
   @override

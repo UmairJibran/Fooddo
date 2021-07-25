@@ -84,10 +84,15 @@ class FoodCardTile extends StatelessWidget {
                       width: 200,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          imgUrl,
-                          fit: BoxFit.cover,
-                        ),
+                        child: imgUrl == null
+                            ? Image.asset(
+                                "assets/broken_image.png",
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                imgUrl,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -176,12 +181,19 @@ class FoodCardTile extends StatelessWidget {
             Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  imgUrl,
-                  height: height * 0.8,
-                  width: height * 0.8,
-                  fit: BoxFit.cover,
-                ),
+                child: imgUrl == null
+                    ? Image.asset(
+                        "assets/broken_image.png",
+                        height: height * 0.8,
+                        width: height * 0.8,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        imgUrl,
+                        height: height * 0.8,
+                        width: height * 0.8,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             SizedBox(width: 10),

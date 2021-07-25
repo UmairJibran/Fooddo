@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fooddo/components/continuation_button.dart';
 import 'package:fooddo/services.dart';
 import 'package:image/image.dart' as im;
@@ -22,7 +23,6 @@ class _SettingsState extends State<Settings> {
   var _key;
   String _userName, _userEmail, _userAddress, _userId, _imageUrl;
   File _file;
-  var _error;
 
   @override
   void initState() {
@@ -37,7 +37,6 @@ class _SettingsState extends State<Settings> {
     _imageUploading = false;
     changesMade = false;
     updating = false;
-    _error = "";
   }
 
   @override
@@ -306,7 +305,6 @@ class _SettingsState extends State<Settings> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(_error, style: TextStyle(color: Colors.red)),
                             ContinuationButton(
                               buttonText: "Update",
                               onTap: () async {
@@ -316,7 +314,6 @@ class _SettingsState extends State<Settings> {
                                   if (_key.currentState.validate()) {
                                     setState(() {
                                       updating = true;
-                                      _error = "";
                                     });
                                     _key.currentState.save();
                                     await Services.updateUser(
@@ -330,9 +327,14 @@ class _SettingsState extends State<Settings> {
                                     });
                                   }
                                 } else {
-                                  setState(() {
-                                    _error = "Nothing to Update";
-                                  });
+                                  Fluttertoast.showToast(
+                                    msg: "Nothing to Update",
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
                                 }
                               },
                             ),

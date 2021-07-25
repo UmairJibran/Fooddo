@@ -41,6 +41,7 @@ dependencies:
   firebase_storage:
   flutter_phone_direct_caller:
   loading_animations:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:

@@ -19,6 +19,8 @@ class Donation {
   final String foodName;
   final String foodDetails;
   bool seen;
+  String deliveryPersonContact;
+  String deliveryPersonName;
 
   Donation({
     @required this.foodName,
@@ -38,5 +40,7 @@ class Donation {
     this.timeStamp,
     this.moreImages,
     this.seen,
+    this.deliveryPersonContact,
+    this.deliveryPersonName,
   });
 }

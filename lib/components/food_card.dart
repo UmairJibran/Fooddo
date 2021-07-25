@@ -15,6 +15,9 @@ class FoodCardTile extends StatelessWidget {
   final Timestamp timeStamp;
   final String foodName;
   final String foodDetails;
+  final String deliveryPersonContact;
+  final String deliveryPersonName;
+
   FoodCardTile({
     this.pickupAddress,
     this.date,
@@ -28,6 +31,8 @@ class FoodCardTile extends StatelessWidget {
     this.timeStamp,
     this.foodName,
     this.foodDetails,
+    this.deliveryPersonContact,
+    this.deliveryPersonName,
   });
   @override
   Widget build(BuildContext context) {
@@ -142,20 +147,23 @@ class FoodCardTile extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: 20),
-                    RaisedButton(
-                      color: Colors.blue,
-                      child: Text(
-                        "Call $recepient",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () async {
-                        await FlutterPhoneDirectCaller.callNumber(
-                            "03138185443");
-                      },
-                    ),
+                    deliveryPersonContact == null
+                        ? Text("Not Assigned")
+                        : RaisedButton(
+                            color: Colors.blue,
+                            child: Text(
+                              "Call $deliveryPersonName",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () async {
+                              await FlutterPhoneDirectCaller.callNumber(
+                                deliveryPersonContact,
+                              );
+                            },
+                          ),
                   ],
                 ),
               );

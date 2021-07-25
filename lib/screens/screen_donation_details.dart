@@ -385,7 +385,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                       )
                     else if (donation.status == "collecting")
                       Text(
-                        "DeliveryPerson EnRoute",
+                        "${donation.deliveryPersonName} EnRoute",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -394,25 +394,56 @@ class _DonationDetailsState extends State<DonationDetails> {
                   ],
                 ),
               ),
-              RaisedButton(
-                  color: Colors.blue,
-                  child: Container(
-                    width: 150,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Call Donor",
-                          style: TextStyle(color: Colors.white),
+              Row(
+                children: [
+                  Spacer(),
+                  donation.deliveryPersonContact == null
+                      ? SizedBox()
+                      : RaisedButton(
+                          color: Colors.blue,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Call ${donation.deliveryPersonName}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Icon(Icons.call, color: Colors.white)
+                              ],
+                            ),
+                          ),
+                          onPressed: () async {
+                            bool res =
+                                await FlutterPhoneDirectCaller.callNumber(
+                              donation.deliveryPersonContact,
+                            );
+                          },
                         ),
-                        Icon(Icons.call, color: Colors.white)
-                      ],
+                  Spacer(flex: 2),
+                  RaisedButton(
+                    color: Colors.blue,
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Call Donor",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Icon(Icons.call, color: Colors.white)
+                        ],
+                      ),
                     ),
+                    onPressed: () async {
+                      bool res = await FlutterPhoneDirectCaller.callNumber(
+                        donation.donorId,
+                      );
+                    },
                   ),
-                  onPressed: () async {
-                    bool res = await FlutterPhoneDirectCaller.callNumber(
-                        donation.donorId);
-                  }),
+                  Spacer(),
+                ],
+              ),
             ],
           ),
           if (updating)

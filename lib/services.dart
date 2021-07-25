@@ -51,6 +51,8 @@ class Services {
           timeStamp: data["timeStamp"],
           foodName: data["foodName"] ?? "",
           foodDetails: data["foodDetails"] ?? "",
+          deliveryPersonContact: data["deliveryPersonContact"],
+          deliveryPersonName: data["deliveryPersonName"] ?? "",
         );
         Data.pastDonations.add(donation);
       });
@@ -469,6 +471,8 @@ class Services {
           donorName: data["name"],
           foodName: data["foodName"] ?? "",
           foodDetails: data["foodDetails"] ?? "",
+          deliveryPersonContact: data["deliveryPersonContact"],
+          deliveryPersonName: data["deliveryPersonName"] ?? "",
         );
         Data.enRouteDonations.add(donation);
       });
@@ -628,6 +632,8 @@ class Services {
         await firebaseFirestore.collection("donations").doc(donation.id).get();
     var donationDocument = doc.data();
     donationDocument["status"] = "collecting";
+    donationDocument["deliveryPersonContact"] = deliveryPersons.contact;
+    donationDocument["deliveryPersonName"] = deliveryPersons.name;
     firebaseFirestore
         .collection("donations")
         .doc(donation.id)

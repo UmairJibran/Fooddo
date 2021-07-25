@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 class User {
   final String id;
   final String city;
-  final String email;
+  String email;
   final String phone;
   final String type;
-  final String address;
-  final String name;
+  String address;
+  String name;
   String imageUrl;
   final bool isDonor;
   final bool unreadNotifications;

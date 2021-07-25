@@ -321,6 +321,9 @@ class _SettingsState extends State<Settings> {
                                       address: _userAddress,
                                       email: _userEmail,
                                     );
+                                    Data.user.name = _userName;
+                                    Data.user.address = _userAddress;
+                                    Data.user.email = _userEmail;
                                     setState(() {
                                       updating = false;
                                       changesMade = false;

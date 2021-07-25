@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Image.asset(
-                    "./lib/assets/fooddo_logo.png",
+                    "assets/fooddo_logo.png",
                     height: 150,
                   ),
                   Container(

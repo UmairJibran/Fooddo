@@ -41,7 +41,7 @@ class _MakeDonationState extends State<MakeDonation> {
                 child: Stack(
                   children: [
                     SvgPicture.asset(
-                      "./lib/assets/plate_assets/empty_plate.svg",
+                      "assets/plate_assets/empty_plate.svg",
                       height: 400,
                     ),
                     double.parse(_servings.text).round() > 0
@@ -49,7 +49,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             top: 50,
                             right: 30,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/toast.svg",
+                              "assets/plate_assets/toast.svg",
                               height: 300,
                             ),
                           )
@@ -59,7 +59,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             top: 80,
                             left: 10,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/salad_leaf.svg",
+                              "assets/plate_assets/salad_leaf.svg",
                               height: 250,
                             ),
                           )
@@ -69,7 +69,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             top: 50,
                             right: 00,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/meat.svg",
+                              "assets/plate_assets/meat.svg",
                               height: 300,
                             ),
                           )
@@ -79,7 +79,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             bottom: 100,
                             left: 20,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/lemon.svg",
+                              "assets/plate_assets/lemon.svg",
                               height: 200,
                             ),
                           )
@@ -89,7 +89,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             top: 50,
                             left: 80,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/carrot.svg",
+                              "assets/plate_assets/carrot.svg",
                               height: 200,
                             ),
                           )
@@ -99,7 +99,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             bottom: 10,
                             right: 100,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/pizza.svg",
+                              "assets/plate_assets/pizza.svg",
                               height: 200,
                             ),
                           )
@@ -109,7 +109,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             top: 10,
                             right: 80,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/lime.svg",
+                              "assets/plate_assets/lime.svg",
                               height: 200,
                             ),
                           )
@@ -119,7 +119,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             top: 50,
                             right: 30,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/mushroom.svg",
+                              "assets/plate_assets/mushroom.svg",
                               height: 100,
                             ),
                           )
@@ -129,7 +129,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             top: 30,
                             left: 30,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/chicken_leg.svg",
+                              "assets/plate_assets/chicken_leg.svg",
                               height: 180,
                             ),
                           )
@@ -139,7 +139,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             bottom: 30,
                             right: 30,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/fried_egg.svg",
+                              "assets/plate_assets/fried_egg.svg",
                               height: 180,
                             ),
                           )
@@ -149,7 +149,7 @@ class _MakeDonationState extends State<MakeDonation> {
                             bottom: 80,
                             right: 50,
                             child: SvgPicture.asset(
-                              "./lib/assets/plate_assets/coriander.svg",
+                              "assets/plate_assets/coriander.svg",
                               height: 250,
                             ),
                           )

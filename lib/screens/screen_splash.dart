@@ -34,7 +34,7 @@ class SplashScreen extends StatelessWidget {
         loaderColor: Theme.of(context).primaryColor,
         backgroundColor: Colors.white,
         photoSize: 150.0,
-        image: Image.asset("./lib/assets/fooddo_logo.png"),
+        image: Image.asset("assets/fooddo_logo.png"),
       ),
     );
   }

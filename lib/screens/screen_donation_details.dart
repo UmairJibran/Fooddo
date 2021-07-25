@@ -325,9 +325,13 @@ class _DonationDetailsState extends State<DonationDetails> {
                                 builder: (ctx) => AlertDialog(
                                   backgroundColor:
                                       Theme.of(context).primaryColor,
-                                  content: Text(
+                                  title: Text(
                                     "Are you sure you want to reject?",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
+                                  content: SizedBox(),
                                   actions: [
                                     FlatButton(
                                       child: Text("Yes"),

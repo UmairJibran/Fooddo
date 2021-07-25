@@ -70,10 +70,11 @@ class FoodCardTile extends StatelessWidget {
                     ),
                     Spacer(),
                     IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   ],
                 ),
                 content: Column(

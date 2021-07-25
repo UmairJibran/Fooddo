@@ -159,7 +159,12 @@ class Services {
           builder: (context) {
             return AlertDialog(
               backgroundColor: Theme.of(context).primaryColor,
-              title: Text("${e.code}"),
+              title: Text(
+                "${e.code}",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               actions: [
                 ContinuationButton(
                   buttonText: "Dismiss",
@@ -181,7 +186,12 @@ class Services {
             return AlertDialog(
               backgroundColor: Theme.of(context).primaryColor,
               clipBehavior: Clip.hardEdge,
-              title: Text("Please Enter your verification code"),
+              title: Text(
+                "Please Enter your verification code",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

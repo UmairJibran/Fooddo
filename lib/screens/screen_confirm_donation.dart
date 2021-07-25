@@ -439,7 +439,13 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                 builder: (ctx) => AlertDialog(
                                   backgroundColor:
                                       Theme.of(context).primaryColor,
-                                  content: Text('Confirm Donation?'),
+                                  title: Text(
+                                    'Confirm Donation?',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  content: SizedBox(),
                                   actions: [
                                     FlatButton(
                                       textColor: Colors.black,
@@ -528,7 +534,12 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                               context: context,
                               builder: (ctx) => AlertDialog(
                                 backgroundColor: Theme.of(context).primaryColor,
-                                title: Text("ALERT!"),
+                                title: Text(
+                                  "ALERT!",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 content: Text(
                                   "Please Agree to Fresh Food Agreement",
                                 ),

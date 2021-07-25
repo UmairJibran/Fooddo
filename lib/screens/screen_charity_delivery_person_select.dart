@@ -29,9 +29,15 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
         builder: (ctx) {
           return AlertDialog(
             backgroundColor: Theme.of(ctx).primaryColor,
-            content: Text("Select ${deliveryPerson.name}"),
+            title: Text(
+              "Select ${deliveryPerson.name}",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: SizedBox(),
             actions: [
-              FlatButton(
+              ElevatedButton(
                 child: Text("Select"),
                 onPressed: () async {
                   Navigator.pop(context);

@@ -121,25 +121,30 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
                           title: Text(
                             Data.deliveryPersons[index].name,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text(
-                            Data.deliveryPersons[index].contact,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          trailing: Text(
-                            "Capacity (per meal): " +
-                                Data.deliveryPersons[index].vehicleCapacity
-                                    .toString(),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                Data.deliveryPersons[index].contact,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                "Capacity (per meal): " +
+                                    Data.deliveryPersons[index].vehicleCapacity
+                                        .toString(),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                           onTap: _loading
                               ? () {}

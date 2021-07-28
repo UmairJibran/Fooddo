@@ -33,7 +33,7 @@ class _SettingsState extends State<Settings> {
     _userEmail = Data.user.email;
     _userAddress = Data.user.address;
     _userId = Data.user.id;
-    _imageUrl = Data.user.imageUrl ?? "";
+    _imageUrl = Data.user.imageUrl;
     _imageUploading = false;
     changesMade = false;
     updating = false;
@@ -124,9 +124,14 @@ class _SettingsState extends State<Settings> {
                               alignment: Alignment.center,
                               child: _imageUploading
                                   ? Center(child: CircularProgressIndicator())
-                                  : ClipOval(
-                                      child: Image.network(_imageUrl),
-                                    ),
+                                  : _imageUrl == null
+                                      ? Icon(
+                                          Icons.person,
+                                          size: 160,
+                                        )
+                                      : ClipOval(
+                                          child: Image.network(_imageUrl),
+                                        ),
                             ),
                             Spacer(),
                           ],

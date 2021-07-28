@@ -60,8 +60,11 @@ class _DonationDetailsState extends State<DonationDetails> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (_, index) {
                     return donation.imgUrl == null
-                        ? Container(
-                            child: Icon(Icons.broken_image),
+                        ? Image.asset(
+                            "assets/broken_image.png",
+                            height: height * 0.365,
+                            width: width,
+                            fit: BoxFit.cover,
                           )
                         : Image.network(
                             index == 0
@@ -424,7 +427,9 @@ class _DonationDetailsState extends State<DonationDetails> {
                             );
                           },
                         ),
-                  Spacer(flex: 2),
+                  donation.deliveryPersonContact == null
+                      ? SizedBox()
+                      : Spacer(flex: 2),
                   RaisedButton(
                     color: Colors.blue,
                     child: Container(

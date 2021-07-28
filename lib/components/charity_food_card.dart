@@ -64,12 +64,19 @@ class _CharityFoodCardState extends State<CharityFoodCard> {
             Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  widget.donation.imgUrl,
-                  height: widget.height * 0.7,
-                  width: widget.height * 0.7,
-                  fit: BoxFit.cover,
-                ),
+                child: widget.donation.imgUrl == null
+                    ? Image.asset(
+                        "assets/broken_image.png",
+                        height: widget.height * 0.7,
+                        width: widget.height * 0.7,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        widget.donation.imgUrl,
+                        height: widget.height * 0.7,
+                        width: widget.height * 0.7,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             SizedBox(width: 10),

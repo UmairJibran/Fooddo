@@ -98,7 +98,7 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
               ),
-            Column(
+            ListView(
               children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),

@@ -98,9 +98,13 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
             Column(
               children: [
                 if (Data.deliveryPersons.length == 0)
-                  Center(
-                    child: Text(
-                      "No Delivery Person with available capacity found for specified area",
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        "No Delivery Person with available capacity found for specified area",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30),
+                      ),
                     ),
                   )
                 else

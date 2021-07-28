@@ -99,7 +99,9 @@ class _DeliveryPersonsAssignmentState extends State<DeliveryPersonsAssignment> {
               children: [
                 if (Data.deliveryPersons.length == 0)
                   Center(
-                    child: Text("No Delivery Person found for specified area"),
+                    child: Text(
+                      "No Delivery Person with available capacity found for specified area",
+                    ),
                   )
                 else
                   Container(

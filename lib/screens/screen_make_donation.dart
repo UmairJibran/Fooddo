@@ -171,7 +171,7 @@ class _MakeDonationState extends State<MakeDonation> {
                         ),
                         SizedBox(width: 10),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.1,
+                          width: MediaQuery.of(context).size.width * 0.2,
                           child: TextField(
                             controller: _servings,
                             enabled: true,

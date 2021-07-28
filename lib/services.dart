@@ -13,6 +13,7 @@ import 'classes/delivery_person.dart';
 import 'classes/donation.dart';
 import 'classes/notification.dart' as Notification;
 import 'classes/user.dart';
+import 'screens/screen_charity_home.dart';
 import 'screens/screen_check_reg_status.dart';
 
 class Data {
@@ -272,10 +273,13 @@ class Services {
         unreadNotifications: userData["unreadnotifs"],
         imageUrl: userData["imageUrl"],
       );
-      await Services.fetchUserPastDonation();
-      Navigator.of(context).pushReplacementNamed(
-        Home.routeName,
-      );
+      if (Data.user.isDonor) {
+        await Services.fetchUserPastDonation();
+        return Home();
+      } else {
+        await Services.fetchUnclaimedDonations();
+        return CharityDashboard();
+      }
     } else {
       Navigator.of(context).pushReplacementNamed(RegisterAsDonor.routeName,
           arguments: {"phoneNumber": userPhone});
@@ -299,8 +303,13 @@ class Services {
         "unreadnotifs": false,
       },
     ).then((_d) async {
-      await Services.fetchUserData(user.phone);
-      Navigator.of(context).pushReplacementNamed(Home.routeName);
+      if (Data.user.isDonor) {
+        await Services.fetchUserPastDonation();
+        return Home();
+      } else {
+        await Services.fetchUnclaimedDonations();
+        return CharityDashboard();
+      }
     });
   }
 

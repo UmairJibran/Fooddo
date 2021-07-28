@@ -90,7 +90,7 @@ class _CharityFoodCardState extends State<CharityFoodCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Served",
+                        "Serves",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

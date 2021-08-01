@@ -148,7 +148,13 @@ class _HomeState extends State<Home> {
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Center(
-                        child: Icon(Icons.home, size: 30),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.home, size: 30),
+                            Text("Home"),
+                          ],
+                        ),
                       ),
                     ),
                     onTap: () async {
@@ -168,7 +174,13 @@ class _HomeState extends State<Home> {
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Center(
-                        child: Icon(Icons.phone, size: 30),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.phone, size: 30),
+                            Text("Call Charity"),
+                          ],
+                        ),
                       ),
                     ),
                     onTap: () async {

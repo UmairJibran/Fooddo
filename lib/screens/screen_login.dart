@@ -14,7 +14,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String _phoneNumber = "";
+  TextEditingController _phoneNumberController = new TextEditingController();
   bool _loading = false;
 
   @override
@@ -42,16 +42,12 @@ class _LoginState extends State<Login> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: TextField(
+                      controller: _phoneNumberController,
                       autofocus: true,
                       enabled: true,
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.left,
                       style: TextStyle(fontFamily: "Roboto"),
-                      onChanged: (value) {
-                        setState(() {
-                          _phoneNumber = value;
-                        });
-                      },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -94,13 +90,13 @@ class _LoginState extends State<Login> {
                     children: [
                       ContinuationButton(
                         onTap: () async {
-                          if (_phoneNumber.isNotEmpty &&
-                              _phoneNumber.length == 10) {
+                          if (_phoneNumberController.text.isNotEmpty &&
+                              _phoneNumberController.text.length == 10) {
                             setState(() {
                               _loading = true;
                             });
                             await Services.verifyPhone(
-                              "+92" + _phoneNumber,
+                              "+92" + _phoneNumberController.text,
                               context,
                             );
                           }

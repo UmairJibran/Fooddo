@@ -282,7 +282,8 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                   ),
                                   child: _addingImage
                                       ? Center(
-                                          child: CircularProgressIndicator())
+                                          child: CircularProgressIndicator(),
+                                        )
                                       : IconButton(
                                           icon: Icon(_file != null
                                               ? Icons.check
@@ -302,7 +303,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                           },
                                         ),
                                 ),
-                                Spacer(),
+                                // Spacer(),
                                 Container(
                                   height: 50,
                                   width:

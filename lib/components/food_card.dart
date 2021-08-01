@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class FoodCardTile extends StatelessWidget {
   final String date;
@@ -99,14 +100,11 @@ class FoodCardTile extends StatelessWidget {
                     SizedBox(height: 20),
                     Row(
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            foodName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            ),
+                        Text(
+                          foodName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
                           ),
                         ),
                         Spacer(),
@@ -185,14 +183,14 @@ class FoodCardTile extends StatelessWidget {
                 child: imgUrl == null
                     ? Image.asset(
                         "assets/broken_image.png",
-                        height: height * 0.8,
-                        width: height * 0.8,
+                        height: height * 0.7,
+                        width: height * 0.7,
                         fit: BoxFit.cover,
                       )
                     : Image.network(
                         imgUrl,
-                        height: height * 0.8,
-                        width: height * 0.8,
+                        height: height * 0.7,
+                        width: height * 0.7,
                         fit: BoxFit.cover,
                       ),
               ),
@@ -200,71 +198,75 @@ class FoodCardTile extends StatelessWidget {
             SizedBox(width: 10),
             Container(
               height: height * 0.7,
-              width: MediaQuery.of(context).size.width * 0.45,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
+              width: MediaQuery.of(context).size.width * 0.41,
+              child: ListTile(
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$serving People",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      "$recepient",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "on ${_timeStamp.day}/${_timeStamp.month}/${_timeStamp.year} around ${_timeStamp.hour}:${_timeStamp.minute}",
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                title: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: AutoSizeText(
                         foodName,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Spacer(),
-                      if (status == "completed")
-                        Icon(
-                          Icons.done_all_outlined,
-                          color: Colors.blue[700],
-                        )
-                      else if (status == "waiting")
-                        Icon(
-                          Icons.schedule_outlined,
-                          color: Colors.indigo,
-                        )
-                      else if (status == "accepted")
-                        Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        )
-                      else if (status == "rejected")
-                        Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        )
-                      else if (status == "collecting")
-                        Icon(
-                          Icons.local_shipping_outlined,
-                          color: Colors.cyan,
-                        )
-                    ],
-                  ),
-                  Text(
-                    foodDetails,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    "$serving People",
-                    style: TextStyle(
-                      fontSize: 18,
                     ),
-                  ),
-                  Text(
-                    "at $recepient",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "on ${_timeStamp.day}/${_timeStamp.month}/${_timeStamp.year} around ${_timeStamp.hour}:${_timeStamp.minute}",
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
+                    Spacer(),
+                    if (status == "completed")
+                      Icon(
+                        Icons.done_all_outlined,
+                        color: Colors.blue[700],
+                      )
+                    else if (status == "waiting")
+                      Icon(
+                        Icons.schedule_outlined,
+                        color: Colors.indigo,
+                      )
+                    else if (status == "accepted")
+                      Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      )
+                    else if (status == "rejected")
+                      Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      )
+                    else if (status == "collecting")
+                      Icon(
+                        Icons.local_shipping_outlined,
+                        color: Colors.cyan,
+                      )
+                  ],
+                ),
               ),
             ),
           ],

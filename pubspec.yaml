@@ -42,6 +42,7 @@ dependencies:
   flutter_phone_direct_caller:
   loading_animations:
   fluttertoast:
+  auto_size_text:
 
 dev_dependencies:
   flutter_test:

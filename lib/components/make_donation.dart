@@ -13,7 +13,7 @@ class AddDonation extends StatelessWidget {
         Navigator.of(context).pushNamed(MakeDonation.routeName);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: EdgeInsets.only(top: 20, bottom: 10, right: 20, left: 20),
         padding: EdgeInsets.all(20),
         height: height * 0.25,
         width: MediaQuery.of(context).size.width * 0.38,

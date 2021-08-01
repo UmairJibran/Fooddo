@@ -186,6 +186,27 @@ class _DonationDetailsState extends State<DonationDetails> {
                               padding: const EdgeInsets.only(left: 20.0),
                               child: RichText(
                                 text: TextSpan(
+                                  text: "Food: ",
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: donation.foodName,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: RichText(
+                                text: TextSpan(
                                   text: "Donor: ",
                                   style: TextStyle(
                                     color: Colors.black87,

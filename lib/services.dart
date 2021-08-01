@@ -512,6 +512,7 @@ class Services {
         {
           "donationId": doc.id,
           "status": "accepted",
+          "foodName": doc["foodName"] ?? "",
           "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
         },
       );
@@ -538,6 +539,7 @@ class Services {
         {
           "donationId": doc.id,
           "status": "rejected",
+          "foodName": doc["foodName"] ?? "",
           "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
         },
       );
@@ -582,6 +584,7 @@ class Services {
               donationId: notification["donationId"],
               status: notification["status"],
               timeStamp: notification["timeStamp"],
+              donationName: notification["foodName"] ?? "",
             ),
           );
         },
@@ -644,6 +647,7 @@ class Services {
       {
         "donationId": donation.id,
         "status": "EnRoute",
+        "foodName": donation.foodName,
         "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
       },
     );

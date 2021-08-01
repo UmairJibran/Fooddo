@@ -29,7 +29,7 @@ class NotificationTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "An Update on your Donation#${notification.donationId}",
+                "An Update on your Donation: \"${notification.donationName}\"",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

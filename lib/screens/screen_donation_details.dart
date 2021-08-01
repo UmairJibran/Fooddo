@@ -412,11 +412,11 @@ class _DonationDetailsState extends State<DonationDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                Icon(Icons.call, color: Colors.white),
                                 Text(
-                                  "Call ${donation.deliveryPersonName}",
+                                  " ${donation.deliveryPersonName}",
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                Icon(Icons.call, color: Colors.white)
                               ],
                             ),
                           ),
@@ -436,11 +436,11 @@ class _DonationDetailsState extends State<DonationDetails> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Icon(Icons.call, color: Colors.white),
                           Text(
-                            "Call Donor",
+                            " Donor",
                             style: TextStyle(color: Colors.white),
                           ),
-                          Icon(Icons.call, color: Colors.white)
                         ],
                       ),
                     ),

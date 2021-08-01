@@ -118,31 +118,27 @@ class _SettingsState extends State<Settings> {
                         Row(
                           children: [
                             Spacer(),
-                            Container(
-                              height: height * 0.3,
-                              width: height * 0.3,
-                              alignment: Alignment.center,
-                              child: _imageUploading
-                                  ? Center(child: CircularProgressIndicator())
-                                  : _imageUrl == null
-                                      ? Icon(
-                                          Icons.person,
-                                          size: 160,
-                                        )
-                                      : ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          child: Image.network(_imageUrl),
-                                        ),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Spacer(),
                             TextButton(
-                              child: Text("Update Image"),
+                              child: Container(
+                                height: height * 0.3,
+                                width: height * 0.3,
+                                alignment: Alignment.center,
+                                child: _imageUploading
+                                    ? Center(child: CircularProgressIndicator())
+                                    : _imageUrl == null
+                                        ? Icon(
+                                            Icons.person,
+                                            size: 160,
+                                          )
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image.network(
+                                              _imageUrl,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                              ),
                               onPressed: () async {
                                 setState(() {
                                   _imageUploading = true;
@@ -150,6 +146,7 @@ class _SettingsState extends State<Settings> {
                                 imageProcessing(context, height);
                               },
                             ),
+                            Spacer(),
                           ],
                         ),
                         SizedBox(height: 10),

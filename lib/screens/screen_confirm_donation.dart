@@ -38,10 +38,12 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   bool _addingImage = false;
   String _imgUrl;
   int _numberOfImages = 0;
+  TextEditingController _userNameController = new TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _userNameController.text = _name;
     uniqueId = Uuid().v4();
   }
 
@@ -91,7 +93,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                       children: [
                         TextField(
                           decoration: InputDecoration(
-                            labelText: "Food Name *",
+                            labelText: "Food Name",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide: BorderSide(
@@ -172,6 +174,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         ),
                         SizedBox(height: 10),
                         TextField(
+                          controller: _userNameController,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
@@ -180,7 +183,6 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                 width: 1,
                               ),
                             ),
-                            hintText: _name,
                             labelText: "Your Name",
                             labelStyle: TextStyle(
                               color: Theme.of(context).accentColor,
@@ -206,11 +208,6 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                               ),
                             ),
                           ),
-                          onChanged: (value) {
-                            setState(() {
-                              _name = value;
-                            });
-                          },
                         ),
                         SizedBox(height: 10),
                         TextField(

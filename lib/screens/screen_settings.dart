@@ -129,7 +129,9 @@ class _SettingsState extends State<Settings> {
                                           Icons.person,
                                           size: 160,
                                         )
-                                      : ClipOval(
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                           child: Image.network(_imageUrl),
                                         ),
                             ),

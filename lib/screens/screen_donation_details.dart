@@ -133,7 +133,6 @@ class _DonationDetailsState extends State<DonationDetails> {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
                       height: height * 0.2,
@@ -312,6 +311,7 @@ class _DonationDetailsState extends State<DonationDetails> {
                         ),
                       ),
                     ),
+                    Spacer(),
                     if (donation.status == "waiting")
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

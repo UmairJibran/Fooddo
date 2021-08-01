@@ -273,7 +273,6 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                         ),
                         SizedBox(height: 10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
@@ -303,6 +302,7 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                                           },
                                         ),
                                 ),
+                                Spacer(),
                                 Container(
                                   height: 50,
                                   width:

@@ -87,7 +87,6 @@ class _CharityFoodCardState extends State<CharityFoodCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         widget.donation.foodName,
@@ -96,6 +95,7 @@ class _CharityFoodCardState extends State<CharityFoodCard> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      Spacer(),
                       if (widget.donation.status == "completed")
                         Icon(
                           Icons.done_all_outlined,

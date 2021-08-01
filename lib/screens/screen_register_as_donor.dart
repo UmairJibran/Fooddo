@@ -131,7 +131,6 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                 //conditional item
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Address",
@@ -140,6 +139,7 @@ class _RegisterAsDonorState extends State<RegisterAsDonor> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      Spacer(),
                       DropdownButton<City>(
                         hint: Text("Select a city"),
                         value: donorSelectedCity,

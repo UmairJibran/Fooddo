@@ -273,13 +273,10 @@ class Services {
         unreadNotifications: userData["unreadnotifs"],
         imageUrl: userData["imageUrl"],
       );
-      if (Data.user.isDonor) {
-        await Services.fetchUserPastDonation();
-        return Home();
-      } else {
-        await Services.fetchUnclaimedDonations();
-        return CharityDashboard();
-      }
+      await Services.fetchUserPastDonation();
+      Navigator.of(context).pushReplacementNamed(
+        Home.routeName,
+      );
     } else {
       Navigator.of(context).pushReplacementNamed(RegisterAsDonor.routeName,
           arguments: {"phoneNumber": userPhone});
@@ -303,13 +300,8 @@ class Services {
         "unreadnotifs": false,
       },
     ).then((_d) async {
-      if (Data.user.isDonor) {
-        await Services.fetchUserPastDonation();
-        return Home();
-      } else {
-        await Services.fetchUnclaimedDonations();
-        return CharityDashboard();
-      }
+      await Services.fetchUserData(user.phone);
+      Navigator.of(context).pushReplacementNamed(Home.routeName);
     });
   }
 

@@ -41,7 +41,7 @@ class FoodCardTile extends StatelessWidget {
         DateTime.fromMicrosecondsSinceEpoch(timeStamp.microsecondsSinceEpoch);
     return Container(
       height: height,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -196,9 +196,7 @@ class FoodCardTile extends StatelessWidget {
               ),
             ),
             SizedBox(width: 10),
-            Container(
-              height: height * 0.7,
-              width: MediaQuery.of(context).size.width * 0.41,
+            Expanded(
               child: ListTile(
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,8 +225,7 @@ class FoodCardTile extends StatelessWidget {
                 ),
                 title: Row(
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.2,
+                    Expanded(
                       child: AutoSizeText(
                         foodName,
                         softWrap: true,

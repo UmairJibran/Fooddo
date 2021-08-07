@@ -39,11 +39,13 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
   String _imgUrl;
   int _numberOfImages = 0;
   TextEditingController _userNameController = new TextEditingController();
+  TextEditingController _pickUpAddressController = new TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _userNameController.text = _name;
+    _pickUpAddressController.text = _pickUpAddress;
     uniqueId = Uuid().v4();
   }
 
@@ -208,6 +210,48 @@ class _ConfirmDonationState extends State<ConfirmDonation> {
                               ),
                             ),
                           ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          controller: _pickUpAddressController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
+                            labelText: "Street Address",
+                            labelStyle: TextStyle(
+                              color: Theme.of(context).accentColor,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              _waitingTime = int.parse(value);
+                            });
+                          },
                         ),
                         SizedBox(height: 10),
                         TextField(

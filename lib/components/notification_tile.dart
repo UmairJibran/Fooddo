@@ -39,6 +39,12 @@ class NotificationTile extends StatelessWidget {
                 "Status changed to: ${notification.status}",
                 style: TextStyle(fontSize: 16),
               ),
+              notification.reason == null
+                  ? SizedBox()
+                  : Text(
+                      "Reason: ${notification.reason}",
+                      style: TextStyle(fontSize: 16),
+                    ),
             ],
           ),
           Text(

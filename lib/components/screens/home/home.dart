@@ -35,6 +35,7 @@ class HomeComponent extends StatelessWidget {
                         Data.pastDonations[index - 1].deliveryPersonContact,
                     deliveryPersonName:
                         Data.pastDonations[index - 1].deliveryPersonName,
+                    reason: Data.pastDonations[index - 1].reason,
                   );
           },
           itemCount: Data.pastDonations.length + 1,

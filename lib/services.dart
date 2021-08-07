@@ -54,6 +54,7 @@ class Services {
           foodDetails: data["foodDetails"] ?? "",
           deliveryPersonContact: data["deliveryPersonContact"],
           deliveryPersonName: data["deliveryPersonName"] ?? "",
+          reason: data["reason"],
         );
         Data.pastDonations.add(donation);
       });
@@ -579,6 +580,7 @@ class Services {
               status: notification["status"],
               timeStamp: notification["timeStamp"],
               donationName: notification["foodName"] ?? "",
+              reason: notification["reason"] ?? "",
             ),
           );
         },

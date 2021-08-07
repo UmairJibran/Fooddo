@@ -21,6 +21,7 @@ class Donation {
   bool seen;
   String deliveryPersonContact;
   String deliveryPersonName;
+  String reason;
 
   Donation({
     @required this.foodName,
@@ -42,5 +43,6 @@ class Donation {
     this.seen,
     this.deliveryPersonContact,
     this.deliveryPersonName,
+    this.reason,
   });
 }

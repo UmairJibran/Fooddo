@@ -6,6 +6,7 @@ class Notification {
   final String status;
   final String timeStamp;
   final String donationName;
+  final String reason;
 
   Notification({
     @required this.id,
@@ -13,5 +14,6 @@ class Notification {
     @required this.status,
     @required this.timeStamp,
     @required this.donationName,
+    @required this.reason,
   });
 }

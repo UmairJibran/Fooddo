@@ -18,6 +18,7 @@ class FoodCardTile extends StatelessWidget {
   final String foodDetails;
   final String deliveryPersonContact;
   final String deliveryPersonName;
+  final String reason;
 
   FoodCardTile({
     this.pickupAddress,
@@ -34,6 +35,7 @@ class FoodCardTile extends StatelessWidget {
     this.foodDetails,
     this.deliveryPersonContact,
     this.deliveryPersonName,
+    this.reason,
   });
   @override
   Widget build(BuildContext context) {
@@ -145,6 +147,14 @@ class FoodCardTile extends StatelessWidget {
                       "Meal for $serving people was donated to $recepient at ${_timeStamp.hour}:${_timeStamp.minute} on $date",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
+                    if (reason != null)
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Rejection Reason: $reason",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                      ),
                     SizedBox(height: 20),
                     Text(
                       "$pickupAddress",

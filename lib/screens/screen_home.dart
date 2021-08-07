@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int selectedScreen = 0;
-  bool _loading;
+  bool _loading, refreshing;
 
   List<Widget> screens;
 
@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
     // TODO: implement initState
     super.initState();
     _loading = false;
+    refreshing = false;
   }
 
   @override
@@ -46,6 +47,24 @@ class _HomeState extends State<Home> {
         ),
         centerTitle: true,
         actions: [
+          Container(
+            child: FlatButton(
+              onPressed: () async {
+                setState(() {
+                  refreshing = true;
+                });
+                await Services.fetchUserPastDonation();
+                setState(() {
+                  refreshing = false;
+                });
+              },
+              child: refreshing
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Icon(Icons.refresh_sharp),
+            ),
+          ),
           InkWell(
             child: Stack(
               children: [

@@ -15,9 +15,12 @@ class DonationDetails extends StatefulWidget {
 
 class _DonationDetailsState extends State<DonationDetails> {
   bool updating;
+  var _formKey;
+  TextEditingController _reason = new TextEditingController();
 
   @override
   void initState() {
+    _formKey = GlobalKey<FormState>();
     super.initState();
     updating = false;
   }
@@ -346,40 +349,60 @@ class _DonationDetailsState extends State<DonationDetails> {
                             onPressed: () {
                               return showDialog(
                                 context: context,
-                                builder: (ctx) => AlertDialog(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  title: Text(
-                                    "Are you sure you want to reject?",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                builder: (ctx) => Form(
+                                  key: _formKey,
+                                  child: AlertDialog(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    title: Text(
+                                      "Are you sure you want to reject?",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
+                                    content: TextFormField(
+                                      controller: _reason,
+                                      validator: (value) {
+                                        if (value.trim().isEmpty) {
+                                          return "Please Enter Reason";
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: "Reason to reject?",
+                                      ),
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                        child: Text("Yes"),
+                                        onPressed: () async {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            setState(() {
+                                              updating = true;
+                                            });
+                                            Navigator.pop(context);
+                                            await Services.rejectDonation(
+                                              donation.id,
+                                              _reason.text,
+                                            );
+                                            await Navigator.of(context)
+                                                .pushNamed(CharityUpdateLoading
+                                                    .routeName);
+                                            setState(() {
+                                              updating = false;
+                                            });
+                                          }
+                                        },
+                                      ),
+                                      FlatButton(
+                                        child: Text("No"),
+                                        onPressed: () async {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  content: SizedBox(),
-                                  actions: [
-                                    FlatButton(
-                                      child: Text("Yes"),
-                                      onPressed: () async {
-                                        setState(() {
-                                          updating = true;
-                                        });
-                                        Navigator.pop(context);
-                                        await Services.rejectDonation(
-                                            donation.id);
-                                        await Navigator.of(context).pushNamed(
-                                            CharityUpdateLoading.routeName);
-                                        setState(() {
-                                          updating = false;
-                                        });
-                                      },
-                                    ),
-                                    FlatButton(
-                                      child: Text("No"),
-                                      onPressed: () async {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
                                 ),
                               );
                             },

@@ -517,7 +517,7 @@ class Services {
     await Services.generateNotification(doc["donorId"]);
   }
 
-  static rejectDonation(String donationId) async {
+  static rejectDonation(String donationId, String reason) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     DocumentSnapshot doc =
         await firebaseFirestore.collection("donations").doc(donationId).get();
@@ -530,12 +530,14 @@ class Services {
           .add(
         {
           "donationId": doc.id,
+          "reason": reason,
           "status": "rejected",
           "foodName": doc["foodName"] ?? "",
           "timeStamp": DateFormat.yMMMEd().format(DateTime.now()).toString(),
         },
       );
       donationDocument["status"] = "rejected";
+      donationDocument["reason"] = reason;
       firebaseFirestore
           .collection("donations")
           .doc(donationId)
